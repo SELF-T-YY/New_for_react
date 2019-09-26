@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="Frame.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.2/pixi.min.js"></script>
+    
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+</head>
+<body style="overflow-x: hidden; overflow-y: hidden ">
+    <div id="container">
+        <div id="Big_Left">
+            <div id="Left">
+                <div id="Left_1">
+                    <div class="mytitle">&nbsp; Data Overview</div>
+                    <div id="Left_body">
+                        <button id="button-dataSet">DataSet</button>
+                        <input type="text" name="DataSet" value="oregonf" class="dataSetTextline">
+                        <table border="DataOverview"  class="datalist">
+                            <tr>
+                                <th></th>
+                                <th>Nodes</th>
+                                <th>Edges</th>
+                                <th>Community</th>
+                            </tr>
+                            <tr>
+                                <th>Origin:</th>
+                                <th>11174</th>
+                                <th>23410</th>
+                                <th>36</th>
+                            </tr>
+                            <tr>
+                                <th>Sample:</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="Left_2">
+                    <div class="mytitle">
+                        &nbsp;Control Panel
+                    </div>
+                    <div id="L_2">
+                            <div id="L_1_2">
+                                <select name="Left-select" id="Left-s">
+                                        <option value="TIES">Sampling Methods</option>
+                                </select>
+                                <input type="button" id="button-sample" value="Sample" onclick="sampling_func()">
+                                <input type="button" id="button-Reset" value="Reset" onclick="sampling_func()">
+                                <!-- <script src="/js/button.js"></script> -->
+                            </div>
+                            <div id="L_1_3">
+                                Density: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="range" min="5" max="100" value="100" class="range" id="range1" step="5">
+                                <b class="b1">100</b>
+                                <br>
+                                Betweeness：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="range" min="0" max="100" value="100" class="range" id="range2"> 
+                                <b class="b2">100</b>                       
+                                <br>
+                                Samoleing Rate: &nbsp;
+                                <input type="range" min="0" max="100" value="100" class="range" id="range3">
+                                <b class="b3">100</b>
+                                <br>
+                                <script>
+                                    var elem1 = document.querySelector('input[id="range1"]');
+                                    var rangeValue1 = function(){
+                                        var newValue1 = elem1.value;
+                                        var target1 = document.querySelector('.b1');
+                                        target1.innerHTML = newValue1;
+                                    };
+                                    elem1.addEventListener("input", rangeValue1);
+    
+                                    var elem2 = document.querySelector('input[id="range2"]');
+                                    var rangeValue2 = function(){
+                                        var newValue2 = elem2.value;
+                                        var target2 = document.querySelector('.b2');
+                                        target2.innerHTML = newValue2;
+                                    };
+                                    elem2.addEventListener("input", rangeValue2);
+    
+                                    var elem3 = document.querySelector('input[id="range3"]');
+                                    var rangeValue3 = function(){
+                                        var newValue3 = elem3.value;
+                                        var target3 = document.querySelector('.b3');
+                                        target3.innerHTML = newValue3;
+                                    };
+                                    elem3.addEventListener("input", rangeValue3);
+                                </script>
+                            </div>
+                    </div>
+                </div>
+                <div id="Left_3">
+                    <div class="mytitle">
+                            &nbsp;Graph Abstraction
+                            <select name="Center_select" id="s1" >
+                                    <option value="Communtiy">Communtiy</option>
+                            </select>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Centre">
+                <div class="mytitle">
+                    &nbsp; Node-Link Diagram
+                    <select name="Center_select" id="s1" >
+                        <option value="Communtiy">Origin</option>
+                    </select>
+                </div>
+                <div id="Centre_2">
+                    <!-- <script src="/js/ForceDirected_pixi.js"></script> -->
+                    <script src="/force_gai2.js"></script>
+                    <!-- <script src="/js/Force-Directed.js"></script> -->
+                </div>
+            </div>
+
+            <div id="Down_1">
+                <div class="mytitle">Communtiy Changes</div>
+                <div id="Down_1_1">
+
+                </div>
+            </div>
+            <div id="Down_2">
+                <div class="mytitle">Communtiy Distribution</div>
+                <div id="Down_2_1">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="Right">
+            <div id="Right_1">
+                <div class="mytitle">
+                    <div class="mytitle">&nbsp;Graph representation</div>
+                </div>
+            </div>
+            
+            <div id="Right_2">
+                <div class="mytitle">&nbsp;Evaluation</div>
+                <div style="height:338px; width: 410px;" id="container1">
+                </div>
+            </div>
+        </div>
+</body>
+</html>

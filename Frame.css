@@ -1,0 +1,262 @@
+html,body{
+    height: 90%;
+}
+#Big_Left{
+    position: absolute;
+    top:0;
+    width:70%;
+    height:98%;
+    margin-top: 2px;
+}
+#Left{
+    position: absolute;
+    top:0;
+    width:30%;
+    height:70%;
+    margin-top: 2px;
+}
+#Down{
+    position: absolute;
+    top:71%;
+    width: 100%;
+    height: 28;
+    margin-top: 2px;
+}
+#Down_1{
+    position: absolute;
+    top:71%;
+    height: 28;
+    margin-top: 2px;
+    left: 8px;
+    width:35%;
+    height:100%;
+    border: 2px solid #D3D3D3;
+    border-radius: 1%;
+}
+#Down_2{
+    position: absolute;
+    top:71%;
+    height: 28;
+    margin-top: 2px;
+    left: 35.9%;
+    width:37%;
+    height:100%;
+    border: 2px solid #D3D3D3;
+    border-radius: 1%;
+}
+#Centre{
+    position: absolute;
+    top: 0;
+    left: 22%;
+    width: 50.5%;
+    height:70%;
+    margin-top: 3px;
+    border: 2px solid #D3D3D3;
+    border-radius: 1%;
+}
+#Right{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 27%;
+    height: 98%;
+    margin-top: 3px;
+}
+#Left_1{
+    width:100%;
+    height:25%;
+    border: 2px solid #D3D3D3;
+    /* border: 1px solid #CAE1FF; */
+    border-radius: 1%;
+}
+#L_1_1{
+    width: 90%;
+    height: 40%;
+    background-color: #D3D3D3;
+    line-height:18px;
+    margin: 5px;
+    font-size: 12px;
+    line-height:30px;
+}
+#L_1_3{
+    width: 100%;
+    font-size: 12px;
+    line-height: 30px;
+}
+#Left_2{
+    width: 100%;
+    height: 30%;
+    border: 2px solid #D3D3D3;
+    border-radius: 1%
+}
+#Left_3{
+    width: 100%;
+    height: 45%;
+    border: 2px solid #D3D3D3;
+    border-radius: 2%;
+}
+#canvas_1{
+    width: 300;
+    height: 300;
+
+}
+#Centre_2{
+    width: 100%;
+    height: 100%;
+    /* border: 2px solid #D3D3D3; */
+    border-radius: 1%;
+}
+#Right_1{
+    width: 100%;
+    height: 50%;
+    border: 2px solid #D3D3D3;
+    border-radius: 1%;
+}
+#Right_2{
+    width: 100%;
+    height: 49.5%;
+    border: 2px solid #D3D3D3;
+    border-radius: 1%;
+}
+#s1{
+    float: right;
+    margin-top: 2px;
+    margin-right: 5px;
+}
+#Left-s{
+    width: 50%;
+    height: 30%;
+    font-size: 15px;
+    margin: 5px;
+    border: 1px solid #D3D3D3;
+    outline: none;
+}
+#button-sample{
+    width: 20%;
+    height: 30%;
+    font-size: 15px;
+    background-color: white;
+    border: 1px solid #D3D3D3;
+    outline:none;
+}
+#button-dataSet{
+    width: 20%;
+    height: 30%;
+    font-size: 15px;
+    background-color: white;
+    border: 1px solid #D3D3D3;
+    outline:none;    
+}
+#button-Reset{
+    width: 20%;
+    height: 30%;
+    font-size: 15px;
+    background-color: white;
+    border: 1px solid #D3D3D3;
+    outline:none;
+}
+#tsne_heat{
+    width:15%;
+    height:95%;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: black;
+    border: 0px solid;
+    outline:none;
+}
+
+
+
+.dataSetTextline {
+    margin: 4px;
+    margin-left: 30px; 
+}
+.datalist {
+    margin-top: 5px;
+    margin-left: 3px;
+    border: 1px solid #949697; /* 表格边框 */
+    font-family: Arial;
+    border-collapse: collapse; /* 边框重叠 */
+}
+.datalist tr:hover {
+    background-color: #949697; /* 动态变色,IE6下无效！*/
+}
+.datalist caption {
+    padding-top: 3px;
+    padding-bottom: 2px;
+    font: bold 1.1em;
+    background-color: #f0f2f5;
+    border: 1px solid #949697; /* 表格标题边框 */
+}
+.datalist th {
+    border: 1px solid #949697; /* 行、列名称边框 */
+    background-color: #f0f2f5;
+    font-weight: bold;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: center;
+}
+.datalist td {
+    border: 1px solid #949697; /* 单元格边框 */
+    text-align: right;
+    padding: 4px;
+}
+
+
+
+
+
+
+
+
+
+
+.mytitle{
+    height:3vh;
+    width: 100%;
+    background-color: rgb(199, 199, 199);
+    position: relative;
+    color: rgb(22, 19, 19);
+    /* font-weight: 1; */
+    font-size: 20px;
+    /* border: 2px solid #D3D3D3;
+    border-radius: 1%; */
+}
+.Centre_1{
+    height: 3vh;
+    width: 100%;
+    background-color: black;
+    position: relative;
+    color: white;
+    border: 2px solid #D3D3D3;
+    border-radius: 1%;
+}
+ .range{
+    -webkit-appearance: none;
+    height: 15px;
+    width: 55%;
+    outline: none;
+    margin-top: -10px;
+    background: #ffffff; 
+    border-radius: 10px;
+    border: solid 0.125em rgba(205, 224, 230, 0.5);
+    box-shadow: 0 .125em .125em #3b4547; 
+} 
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 25px;
+    margin-top: -5px; 
+    background: #ffffff; 
+    border-radius: 100%;
+    border: solid 0.125em rgba(205, 224, 230, 0.5);
+    box-shadow: 0 .125em .125em #3b4547;
+}
+
+
+.axis path,.axis line{fill:none;stroke:black;shape-rendering:crispEdges;}
+.axis text{font-family:sans-serif;font-size:11px;}
+.MyRect{fill:steelblue}
+.MyText{fill:white;text-anchor:middle;}
