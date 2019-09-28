@@ -1,3 +1,5 @@
+force_json_filename="../data/force_data_gai.json"
+data_filename="../data/oregonf.csv"
 function drawforce(data){
     var nodes = [];
     var links = [];
@@ -6,7 +8,7 @@ function drawforce(data){
     var force_height = 500;
     var circle_Color = 0x3A435E;
     var line_Color = 0xc6c6c6;
-    d3.json("/force_data_gai.json", function populate(datas){
+    d3.json(force_json_filename, function populate(datas){
         for(var key in datas){
             var node = {};
             node["id"] = key;
@@ -14,8 +16,8 @@ function drawforce(data){
             node["y"] = datas[key]["y"];
             nodes.push(node);
         }
-        console.log(nodes);
-        d3.csv("oregonf.csv",function(error,csvdata){
+        // console.log(nodes);
+        d3.csv(data_filename,function(error,csvdata){
             for(var i=0;i<csvdata.length;i++){
                 var data = {};
                 var a1 = csvdata[i].source;
@@ -31,8 +33,8 @@ function drawforce(data){
                 resolution : 1,
             });
 
-            console.log(nodes);
-
+            // console.log(nodes);
+            
             document.querySelector('#Centre_2').appendChild(app.view);
             app.renderer.backgroundColor = 0xffffff;
             const lines = new PIXI.Graphics();
@@ -42,7 +44,9 @@ function drawforce(data){
                 lines.lineTo(datas[links[i].target].x,datas[links[i].target].y);
             }
             app.stage.addChild(lines);
-            console.log(nodes);
+            
+            // console.log(nodes);
+
             const circles = new PIXI.Graphics();
             for(var key in datas){
                 circles.beginFill(circle_Color);
