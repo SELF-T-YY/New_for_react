@@ -1,3 +1,5 @@
+force_json_filename="data/force_data_gai.json"
+data_filename="data/oregonf.csv"
 function drawforce(data){
     var nodes = [];
     var links = [];
@@ -6,7 +8,7 @@ function drawforce(data){
     var force_height = 500;
     var circle_Color = 0x3A435E;
     var line_Color = 0xc6c6c6;
-    d3.json("/force_data_gai.json", function populate(datas){
+    d3.json(force_json_filename, function populate(datas){
         for(var key in datas){
             var node = {};
             node["id"] = key;
@@ -15,7 +17,7 @@ function drawforce(data){
             nodes.push(node);
         }
         console.log(nodes);
-        d3.csv("oregonf.csv",function(error,csvdata){
+        d3.csv(data_filename,function(error,csvdata){
             for(var i=0;i<csvdata.length;i++){
                 var data = {};
                 var a1 = csvdata[i].source;
