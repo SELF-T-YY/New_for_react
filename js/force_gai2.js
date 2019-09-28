@@ -1,5 +1,5 @@
-force_json_filename="data/force_data_gai.json"
-data_filename="data/oregonf.csv"
+force_json_filename="../data/force_data_gai.json"
+data_filename="../data/oregonf.csv"
 function drawforce(data){
     var nodes = [];
     var links = [];
@@ -16,7 +16,7 @@ function drawforce(data){
             node["y"] = datas[key]["y"];
             nodes.push(node);
         }
-        console.log(nodes);
+        // console.log(nodes);
         d3.csv(data_filename,function(error,csvdata){
             for(var i=0;i<csvdata.length;i++){
                 var data = {};
@@ -33,8 +33,8 @@ function drawforce(data){
                 resolution : 1,
             });
 
-            console.log(nodes);
-
+            // console.log(nodes);
+            
             document.querySelector('#Centre_2').appendChild(app.view);
             app.renderer.backgroundColor = 0xffffff;
             const lines = new PIXI.Graphics();
@@ -44,7 +44,9 @@ function drawforce(data){
                 lines.lineTo(datas[links[i].target].x,datas[links[i].target].y);
             }
             app.stage.addChild(lines);
-            console.log(nodes);
+            
+            // console.log(nodes);
+
             const circles = new PIXI.Graphics();
             for(var key in datas){
                 circles.beginFill(circle_Color);
