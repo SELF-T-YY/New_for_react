@@ -2,15 +2,13 @@
  * @Author: ChenShan 
  * @Date: 2019-09-27 21:07:57 
  * @Last Modified by: ChenShan
- * @Last Modified time: 2019-09-28 21:20:35
+ * @Last Modified time: 2019-09-29 22:15:15
  */
+
 var tsne_filename = "../data/oregonf_tsne_5000.csv";
 var tsne_draw_id = "#Right_1";
-
-
 var tsne_selected_color = "rgb(255,0,0,1.0)"
 var tsne_unselected_color = "rgb(23, 37, 90,0.6)"
-
 var tsne_height = 350;
 var tsne_width = 410;
 var tsne_svg = d3.select(tsne_draw_id)
@@ -60,7 +58,7 @@ function darwtsnenodes(filename,draw_id){
                         clearSelectPoint();
                         
                     });
-
+                    
         function tsne_point_click(id)
         {
             d3.select("#tsne_node_"+id).style("fill",tsne_selected_color);
@@ -111,7 +109,7 @@ function darwtsnenodes(filename,draw_id){
                 var y=parseFloat($("#tsne_node_"+tsneData[i].id)[0].attributes.cy.value);
                 if(x>=x_min&&x<=x_max&&y>=y_min&&y<=y_max){
                     selectpoints.push(tsneData[i].id);
-                    console.log(tsneData[i].id)
+                    // console.log(tsneData[i].id);
                     tsne_point_click(tsneData[i].id);
                     // forceselect(tsneData[i].id);
                     d3.select("#tsne_node_"+tsneData[i].id).style("fill",tsne_selected_color);
@@ -120,13 +118,20 @@ function darwtsnenodes(filename,draw_id){
             }
         brush_tsne_force(selectpoints);
         }
-        tsne_svg.append("g")
-                .attr("class","brush")
-                .call(brush.on("start brush",brushed).on("end",brushend));
         
-        brushed();
+        // tsne_svg.append("g")
+        //         .attr("class","brush")
+        //         .call(brush.on("start brush",brushed).on("end",brushend));
+        
+        // brushed();
     })
 }
 
 darwtsnenodes(tsne_filename,tsne_draw_id);
+
+function change_heatmap_node()
+{
+    d3.select(".heatmap-canvas"),remove();
+    darwtsnenodes(tsne_filename,tsne_draw_id);
+}
 

@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <link rel="stylesheet" href="/css/Frame.css">
+    <link rel="stylesheet" href="/css/title_factors.css">
+    <link rel="stylesheet" href="/css/data_introduction.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="/js/heatmap.min.js"></script>
     <script src="/js/d3.v4.min.js"></script>
     <script src="/js/jquery-2.1.4.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -103,7 +107,7 @@
                 <div id="Left_3">
                     <div class="mytitle">
                             &nbsp;Graph Abstraction
-                            <select name="Center_select" id="s1" >
+                            <select name="Center_select" class="title_select" id="s1" >
                                     <option value="Communtiy">Communtiy</option>
                             </select>
                     </div>
@@ -135,13 +139,43 @@
                 </div>
             </div>
         </div>
-
         <div id="Right">
             <div id="Right_1">
                 <div class="mytitle">
-                    <div class="mytitle">&nbsp;Graph representation</div>
+                    <div class="mytitle">
+                        &nbsp;Graph representation
+                        <!-- <select name="title_select" class="title_select" id="node_heatmap_select" >
+                            <option value="Nodes" onclick="change_heatmap_node">Nodes</option>
+                            <option value="Heatmaps" onclick="change_node_heatmap">Heatmaps</option>
+                        </select> -->
+
+                        <!-- <div class="dropdown">
+                            <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">主题
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">Java</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
+                                </li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">分离的链接</a>
+                                </li>
+                            </ul>
+                        </div> -->
+
+                    </div>
+                    <button class="title_btn" id = "node_brush_btn">11</button>
+                    <button class="title_btn" id = "node_clear_btn">22</button>
                 </div>
                 <script src="/js/tsne.js"></script>
+                <script src="/js/heatmap.js"></script>
             </div>
             
             <div id="Right_2">
