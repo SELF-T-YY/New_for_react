@@ -57,8 +57,7 @@ function darwtsnenodes(filename,draw_id){
                     .attr("fill",tsne_unselected_color)
                     .on("click",function(d)
                     {
-                        clearSelectPoint();
-                        
+                        clearSelectPoint();  
                     });
 
         function tsne_point_click(id)
