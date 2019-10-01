@@ -2,13 +2,13 @@
  * @Author: ChenShan 
  * @Date: 2019-09-29 19:47:58 
  * @Last Modified by: ChenShan
- * @Last Modified time: 2019-09-29 22:17:35
+ * @Last Modified time: 2019-09-30 21:55:24
  */
 
 var heatmap_filename = "../data/oregonf_heatmap.csv";
-var heatmap_draw_id = "#Right_1";
+var heatmap_draw_id = "#Right_1_canvas";
 var heatmap_height = 350;
-var heatmap_width = 410;
+var heatmap_width = 400;
 
 function drawheatmap(filename,draw_id){
     d3.csv(filename,function(error,data){
@@ -62,9 +62,9 @@ function drawheatmap(filename,draw_id){
 
 // drawheatmap(heatmap_filename,heatmap_draw_id);
 
-function change_node_heatmap()
-{
-    console.log('yes');
-    d3.selcet("#tsneNodes").remove();
-    drawheatmap(heatmap_filename,heatmap_draw_id);    
-}
+// function change_node_heatmap()
+// {
+//     console.log('yes');
+//     d3.select("#tsneNodes").remove();
+//     drawheatmap(heatmap_filename,heatmap_draw_id);    
+// }
