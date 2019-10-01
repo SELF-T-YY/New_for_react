@@ -1,12 +1,12 @@
 function drawforce(data){
     var nodes = [];
     var links = [];
-    var stroke_width = 1;
-    var force_width = 760;
-    var force_height = 500;
+    var force_width = 775;
+    var force_height = 509;
     var circle_Color = 0x3A435E;
     var line_Color = 0xc6c6c6;
-    d3.json("/force_data_gai.json", function populate(datas){
+    d3.json("/data/force_data_gai.json", function populate(datas){
+
         for(var key in datas){
             var node = {};
             node["id"] = key;
@@ -15,7 +15,9 @@ function drawforce(data){
             nodes.push(node);
         }
         console.log(nodes);
-        d3.csv("oregonf.csv",function(error,csvdata){
+
+        d3.csv("/data/oregonf.csv",function(error,csvdata){
+
             for(var i=0;i<csvdata.length;i++){
                 var data = {};
                 var a1 = csvdata[i].source;
@@ -51,6 +53,105 @@ function drawforce(data){
                 circles.endFill();
             }
         
+            if (window.addEventListener)//FF,火狐浏览器会识别该方法
+                window.addEventListener('DOMMouseScroll', wheel, false);
+            window.onmousewheel = document.onmousewheel = wheel;//W3C
+            //统一处理滚轮滚动事件
+            function wheel(event){
+                var delta = 0;
+                if (!event) event = window.event;
+                if (event.wheelDelta) {//IE、chrome浏览器使用的是wheelDelta，并且值为“正负120”
+                    delta = event.wheelDelta/120; 
+                    if (window.opera) delta = -delta;//因为IE、chrome等向下滚动是负值，FF是正值，为了处理一致性，在此取反处理
+                } else if (event.detail) {//FF浏览器使用的是detail,其值为“正负3”
+                    delta = -event.detail/3;
+                }
+                if (delta)
+                    handle(delta);
+            }
+            //上下滚动时的具体处理函数
+            function handle(delta) {
+                    if (delta <0){//向下滚动
+                        circles.scale.x *= 1.2;
+                        circles.scale.y *= 1.2;
+                        lines.scale.x *= 1.2;
+                        lines.scale.y *= 1.2;
+                    }else{//向上滚动
+                        circles.scale.x /= 1.2;
+                        circles.scale.y /= 1.2;
+                        lines.scale.x /= 1.2;
+                        lines.scale.y /= 1.2;
+                    }
+            }
+            
+
+            
+
+            // var canvas=document.getElementById('canvas');
+            
+            // var if_drag = false;
+            // canvas.addEventListener("mousedown",onDragStart,false);
+            // canvas.addEventListener("mousemove",onDragMove,true);
+            // canvas.addEventListener("mouseup",onDragEnd,true);
+
+
+            // function mousedown(event)
+            // {
+            //     var x = event.pageX;
+            //     var y = event.pageY;
+
+            //     var loc = getLocation(x,y)
+            // }
+
+            circles.buttonMode = true;
+            circles.interactive = true;
+            
+            circles
+                .on('pointerdown', onDragStart)
+                .on('pointerup', onDragEnd)
+                .on('pointerupoutside', onDragEnd)
+                .on('pointermove', onDragMove);
+
+
+            function onDragStart(event) {
+
+                // var x = event.pageX;
+                // var y = event.pageY;
+                // var loc = getLocation(x,y);
+                // // store a reference to the data
+                // the reason for this is because of multitouch
+                // we want to track the movement of this particular touch
+                this.data = event.data;
+                this.dragging = true;
+            }
+
+            function onDragEnd() {
+                this.dragging = false;
+                // set the interaction data to null
+                this.data = null;
+            }
+
+            function onDragMove() {
+                if (this.dragging) {
+                    const newPosition = this.data.getLocalPosition(this.parent);
+                    this.x = newPosition.x;
+                    this.y = newPosition.y;
+                    lines.x = newPosition.x;
+                    lines.y = newPosition.y;
+                }
+            }
+            
+
+            //获取当前鼠标点击的坐标
+            function getLocation(x, y) {
+                var bbox = canvas.getBoundingClientRect();
+                return {
+                    x: (x - bbox.left) * (canvas.width / bbox.width),
+                    y: (y - bbox.top) * (canvas.height / bbox.height)
+                };
+            }
+
+
             app.stage.addChild(circles);
         });
     })
