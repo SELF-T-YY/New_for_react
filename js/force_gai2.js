@@ -14,7 +14,9 @@ function drawforce(data){
             nodes.push(node);
         }
         console.log(nodes);
+
         d3.csv("/data/oregonf.csv",function(error,csvdata){
+
             for(var i=0;i<csvdata.length;i++){
                 var data = {};
                 var a1 = csvdata[i].source;
@@ -94,6 +96,12 @@ function drawforce(data){
 
             function onDragStart(event) {
 
+                // var x = event.pageX;
+                // var y = event.pageY;
+                // var loc = getLocation(x,y);
+                // // store a reference to the data
+                // the reason for this is because of multitouch
+                // we want to track the movement of this particular touch
                 this.data = event.data;
                 this.dragging = true;
             }

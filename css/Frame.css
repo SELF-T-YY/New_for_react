@@ -167,46 +167,6 @@ html,body{
 
 
 
-.dataSetTextline {
-    margin: 4px;
-    margin-left: 30px; 
-}
-.datalist {
-    margin-top: 5px;
-    margin-left: 3px;
-    border: 1px solid #949697; /* 表格边框 */
-    font-family: Arial;
-    border-collapse: collapse; /* 边框重叠 */
-}
-.datalist tr:hover {
-    background-color: #949697; /* 动态变色,IE6下无效！*/
-}
-.datalist caption {
-    padding-top: 3px;
-    padding-bottom: 2px;
-    font: bold 1.1em;
-    background-color: #f0f2f5;
-    border: 1px solid #949697; /* 表格标题边框 */
-}
-.datalist th {
-    border: 1px solid #949697; /* 行、列名称边框 */
-    background-color: #f0f2f5;
-    font-weight: bold;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 8px;
-    padding-right: 8px;
-    text-align: center;
-}
-.datalist td {
-    border: 1px solid #949697; /* 单元格边框 */
-    text-align: right;
-    padding: 4px;
-}
-
-
-
-
 
 
 

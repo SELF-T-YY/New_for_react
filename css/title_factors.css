@@ -1,0 +1,21 @@
+/*
+ * @Author: ChenShan 
+ * @Date: 2019-09-29 20:29:46 
+ * @Last Modified by: ChenShan
+ * @Last Modified time: 2019-09-29 22:23:35
+ */
+
+ .mt_title{
+     position: absolute;
+ }
+ .title_select{
+    float: right;
+    position: relative;
+    top: 2px;
+    right: 2px;
+}
+
+.title_btn{
+    display: block;
+    width: 20px;
+}
