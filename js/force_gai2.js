@@ -92,6 +92,7 @@ function drawforce(data){
                 .on('pointerup', onDragEnd)
                 .on('pointerupoutside', onDragEnd)
                 .on('pointermove', onDragMove);
+            
 
 
             function onDragStart(event) {
@@ -131,10 +132,21 @@ function drawforce(data){
                     y: (y - bbox.top) * (canvas.height / bbox.height)
                 };
             }
-
-
+            function canvas_move(){
+                var canvas = document.getElementById('canvas');
+                this.console.log(canvas)
+                canvas.addEventListener('mousedown', onDragStart, false);
+                canvas.addEventListener('mouseup', onDragEnd, false);
+                canvas.addEventListener('mousemove', onDragMove, false);
+                canvas.addEventListener('mouseout', onDragEnd,false);
+            }
             app.stage.addChild(circles);
+            setTimeout(canvas_move(), 1000);
         });
     })
+
+
 }
+
+
 drawforce();

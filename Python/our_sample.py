@@ -1,6 +1,9 @@
 import math
 import json
 import random
+from write_file_json import write_json
+import os
+
 
 # data_dict ={}
 
@@ -51,7 +54,8 @@ def poisson_disc(p_dict, elem_time=100):
     p_temp_dict.update({p_key: temp_dict[p_key]})
     temp_dict.pop(p_key)
 
-    while temp_dict != {}:
+    while temp_dict:
+        print(a)
         if p_temp_dict == {}:
             p_key = random.choice(list(temp_dict))
             p = temp_dict[p_key]
@@ -62,6 +66,13 @@ def poisson_disc(p_dict, elem_time=100):
 
         around_p = ns_around_p(p, temp_dict)
         if around_p == {}:
+            if p_key in list(p_temp_dict):
+                a += 1
+                # print(a)
+                ans_dict.update({p_key: p})
+                p_temp_dict.pop(p_key)
+            else:
+                p_temp_dict.update({p_key: p})
             continue
 
 
@@ -83,21 +94,26 @@ def poisson_disc(p_dict, elem_time=100):
             else:
                 if pd_p_key not in list(p_temp_dict):
                     p_temp_dict.update({pd_p_key: pd_p})
+                    if_remove = True
+                    break
+
         if not if_remove:
-            # if p_key in list(p_temp_dict):
-            a += 1
-            print(a)
-            ans_dict.update({p_key: p})
-            p_temp_dict.pop(p_key)
-            # else:
-            #     p_temp_dict.update({p_key: p})
+            if p_key in list(p_temp_dict):
+                a += 1
+                # print(a)
+                ans_dict.update({p_key: p})
+                p_temp_dict.pop(p_key)
+            else:
+                p_temp_dict.update({p_key: p})
     return ans_dict
 
 
 with open(r'../data/oregonf_TSNE_5000_id_x_y_kde.json') as f:
     data_dict = json.load(f)
     calculate_r_for_all(data_dict)
-    ans_dict = poisson_disc(data_dict)
+    final_dict = poisson_disc(data_dict)
+    print(final_dict)
     f_file = open(r'../data/1.json', 'w+')
-    ans_json = json.dumps(ans_dict)
+    ans_json = json.dumps(final_dict)
     f_file.write(ans_json)
+
