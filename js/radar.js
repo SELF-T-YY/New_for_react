@@ -1,8 +1,8 @@
 /*
  * @Author: ChenShan 
  * @Date: 2019-10-17 22:16:06 
- * @Last Modified by:   ChenShan 
- * @Last Modified time: 2019-10-17 22:16:06 
+ * @Last Modified by: ChenShan
+ * @Last Modified time: 2019-10-17 22:33:21
  */
 
 var radius = 150;
@@ -12,7 +12,6 @@ var total = 8;
 var level = 4;
 var rangeMin = 0;
 var rangeMax = 100;
-
 //角度   onePiece = mAngle
 var arc = 2 * Math.PI;
 var onePiece = arc / total;
@@ -20,12 +19,9 @@ var polygons = {
    webs:[],
    webPoints:[]
 };
-
 var width = 410, height = 350;
 var splrateconst;
-
 var dataconst = 1000 ;
-
    var data_5 = {
       fielaNames:['RE','RJ','RN','ISRW','RW','DFS','BFS','TIES'],
       values:[
