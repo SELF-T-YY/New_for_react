@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/Frame.css">
     <link rel="stylesheet" href="/css/title_factors.css">
     <link rel="stylesheet" href="/css/data_introduction.css">
+    <link rel="stylesheet" href="/css/radar.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -135,7 +136,6 @@
             <div id="Down_2">
                 <div class="mytitle">Communtiy Distribution</div>
                 <div id="Down_2_1">
-
                 </div>
             </div>
         </div>
@@ -151,32 +151,6 @@
                             <option value="Nodes">Nodes</option>
                             <option value="Heatmaps">Heatmaps</option>
                         </select>
-
-                        <!-- <button className="DropdownButton" key="button" ref="button" onClick="" ></button> -->
-                        <!-- style={{
-                            width: this.props.width,
-                            height: this.props.height,
-                            background: 'rgb(218, 202, 229)',
-                            border: '4px solid rgb(150, 0, 170)',
-                            margin: `auto 10px`,
-                            transform: 'translateY(25%)',
-                            fontWeight: 'bold',
-                            letterSpacing: '0.1em'
-                        }} -->
-
-                        <!-- <button type="button" data-toggle="dropdown">
-                            Nodes
-                            <span class="caret"></span>
-                        </button>
-                        <ul role="menu">
-                            <li role="presentation">
-                                <button>Nodes</button>
-                            </li>
-                            <li role="presentation">
-                                <button>Heatmap</button>
-                            </li>
-                        </ul> -->
-
                     </div>
                     <div id="Right_1_canvas" >
                             <button class="title_btn" id = "node_brush_btn"></button>
@@ -189,9 +163,12 @@
             
             <div id="Right_2">
                 <div class="mytitle">&nbsp;Evaluation</div>
+                
+                <svg></svg>
                 <div style="height:338px; width: 410px;" id="container1">
                 </div>
             </div>
+            <script src="/js/radar.js"></script>
         </div>
 </body>
 </html>
