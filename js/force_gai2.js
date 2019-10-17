@@ -6,6 +6,7 @@ function drawforce(data){
     var circle_Color = 0x3A435E;
     var line_Color = 0xc6c6c6;
     d3.json("/data/force_data_gai.json", function populate(datas){
+
         for(var key in datas){
             var node = {};
             node["id"] = key;
@@ -14,7 +15,9 @@ function drawforce(data){
             nodes.push(node);
         }
         console.log(nodes);
+
         d3.csv("/data/oregonf.csv",function(error,csvdata){
+
             for(var i=0;i<csvdata.length;i++){
                 var data = {};
                 var a1 = csvdata[i].source;
