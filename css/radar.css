@@ -1,0 +1,28 @@
+/*
+ * @Author: ChenShan 
+ * @Date: 2019-10-17 22:16:23 
+ * @Last Modified by:   ChenShan 
+ * @Last Modified time: 2019-10-17 22:16:23 
+ */
+
+ #Right svg {
+    width: 410px;
+    height: 350px;
+}
+
+.webs polygon {
+    fill: white;
+    fill-opacity: 0.5;
+    stroke: gray;
+    stroke-dasharray: 10 5;
+}
+
+#areas polygon{
+    fill-opacity: 0.3;
+    stroke-width: 3;
+}
+
+#areas circle{
+    fill: white;
+    stroke-width: 3;
+}
