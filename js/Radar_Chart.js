@@ -19,10 +19,10 @@ function drawagain(data){
     (function(){
         var canvas = document.getElementById('#Radar_Chart_canvas');
         // canvas.id="canvas_"
-        document.body.appendChild(canvas);
         canvas.height = 800;
         canvas.width = 800;
         mCtx = canvas.getContext('2d');
+        document.body.appendChild(canvas);
         // canvas.height = canvas.height;
 
         drawPolygon(mCtx);

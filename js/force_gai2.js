@@ -54,7 +54,7 @@ function drawforce(data){
         
             if (window.addEventListener)//FF,火狐浏览器会识别该方法
                 window.addEventListener('DOMMouseScroll', wheel, false);
-            window.onmousewheel = document.onmousewheel = wheel;//W3C
+            window.onmousewheel = document.onmousewheel = wheel; //W3C
             //统一处理滚轮滚动事件
             function wheel(event){
                 var delta = 0;
@@ -132,16 +132,10 @@ function drawforce(data){
                     y: (y - bbox.top) * (canvas.height / bbox.height)
                 };
             }
-            function canvas_move(){
-                var canvas = document.getElementById('canvas');
-                this.console.log(canvas)
-                canvas.addEventListener('mousedown', onDragStart, false);
-                canvas.addEventListener('mouseup', onDragEnd, false);
-                canvas.addEventListener('mousemove', onDragMove, false);
-                canvas.addEventListener('mouseout', onDragEnd,false);
-            }
+
             app.stage.addChild(circles);
-            setTimeout(canvas_move(), 1000);
+
+            document.getElementsByTagName("canvas")[0].id = "force_canvas";
         });
     })
 
@@ -150,3 +144,18 @@ function drawforce(data){
 
 
 drawforce();
+
+setTimeout(canvas_move(), 10000);
+function canvas_move(){
+    var canvas = document.getElementsByTagName("canvas");
+    
+    var canvas1 = $("canvas").get();
+    var canvas2 = document.getElementById("#force_canvas");
+    console.log(canvas)
+    console.log(canvas1)
+    console.log(canvas2)
+    // canvas_force.addEventListener('mousedown', onDragStart, false);
+    // canvas_force.addEventListener('mouseup', onDragEnd, false);
+    // canvas_force.addEventListener('mousemove', onDragMove, false);
+    // canvas_force.addEventListener('mouseout', onDragEnd,false);
+}
