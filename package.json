@@ -1,0 +1,23 @@
+{
+  "name": "new_for_react",
+  "version": "1.0.0",
+  "description": "this is an example for cooperation project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SELF-T-YY/New_for_react.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SELF-T-YY/New_for_react/issues"
+  },
+  "homepage": "https://github.com/SELF-T-YY/New_for_react#readme",
+  "dependencies": {
+    "d3-sankey": "^0.12.3"
+  }
+}

@@ -75,7 +75,7 @@ function drawforce(data){
                         circles.scale.y *= 1.2;
                         lines.scale.x *= 1.2;
                         lines.scale.y *= 1.2;
-                    }else{//向上滚动
+                    }else{//向上滚动 
                         circles.scale.x /= 1.2;
                         circles.scale.y /= 1.2;
                         lines.scale.x /= 1.2;
@@ -91,7 +91,7 @@ function drawforce(data){
                 .on('pointerdown', onDragStart)
                 .on('pointerup', onDragEnd)
                 .on('pointerupoutside', onDragEnd)
-                .on('pointermove', onDragMove);
+                .on('pointermove', onDragMove_gai);
             
 
 
@@ -105,6 +105,7 @@ function drawforce(data){
                 // we want to track the movement of this particular touch
                 this.data = event.data;
                 this.dragging = true;
+                console.log("sdasd")
             }
 
             function onDragEnd() {
@@ -113,29 +114,58 @@ function drawforce(data){
                 this.data = null;
             }
 
-            function onDragMove() {
-                if (this.dragging) {
-                    const newPosition = this.data.getLocalPosition(this.parent);
-                    this.x = newPosition.x;
-                    this.y = newPosition.y;
-                    lines.x = newPosition.x;
-                    lines.y = newPosition.y;
-                }
-            }
+            // function onDragMove() {
+            //     if (this.dragging) {
+            //         const newPosition = this.data.ISPOINTINPATH(this.parent);
+            //         this.x = newPosition.x;
+            //         this.y = newPosition.y;
+            //         lines.x = newPosition.x;
+            //         lines.y = newPosition.y;
+            //     }
+            // }
             
 
             //获取当前鼠标点击的坐标
-            function getLocation(x, y) {
-                var bbox = canvas.getBoundingClientRect();
-                return {
-                    x: (x - bbox.left) * (canvas.width / bbox.width),
-                    y: (y - bbox.top) * (canvas.height / bbox.height)
-                };
-            }
+            // function getLocation(x, y) {
+            //     var bbox = canvas.getBoundingClientRect();
+            //     return {
+            //         x: (x - bbox.left) * (canvas.width / bbox.width),
+            //         y: (y - bbox.top) * (canvas.height / bbox.height)
+            //     };
+            // }
 
             app.stage.addChild(circles);
 
             document.getElementsByTagName("canvas")[0].id = "force_canvas";
+            var canvas = document.getElementsByTagName("canvas");
+            console.log(canvas)
+            var canvas_force = canvas[0];
+            canvas_force.addEventListener('mousedown', onDragStart, false);
+            canvas_force.addEventListener('mouseup', onDragEnd, false);
+            canvas_force.addEventListener('mousemove', onDragMove_gai, false);
+            canvas_force.addEventListener('mouseout', onDragEnd,false);
+            function onDragMove_gai() {
+                if (this.dragging) {
+                    const newPosition = getMousePos(this, event);
+                    circles.x = newPosition.x;
+                    circles.y = newPosition.y;
+                    lines.x = newPosition.x;
+                    lines.y = newPosition.y;
+                }
+            }
+
+            function getMousePos(canvas, event) {
+                //1
+                var rect = canvas.getBoundingClientRect();
+                //2
+                var x = event.clientX - rect.left * (canvas.width / rect.width);
+                var y = event.clientY - rect.top * (canvas.height / rect.height);
+                // console.log("x:"+x+",y:"+y);
+                ans = {}
+                ans.x = x;
+                ans.y = y;
+                return ans;
+            }
         });
     })
 
@@ -145,17 +175,19 @@ function drawforce(data){
 
 drawforce();
 
-setTimeout(canvas_move(), 10000);
+// setTimeout(canvas_move(), 10000);
+// canvas_move();
 function canvas_move(){
     var canvas = document.getElementsByTagName("canvas");
-    
-    var canvas1 = $("canvas").get();
-    var canvas2 = document.getElementById("#force_canvas");
     console.log(canvas)
+    var canvas1 = canvas[0];
     console.log(canvas1)
+    var canvas2 = document.getElementById("force_canvas");
+    
+    
     console.log(canvas2)
-    // canvas_force.addEventListener('mousedown', onDragStart, false);
-    // canvas_force.addEventListener('mouseup', onDragEnd, false);
-    // canvas_force.addEventListener('mousemove', onDragMove, false);
-    // canvas_force.addEventListener('mouseout', onDragEnd,false);
+    canvas_force.addEventListener('mousedown', onDragStart, false);
+    canvas_force.addEventListener('mouseup', onDragEnd, false);
+    canvas_force.addEventListener('mousemove', onDragMove, false);
+    canvas_force.addEventListener('mouseout', onDragEnd,false);
 }
