@@ -20,6 +20,7 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/d3-sankey@0"></script>
     <script src="/js/chart.js"></script>
+    <script src="/js/button.js"></script>
 
 </head>
 <body style="overflow-x: hidden; overflow-y: hidden ">
@@ -43,7 +44,7 @@
                                 <th>Origin:</th>
                                 <th>11174</th>
                                 <th>23410</th>
-                                <th>33</th>
+                                <th>34</th>
                             </tr>
                             <tr>
                                 <th>Sample:</th>
@@ -128,9 +129,16 @@
                         <option value="Communtiy">Origin</option>
                     </select>
                 </div>
+
+               
                 <div id="Centre_2">
                     <script src="/js/force_gai2.js"></script>
-                    <script ></script>
+                    <div id="Centre_2_1">
+                        <input type="button" id="button_move" class="button_force" onclick="button_move_click_on()">
+                        <input type="button" id="button_point_click" class="button_force" onclick="button_choose_point_click_on()">
+                        <input type="button" id="button_circle_choose" class="button_force" onclick="button_circle_choose_click_on()">
+                        <input type="button" id="button_reflash" class="button_force" onclick="">
+                    </div>
                 </div>
             </div>
 
@@ -151,9 +159,6 @@
                 <div class="mytitle">
                     <div class="mytitle">
                         &nbsp;Graph representation
-                        <!-- <button id="tmep_btn" onclick="tmep_fuction(this)">
-                            Heatmap
-                        </button> -->
                         <select name="title_select" class="title_select" id="node_heatmap_select" onchange="change_heatmap_node()">
                             <option value="Nodes">Nodes</option>
                             <option value="Heatmaps">Heatmaps</option>
