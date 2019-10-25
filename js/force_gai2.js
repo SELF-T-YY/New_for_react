@@ -104,7 +104,7 @@ function drawforce(data){
                     circles_choose.endFill();
                     app.stage.addChild(circles_choose);
                     console.log(circles_choose);
-                    }
+                    
                 }
 
                 // function circleEnd()
