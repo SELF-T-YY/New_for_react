@@ -2,20 +2,26 @@ var if_move = true;
 var if_choose_point = false;
 var if_circle_choose = false;
 
+var scaleAll_xy = 1;//整体缩放
+var moveAll_x = 0;//整体x移动
+var moveAll_y = 0;//整体y移动
+
+var circles_change_color = 0xff00ff;
+
 function drawforce(data){
 
     d3.csv("/data/oregonf_community.csv", function(data_community)
     {
-        var node_community = [];
-        var node_json = {}
-        for(var node in data_community)
-        {
-            if(data_community[node][1] in node_json)
-                node_json[data_community[node][1]].push(data_community[node][0]);
-            else
-                node_json[data_community[node][1]] = [data_community[node][0]]
-        }
-        console.log(node_json)
+        // var node_community = [];
+        // var node_json = {}
+        // for(var node in data_community)
+        // {
+        //     if(data_community[node][1] in node_json)
+        //         node_json[data_community[node][1]].push(data_community[node][0]);
+        //     else
+        //         node_json[data_community[node][1]] = [data_community[node][0]]
+        // }
+        // console.log(node_json)
 
 
         var nodes = [];
@@ -28,9 +34,9 @@ function drawforce(data){
         var circle_Choose_Color = 0x3A435E;
 
         d3.json("/data/force_data_gai.json", function populate(datas){
-            for(var key in datas){
-                var node = {};
-                node["id"] = "force_" + String(key);
+            for(let key in datas){
+                let node = {};
+                node["id"] = key;
                 node["x"] = datas[key]["x"];
                 node["y"] = datas[key]["y"];
                 nodes.push(node);
@@ -39,10 +45,10 @@ function drawforce(data){
 
             d3.csv("/data/oregonf.csv",function(error,csvdata){
 
-                for(var i=0;i<csvdata.length;i++){
-                    var data = {};
-                    var a1 = csvdata[i].source;
-                    var a2 = csvdata[i].target;
+                for(let i=0;i<csvdata.length;i++){
+                    let data = {};
+                    let a1 = csvdata[i].source;
+                    let a2 = csvdata[i].target;
                     data["source"] = a1;
                     data["target"] = a2;
                     links.push(data);
@@ -74,79 +80,122 @@ function drawforce(data){
             
                 app.stage.addChild(circles);
 
-                mouse_down_position = {}
+                mouse_down_position = {};
                 document.getElementsByTagName("canvas")[0].id = "force_canvas";
-                var canvas = document.getElementsByTagName("canvas");
-                var canvas_force = canvas[0];
+                const canvas = document.getElementsByTagName("canvas");
+                const canvas_force = canvas[0];
 
 
                 canvas_force.addEventListener('mousedown', onDragStart, false);
-
                 canvas_force.addEventListener('mouseup', onDragEnd, false);
                 canvas_force.addEventListener('mousemove', onDragMove, false);
-                canvas_force.addEventListener('mouseout', onDragEnd,false);
+                canvas_force.addEventListener('mouseout', onDragEnd,false);        
+
                 canvas_force.addEventListener('DOMMouseScroll', wheel, false); 
 
 
                 canvas_force.onmousewheel = wheel; //W3C鼠标滚轮事件
 
                 const circles_choose = new PIXI.Graphics();
-                if_draw_circle = false;
-
-                function onDragStart(event) 
+                circles_choose_change_color = new PIXI.Graphics();
+                function onDragStart() 
                 {
-                    if_draw_circle = true;
-                    canvas_force.addEventListener('mouseup', circleEnd, false);
-                    canvas_force.addEventListener('mousemove', circleMove, false);
-                    canvas_force.addEventListener('mouseout', circleEnd,false); 
-                    circles_choose.beginFill(circle_Choose_Color);
-                    circles_choose.drawCircle(mouse_down_position.x, mouse_down_position.y, 100);
-                    circles_choose.endFill();
-                    app.stage.addChild(circles_choose);
-                    console.log(circles_choose);
-                    
+                    if(if_move == true){
+                        this.dragging = true;
+                        // console.log("dragging");
+                    }
+                    else {
+                        this.dragging = false;
+                        // console.log("not dragging");
+                    }
+                    if(if_circle_choose)this.drawingCircle = true;
+                    else this.drawingCircle = false;
+
+                    mouse_down_position = getMousePos(this);
                 }
 
-                // function circleEnd()
-                // {
-                //     if_draw_circle =false;
-                //     mouse_down_position = null;
-                // }
+                function onDragEnd() 
+                {
+                    if(this.dragging)this.dragging = false;
+                    
+                    else if(this.drawingCircle)
+                    {
+                        this.drawingCircle = false;
+                        const newPosition = getMousePos(this);
+                        const circle_x = mouse_down_position.x;
+                        const circle_y = mouse_down_position.y;
+                        const circle_r = Math.sqrt(Math.pow(newPosition.x - circle_x, 2) + Math.pow(newPosition.y - circle_y, 2));
+                        let choosed_point_data = [];
+                        for(let node in nodes)
+                        {
+                            const now_x = nodes[node].x * scaleAll_xy + moveAll_x;
+                            const now_y = nodes[node].y * scaleAll_xy + moveAll_y;
+                            if(Math.sqrt(Math.pow(now_x - circle_x, 2) + Math.pow(now_y - circle_y, 2)) <= circle_r)
+                            {
+                                choosed_point_data.push(nodes[node]);
+                            }
+                        }
+                        console.log(choosed_point_data);
 
-                // function circleMove()
-                // {
-                //     if(if_draw_circle)
-                //     {
-                //         const newPosition = getMousePos(this);
-                //         const cricle_long = Math.sqrt(Math.pow(newPosition.x - mouse_down_position.x, 2) + Math.pow(newPosition.y - mouse_down_position.y, 2))                      
-                        
-                //     }
-
-                // }
-
-
-                function onDragEnd() {
-                    this.dragging = false;
-                    // set the interaction data to null
+                        circles_choose.clear();
+                        circles_choose_change_color.clear();
+                        // change_color(choosed_point_data);
+                        for(let node in  choosed_point_data)
+                        {
+                            const now_x = (choosed_point_data[node].x);
+                            const now_y = (choosed_point_data[node].y);
+                            circles_choose_change_color.beginFill(circles_change_color);
+                            circles_choose_change_color.drawCircle(now_x,now_y,5);
+                            circles_choose_change_color.endFill();
+                        }
+                        app.stage.addChild(circles_choose_change_color);
+                    }
                     this.data = null;
                 }
-                function onDragMove() {
-                    if (this.dragging) {
+                function onDragMove()
+                {
+                    if (this.dragging == true)
+                    {
                         const newPosition = getMousePos(this);
                         const move_x = mouse_down_position.x - newPosition.x;
                         const move_y = mouse_down_position.y - newPosition.y;
                         mouse_down_position = newPosition;
-                        circles.x = circles.x - move_x;
-                        circles.y = circles.y - move_y;
-                        lines.x = lines.x - move_x;
-                        lines.y = lines.y - move_y;
+                        moveAll_x -= move_x;
+                        moveAll_y -= move_y;
+
+                        circles.x = moveAll_x;
+                        circles.y = moveAll_y;
+                        lines.x = moveAll_x;
+                        lines.y = moveAll_y;
+                        circles_choose.x = moveAll_x;
+                        circles_choose.y = moveAll_y;
+
+                        circles_choose_change_color.x = moveAll_x;
+                        circles_choose_change_color.y = moveAll_y;
+                    }
+
+                    // console.log(this.drawingCircle);
+                    if(this.drawingCircle == true)
+                    {
+                        const newPosition = getMousePos(this);
+                        const circle_r = Math.sqrt(Math.pow(newPosition.x / scaleAll_xy - mouse_down_position.x / scaleAll_xy, 2) + Math.pow(newPosition.y / scaleAll_xy - mouse_down_position.y / scaleAll_xy, 2));
+
+                        circles_choose.clear();
+                        circles_choose.beginFill(circle_Choose_Color);
+                        circles_choose.drawCircle((mouse_down_position.x - moveAll_x) / scaleAll_xy, (mouse_down_position.y - moveAll_y) / scaleAll_xy, circle_r);
+
+                        // circles_choose.drawCircle(mouse_down_position.x + moveAll_x, mouse_down_position.y + moveAll_y, circle_r);
+                        circles_choose.endFill();
+                        circles_choose.alpha = 0.5;
+
+                        app.stage.addChild(circles_choose);
                     }
                 }
 
                 function getMousePos(canvas) { //获取鼠标位置
-                    var rect = canvas.getBoundingClientRect();
-                    var x = event.clientX - rect.left * (canvas.width / rect.width);
-                    var y = event.clientY - rect.top * (canvas.height / rect.height);
+                    const rect = canvas.getBoundingClientRect();
+                    const x = event.clientX - rect.left * (canvas.width / rect.width);
+                    const y = event.clientY - rect.top * (canvas.height / rect.height);
                     ans = {}
                     ans.x = x;
                     ans.y = y;
@@ -155,7 +204,7 @@ function drawforce(data){
   
                 //统一处理滚轮滚动事件
                 function wheel(event){
-                    var delta = 0;
+                    let delta = 0;
                     if (!event) event = window.event;
                     if (event.wheelDelta) {//IE、chrome浏览器使用的是wheelDelta，并且值为“正负120”
                         delta = event.wheelDelta/120; 
@@ -168,16 +217,40 @@ function drawforce(data){
                 //上下滚动时的具体处理函数
                 function handle(delta) {
                     if (delta <0){//向下滚动
-                        circles.scale.x *= 1.2;
-                        circles.scale.y *= 1.2;
-                        lines.scale.x *= 1.2;
-                        lines.scale.y *= 1.2;
+                        scaleAll_xy *= 1.2;
+                        // moveAll_x *= 1.2;
+                        // moveAll_y *= 1.2;       
                     }else{//向上滚动 
-                        circles.scale.x /= 1.2;
-                        circles.scale.y /= 1.2;
-                        lines.scale.x /= 1.2;
-                        lines.scale.y /= 1.2;
+                        scaleAll_xy /= 1.2;
+                        // moveAll_x /= 1.2;
+                        // moveAll_y /= 1.2;
                     }
+                    circles.scale.x = scaleAll_xy;
+                    circles.scale.y = scaleAll_xy;
+                    lines.scale.x = scaleAll_xy;
+                    lines.scale.y = scaleAll_xy;
+                    circles_choose.scale.x = scaleAll_xy;
+                    circles_choose.scale.y = scaleAll_xy;
+                    circles_choose_change_color.scale.x = scaleAll_xy;
+                    circles_choose_change_color.scale.y = scaleAll_xy;
+                }
+                
+
+                
+
+                // data = ['id', 'id']
+                // nodes = [{id:"12123", x:...., y:,,,,}]
+                function change_color(nodes)
+                {
+                    for(let node in  nodes)
+                    {
+                        const now_x = (nodes[node].x - moveAll_x) * scaleAll_xy;
+                        const now_y = (nodes[node].y - moveAll_y) * scaleAll_xy;
+                        circles_choose_change_color.beginFill(circles_change_color);
+                        circles_choose_change_color.drawCircle(now_x,now_y,5*scaleAll_xy*scaleAll_xy);
+                        circles_choose_change_color.endFill();
+                    }
+                    app.stage.addChild(circles_choose_change_color);
                 }
             })
         })
@@ -198,3 +271,5 @@ function if_button_circle_choose(flag)
 {
     if_circle_choose = flag;
 }
+
+

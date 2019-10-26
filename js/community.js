@@ -57,32 +57,32 @@ var line_Color = 0xc6c6c6;
                                 .scaleExtent([-5, 10])//设置缩放范围
                             );
 
-    var svg_nodes = svg.selectAll("circle")
-                            .data(nodes)
-                            .enter()
-                            .append("circle")
-                            .attr("cx", function(d) { return d.x; })
-                            .attr("cy", function(d) { return d.y; })
-                            .attr("r", function(d){
-                                return Math.log(d.num);
-                            })
-                            .attr("class", "A")
-                            .attr("fill", circle_Color)
-                            .call(d3.drag().on("start", dragstarted)//d3.drag() 创建一个拖曳行为
-                            .on("drag", dragged)
-                            .on("end", dragended))
-                            .on("click",function()
-                            {
-                                d3.selectAll(".A").attr("fill", circle_Color);
-                                d3.select(this).attr("fill", "red");
-                                
-                                
-                            })
-                            // .on("mouseout", function()
-                            // {
-                            //     d3.select(this).attr("fill", "black");
-                            // });
-                            // console.log(nodes);
+        var svg_nodes = svg.selectAll("circle")
+                                .data(nodes)
+                                .enter()
+                                .append("circle")
+                                .attr("cx", function(d) { return d.x; })
+                                .attr("cy", function(d) { return d.y; })
+                                .attr("r", function(d){
+                                    return Math.log(d.num);
+                                })
+                                .attr("class", "A")
+                                .attr("fill", circle_Color)
+                                .call(d3.drag().on("start", dragstarted)//d3.drag() 创建一个拖曳行为
+                                .on("drag", dragged)
+                                .on("end", dragended))
+                                .on("click",function()
+                                {
+                                    d3.selectAll(".A").attr("fill", circle_Color);
+                                    d3.select(this).attr("fill", "red");
+                                    
+                                    
+                                })
+                                // .on("mouseout", function()
+                                // {
+                                //     d3.select(this).attr("fill", "black");
+                                // });
+                                // console.log(nodes);
 
     
         //  //添加描述节点的文字
