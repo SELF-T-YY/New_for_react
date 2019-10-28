@@ -1,6 +1,7 @@
 var if_move = true;
 var if_choose_point = false;
 var if_circle_choose = false;
+var force_community_num = 0;
 
 var scaleAll_xy = 1;//整体缩放
 var moveAll_x = 0;//整体x移动
@@ -8,30 +9,35 @@ var moveAll_y = 0;//整体y移动
 
 var circles_change_color = 0xff00ff;
 
-function drawforce(data){
+// let f_nodes = [];
+// let f_links = [];
 
+var f_nodes = [];
+var f_links = [];
+
+
+var force_width = 775;
+var force_height = 509;
+var circle_Color = 0x3A435E;
+var line_Color = 0xc6c6c6;
+var circle_Choose_Color = 0x3A435E;
+
+var app = new PIXI.Application({
+    width:force_width,
+    height:force_height,
+    antialias: true,
+    resolution : 1,
+});
+
+document.querySelector('#Centre_2').appendChild(app.view);
+app.renderer.backgroundColor = 0xffffff;
+
+
+function drawforce(data){
     d3.csv("/data/oregonf_community.csv", function(data_community)
     {
-        // var node_community = [];
-        // var node_json = {}
-        // for(var node in data_community)
-        // {
-        //     if(data_community[node][1] in node_json)
-        //         node_json[data_community[node][1]].push(data_community[node][0]);
-        //     else
-        //         node_json[data_community[node][1]] = [data_community[node][0]]
-        // }
-        // console.log(node_json)
 
 
-        var nodes = [];
-        var links = [];
-
-        var force_width = 775;
-        var force_height = 509;
-        var circle_Color = 0x3A435E;
-        var line_Color = 0xc6c6c6;
-        var circle_Choose_Color = 0x3A435E;
 
         d3.json("/data/force_data_gai.json", function populate(datas){
             for(let key in datas){
@@ -39,9 +45,9 @@ function drawforce(data){
                 node["id"] = key;
                 node["x"] = datas[key]["x"];
                 node["y"] = datas[key]["y"];
-                nodes.push(node);
+                f_nodes.push(node);
             }
-            console.log(nodes);
+            console.log(f_nodes);
 
             d3.csv("/data/oregonf.csv",function(error,csvdata){
 
@@ -51,24 +57,18 @@ function drawforce(data){
                     let a2 = csvdata[i].target;
                     data["source"] = a1;
                     data["target"] = a2;
-                    links.push(data);
+                    f_links.push(data);
                 }
-                let app = new PIXI.Application({
-                    width:force_width,
-                    height:force_height,
-                    antialias: true,
-                    resolution : 1,
-                });
 
-                console.log(nodes);
 
-                document.querySelector('#Centre_2').appendChild(app.view);
-                app.renderer.backgroundColor = 0xffffff;
+                console.log(f_nodes);
+
+
                 const lines = new PIXI.Graphics();
-                for(var i = 0 ; i < links.length ; i++){
+                for(var i = 0 ; i < f_links.length ; i++){
                     lines.lineStyle(0.4,line_Color,1);
-                    lines.moveTo(datas[links[i].source].x,datas[links[i].source].y);
-                    lines.lineTo(datas[links[i].target].x,datas[links[i].target].y);
+                    lines.moveTo(datas[f_links[i].source].x,datas[f_links[i].source].y);
+                    lines.lineTo(datas[f_links[i].target].x,datas[f_links[i].target].y);
                 }
                 app.stage.addChild(lines);
                 const circles = new PIXI.Graphics();
@@ -96,7 +96,7 @@ function drawforce(data){
 
                 canvas_force.onmousewheel = wheel; //W3C鼠标滚轮事件
 
-                const circles_choose = new PIXI.Graphics();
+                circles_choose = new PIXI.Graphics();
                 circles_choose_change_color = new PIXI.Graphics();
                 function onDragStart() 
                 {
@@ -111,6 +111,8 @@ function drawforce(data){
                     if(if_circle_choose)this.drawingCircle = true;
                     else this.drawingCircle = false;
 
+                    if(if_choose_point)this.drawingPoint = true;
+                    else this.drawingPoint = false;
                     mouse_down_position = getMousePos(this);
                 }
 
@@ -126,13 +128,46 @@ function drawforce(data){
                         const circle_y = mouse_down_position.y;
                         const circle_r = Math.sqrt(Math.pow(newPosition.x - circle_x, 2) + Math.pow(newPosition.y - circle_y, 2));
                         let choosed_point_data = [];
-                        for(let node in nodes)
+                        for(let node in f_nodes)
                         {
-                            const now_x = nodes[node].x * scaleAll_xy + moveAll_x;
-                            const now_y = nodes[node].y * scaleAll_xy + moveAll_y;
+                            const now_x = f_nodes[node].x * scaleAll_xy + moveAll_x;
+                            const now_y = f_nodes[node].y * scaleAll_xy + moveAll_y;
                             if(Math.sqrt(Math.pow(now_x - circle_x, 2) + Math.pow(now_y - circle_y, 2)) <= circle_r)
                             {
-                                choosed_point_data.push(nodes[node]);
+                                choosed_point_data.push(f_nodes[node]);
+                            }
+                        }
+                        console.log(choosed_point_data);
+
+                        circles_choose.clear();
+                        circles_choose_change_color.clear();
+                        // change_color(choosed_point_data);
+                        for(let node in  choosed_point_data)
+                        {
+                            const now_x = (choosed_point_data[node].x);
+                            const now_y = (choosed_point_data[node].y);
+                            circles_choose_change_color.beginFill(circles_change_color);
+                            circles_choose_change_color.drawCircle(now_x,now_y,5);
+                            circles_choose_change_color.endFill();
+                        }
+                        app.stage.addChild(circles_choose_change_color);
+                    }
+
+                    else if(this.drawingPoint == true)
+                    {
+                        this.drawingPoint = false;
+                        const newPosition = getMousePos(this);
+                        const circle_x = newPosition.x;
+                        const circle_y = newPosition.y;
+                        const circle_r = 5;
+                        let choosed_point_data = [];
+                        for(let node in f_nodes)
+                        {
+                            const now_x = f_nodes[node].x * scaleAll_xy + moveAll_x;
+                            const now_y = f_nodes[node].y * scaleAll_xy + moveAll_y;
+                            if(Math.sqrt(Math.pow(now_x - circle_x, 2) + Math.pow(now_y - circle_y, 2)) <= circle_r)
+                            {
+                                choosed_point_data.push(f_nodes[node]);
                             }
                         }
                         console.log(choosed_point_data);
@@ -252,6 +287,59 @@ function drawforce(data){
                     }
                     app.stage.addChild(circles_choose_change_color);
                 }
+
+
+
+
+
+
+
+                //======================================
+                // d3.json("/data/community_id.json", function(data_community)
+                // {
+                //     // let nodes = new Array();
+                //     d3.json("/data/force_data_gai.json", function populate(datas){
+            
+                //             var community_num;
+                //             var svg = d3.select('#Down_2_1').selectAll('svg');
+                //             console.log("OK")
+                //             var rects_c = svg.selectAll('MyRect')                         
+                //                             .on("click",function(d_, g)
+                //                             {
+                //                                 d3.selectAll(".B").attr("fill", 'steelblue');
+                //                                 d3.select(this).attr("fill", "red");
+                //                                 // console.log(d_)
+                //                                 console.log(g)
+                //                                 community_num = g;
+                //                             });
+                //             // console.log(svg);
+                //             var circles_change_color = 0xff00ff;
+            
+                //             community_num = parseInt(community_num);
+                            
+                //             choosed_point_data = data_community[community_num];
+                //             circles_choose.clear();
+                //             circles_choose_change_color.clear();
+                //             // change_color(choosed_point_data);
+                //             for(let node in  choosed_point_data)
+                //             {
+                //                 const now_x = (datas[node].x);
+                //                 const now_y = (datas[node].y);
+                //                 circles_choose_change_color.beginFill(circles_change_color);
+                //                 circles_choose_change_color.drawCircle(now_x,now_y,5);
+                //                 circles_choose_change_color.endFill();
+                //             }
+                //             app.stage.addChild(circles_choose_change_color);
+                        
+                //     })
+            
+                // })
+
+
+
+
+
+
             })
         })
     })
@@ -273,3 +361,40 @@ function if_button_circle_choose(flag)
 }
 
 
+function force_change_color(community_num)
+{
+    // console.log(community_num);
+    d3.json("/data/community_id.json", function(data_community)
+    {
+        // let nodes = new Array();
+        d3.json("/data/force_data_gai.json", function(datas){
+
+                console.log(datas);
+                console.log(data_community);
+
+                var circles_change_color = 0xff00ff;
+
+                // community_num = parseInt(community_num);
+                
+
+                choosed_point_data = data_community[community_num];
+                circles_choose.clear();
+                circles_choose_change_color.clear();
+                // change_color(choosed_point_data);
+                console.log(choosed_point_data)
+                for(let node in  choosed_point_data)
+                {
+                    if(node == '0')continue;
+                    console.log(node)
+                    const now_x = (datas[parseInt(node)].x);
+                    const now_y = (datas[parseInt(node)].y);
+                    circles_choose_change_color.beginFill(circles_change_color);
+                    circles_choose_change_color.drawCircle(now_x,now_y,5);
+                    circles_choose_change_color.endFill();
+                }
+                app.stage.addChild(circles_choose_change_color);
+                console.log("OK");
+        })
+
+    })
+}

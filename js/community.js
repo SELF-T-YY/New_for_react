@@ -1,7 +1,7 @@
 var nodes = [];
 var links = [];
-var force_width = 326.55;
-var force_height = 210;
+var force_community_width = 326.55;
+var force_community_height = 210;
 var circle_Color = 0x3A435E;
 var line_Color = 0xc6c6c6;
     d3.json('/data/community_num.json', function populate(datas)
@@ -29,13 +29,13 @@ var line_Color = 0xc6c6c6;
 
         var svg = d3.select("#community")
                     .append('svg')
-                    .attr('width', force_width)
-                    .attr('height', force_height);
+                    .attr('width', force_community_width)
+                    .attr('height', force_community_height);
         
         var simulation = d3.forceSimulation(nodes)
                             .force('link', d3.forceLink(links).distance(100))
                             .force('charge', d3.forceManyBody())
-                            .force('center', d3.forceCenter(force_width/2-10, force_width/2-55));
+                            .force('center', d3.forceCenter(force_community_width/2-10, force_community_width/2-55));
 
         simulation
                 .nodes(nodes)
