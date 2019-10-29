@@ -18,7 +18,7 @@ var f_links = [];
 
 var force_width = 775;
 var force_height = 509;
-var circle_Color = 0x3A435E;
+var force_community_circle_Color = 0x3A435E;
 var line_Color = 0xc6c6c6;
 var circle_Choose_Color = 0x3A435E;
 
@@ -37,12 +37,10 @@ function drawforce(data){
     d3.csv("/data/oregonf_community.csv", function(data_community)
     {
 
-
-
         d3.json("/data/force_data_gai.json", function populate(datas){
             for(let key in datas){
                 let node = {};
-                node["id"] = key;
+                node["id"] = datas[key]['id'];
                 node["x"] = datas[key]["x"];
                 node["y"] = datas[key]["y"];
                 f_nodes.push(node);
@@ -73,7 +71,7 @@ function drawforce(data){
                 app.stage.addChild(lines);
                 const circles = new PIXI.Graphics();
                 for(var key in datas){
-                    circles.beginFill(circle_Color);
+                    circles.beginFill(force_community_circle_Color);
                     circles.drawCircle(datas[key].x,datas[key].y,5);
                     circles.endFill();
                 }
@@ -373,10 +371,6 @@ function force_change_color(community_num)
                 console.log(data_community);
 
                 var circles_change_color = 0xff00ff;
-
-                // community_num = parseInt(community_num);
-                
-
                 choosed_point_data = data_community[community_num];
                 circles_choose.clear();
                 circles_choose_change_color.clear();
@@ -384,16 +378,13 @@ function force_change_color(community_num)
                 console.log(choosed_point_data)
                 for(let node in  choosed_point_data)
                 {
-                    if(node == '0')continue;
-                    console.log(node)
-                    const now_x = (datas[parseInt(node)].x);
-                    const now_y = (datas[parseInt(node)].y);
+                    const now_x = (datas[choosed_point_data[node]].x);
+                    const now_y = (datas[choosed_point_data[node]].y);
                     circles_choose_change_color.beginFill(circles_change_color);
                     circles_choose_change_color.drawCircle(now_x,now_y,5);
                     circles_choose_change_color.endFill();
                 }
                 app.stage.addChild(circles_choose_change_color);
-                console.log("OK");
         })
 
     })

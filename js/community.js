@@ -2,7 +2,7 @@ var nodes = [];
 var links = [];
 var force_community_width = 326.55;
 var force_community_height = 210;
-var circle_Color = 0x3A435E;
+var force_community_circle_Color = 0x3A435E;
 var line_Color = 0xc6c6c6;
     d3.json('/data/community_num.json', function populate(datas)
     {
@@ -67,22 +67,18 @@ var line_Color = 0xc6c6c6;
                                     return Math.log(d.num);
                                 })
                                 .attr("class", "A")
-                                .attr("fill", circle_Color)
+                                .attr("fill", force_community_circle_Color)
                                 .call(d3.drag().on("start", dragstarted)//d3.drag() 创建一个拖曳行为
                                 .on("drag", dragged)
                                 .on("end", dragended))
-                                .on("click",function()
+                                .on("click",function(d,d_)
                                 {
-                                    d3.selectAll(".A").attr("fill", circle_Color);
+                                    d3.selectAll(".A").attr("fill", force_community_circle_Color);
                                     d3.select(this).attr("fill", "red");
                                     
-                                    
+                                    force_change_color(d_);
+                                    community_Distribution_change_color(d_);
                                 })
-                                // .on("mouseout", function()
-                                // {
-                                //     d3.select(this).attr("fill", "black");
-                                // });
-                                // console.log(nodes);
 
     
         //  //添加描述节点的文字

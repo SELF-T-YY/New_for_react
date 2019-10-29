@@ -41,28 +41,31 @@ function draw_bar_chart(data)
                 .domain([0,d3.max(dataset)])
                 .range([c_height-padding.bottom-padding.top,0]);
         var rects = svg.selectAll('MyRect')
-                .data(dataset)
-                .enter()
-                .append('rect')
-                .attr('class','MyRect')
-                .attr("transform","translate(" + padding.left + "," + padding.top + ")")
-                .attr('x',function(d,i){
-                    return xScale(i) + rectWidth/2;
-                }).attr('y',function(d,i){
-                    return yScale(d);
-                }).attr('width',xScale.bandwidth() - rectWidth)
-                .attr('height',function(d,i){
-                    return height-padding.bottom-padding.top-yScale(d);
-                }).attr('fill','steelblue')
-                .attr("class", "B")
-                .on("click",function(d_, g)
-                {
-                    d3.selectAll(".B").attr("fill", 'steelblue');
-                    d3.select(this).attr("fill", "red");
-                    // console.log(d_)
-                    console.log(g)
-                    force_change_color(g);
-                });
+                        .data(dataset)
+                        .enter()
+                        .append('rect')
+                        .attr('class','MyRect')
+                        .attr("transform","translate(" + padding.left + "," + padding.top + ")")
+                        .attr('x',function(d,i){
+                            return xScale(i) + rectWidth/2;
+                        }).attr('y',function(d,i){
+                            return yScale(d);
+                        }).attr('width',xScale.bandwidth() - rectWidth)
+                        .attr('height',function(d,i){
+                            return height-padding.bottom-padding.top-yScale(d);
+                        }).attr('fill','steelblue')
+                        .attr("id",function(d_, g){
+                            return "B" + String(g);
+                        })
+                        .attr("class", "B")
+                        .on("click",function(d_, g)
+                        {
+                            d3.selectAll(".B").attr("fill", 'steelblue');
+                            d3.select(this).attr("fill", "red");
+                            // console.log(d_)
+                            console.log(g)
+                            force_change_color(g);
+                        });
                 
         // var texts = svg.selectAll('MyText')
         //         .data(dataset)
@@ -89,3 +92,13 @@ function draw_bar_chart(data)
     })
 }
 draw_bar_chart();
+
+
+function community_Distribution_change_color(community_num)
+{
+    let svg = d3.select('#Down_2_1').select('svg');
+    const rect_name = "#B" + String(community_num);
+    let rect = svg.selectAll('MyRect')
+                    .select(rect_name)
+                    .attr("fill", "red");
+}
