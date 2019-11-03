@@ -18,9 +18,10 @@ function drawagain(data){
     var mColorText = '#000000';
     (function(){
         var canvas = document.getElementById('#Radar_Chart_canvas');
-        // canvas.id="canvas_"
-        canvas.height = 800;
+        // canvas.id="canvas_";
+       
         canvas.width = 800;
+        canvas.height = 800;
         mCtx = canvas.getContext('2d');
         document.body.appendChild(canvas);
         // canvas.height = canvas.height;

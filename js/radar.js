@@ -1,10 +1,3 @@
-/*
- * @Author: ChenShan 
- * @Date: 2019-10-17 22:16:06 
- * @Last Modified by: ChenShan
- * @Last Modified time: 2019-10-17 22:33:21
- */
-
 var radius = 150;
 
 //边数

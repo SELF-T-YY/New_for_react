@@ -3,7 +3,7 @@ const filter_color = 0x123123;
 const rest_color = 0x354985;
 const choose_color = 0xff00ff;
 
-const c_width = 568;
+const c_width = 540;
 const c_height = 350;
 
 
@@ -28,7 +28,7 @@ function draw_bar_chart(data)
 
         const rectWidth = 4;
         //画布周边的空白
-        const padding = {left:30, right: - 100, top:20, bottom:200};
+        const padding = {left:30, right: 10, top:20, bottom:200};
         //定义一个数组
         // var dataset = [10, 20, 30, 40, 33, 24, 12, 5];
         var svg = d3.select('#Down_2_1').append('svg').attr('width',c_width).attr('height', c_height);
@@ -52,7 +52,7 @@ function draw_bar_chart(data)
                             return yScale(d);
                         }).attr('width',xScale.bandwidth() - rectWidth)
                         .attr('height',function(d,i){
-                            return height-padding.bottom-padding.top-yScale(d);
+                            return c_height-padding.bottom-padding.top-yScale(d);
                         }).attr('fill','steelblue')
                         .attr("id",function(d_, g){
                             return "B" + String(g);
@@ -86,7 +86,7 @@ function draw_bar_chart(data)
         //         });
 
         svg.append('g')
-                .attr('class','axis').attr("transform","translate(" + padding.left + "," + (height - padding.bottom) + ")").call(d3.axisBottom(xScale));//d3.axisBottom(xScale)  --V4版本
+                .attr('class','axis').attr("transform","translate(" + padding.left + "," + (c_height - padding.bottom) + ")").call(d3.axisBottom(xScale));//d3.axisBottom(xScale)  --V4版本
         svg.append('g')
                 .attr('class','axis').attr("transform","translate(" + padding.left + "," + padding.top + ")").call(d3.axisLeft(yScale));//d3.axisLeft(yScale) --V4版本
     })

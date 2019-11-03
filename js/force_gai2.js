@@ -135,7 +135,7 @@ function drawforce(data){
                                 choosed_point_data.push(f_nodes[node]);
                             }
                         }
-                        console.log(choosed_point_data);
+                        // console.log(choosed_point_data);
 
                         circles_choose.clear();
                         circles_choose_change_color.clear();
