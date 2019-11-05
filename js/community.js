@@ -4,6 +4,7 @@ var force_community_width = 326.55;
 var force_community_height = 210;
 var force_community_circle_Color = 0x3A435E;
 var line_Color = 0xc6c6c6;
+
     d3.json('/data/community_num.json', function populate(datas)
     {
         var count = 0;
