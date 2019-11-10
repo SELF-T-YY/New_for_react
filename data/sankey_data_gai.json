@@ -1,0 +1,418 @@
+{
+  "nodes": {
+    "top_community": {
+      "0": {
+        "community_node_num": 367,
+        "community_id": "0"
+      },
+      "27": {
+        "community_node_num": 3393,
+        "community_id": "1"
+      },
+      "2": {
+        "community_node_num": 1468,
+        "community_id": "2"
+      },
+      "3": {
+        "community_node_num": 209,
+        "community_id": "3"
+      },
+      "4": {
+        "community_node_num": 449,
+        "community_id": "4"
+      },
+      "5": {
+        "community_node_num": 58,
+        "community_id": "5"
+      },
+      "6": {
+        "community_node_num": 758,
+        "community_id": "6"
+      },
+      "7": {
+        "community_node_num": 336,
+        "community_id": "7"
+      },
+      "8": {
+        "community_node_num": 635,
+        "community_id": "8"
+      },
+      "9": {
+        "community_node_num": 186,
+        "community_id": "9"
+      },
+      "10": {
+        "community_node_num": 78,
+        "community_id": "10"
+      },
+      "11": {
+        "community_node_num": 454,
+        "community_id": "11"
+      },
+      "12": {
+        "community_node_num": 25,
+        "community_id": "12"
+      },
+      "13": {
+        "community_node_num": 174,
+        "community_id": "13"
+      },
+      "14": {
+        "community_node_num": 325,
+        "community_id": "14"
+      },
+      "15": {
+        "community_node_num": 279,
+        "community_id": "15"
+      },
+      "16": {
+        "community_node_num": 185,
+        "community_id": "16"
+      },
+      "17": {
+        "community_node_num": 198,
+        "community_id": "17"
+      },
+      "18": {
+        "community_node_num": 403,
+        "community_id": "18"
+      },
+      "19": {
+        "community_node_num": 23,
+        "community_id": "19"
+      },
+      "20": {
+        "community_node_num": 14,
+        "community_id": "20"
+      },
+      "21": {
+        "community_node_num": 108,
+        "community_id": "21"
+      },
+      "22": {
+        "community_node_num": 299,
+        "community_id": "22"
+      },
+      "23": {
+        "community_node_num": 45,
+        "community_id": "23"
+      },
+      "24": {
+        "community_node_num": 168,
+        "community_id": "24"
+      },
+      "25": {
+        "community_node_num": 24,
+        "community_id": "25"
+      },
+      "26": {
+        "community_node_num": 12,
+        "community_id": "26"
+      },
+      "1": {
+        "community_node_num": 7,
+        "community_id": "27"
+      },
+      "28": {
+        "community_node_num": 84,
+        "community_id": "28"
+      },
+      "29": {
+        "community_node_num": 313,
+        "community_id": "29"
+      },
+      "30": {
+        "community_node_num": 39,
+        "community_id": "30"
+      },
+      "31": {
+        "community_node_num": 8,
+        "community_id": "31"
+      },
+      "32": {
+        "community_node_num": 45,
+        "community_id": "32"
+      },
+      "33": {
+        "community_node_num": 5,
+        "community_id": "33"
+      }
+    },
+    "bottom_community": {
+      "6": {
+        "community_node_num": 367,
+        "community_id": "0"
+      },
+      "33": {
+        "community_node_num": 3393,
+        "community_id": "1"
+      },
+      "7": {
+        "community_node_num": 1468,
+        "community_id": "2"
+      },
+      "3": {
+        "community_node_num": 209,
+        "community_id": "3"
+      },
+      "4": {
+        "community_node_num": 449,
+        "community_id": "4"
+      },
+      "5": {
+        "community_node_num": 58,
+        "community_id": "5"
+      },
+      "0": {
+        "community_node_num": 758,
+        "community_id": "6"
+      },
+      "2": {
+        "community_node_num": 336,
+        "community_id": "7"
+      },
+      "8": {
+        "community_node_num": 635,
+        "community_id": "8"
+      },
+      "9": {
+        "community_node_num": 186,
+        "community_id": "9"
+      },
+      "10": {
+        "community_node_num": 78,
+        "community_id": "10"
+      },
+      "11": {
+        "community_node_num": 454,
+        "community_id": "11"
+      },
+      "12": {
+        "community_node_num": 25,
+        "community_id": "12"
+      },
+      "13": {
+        "community_node_num": 174,
+        "community_id": "13"
+      },
+      "14": {
+        "community_node_num": 325,
+        "community_id": "14"
+      },
+      "15": {
+        "community_node_num": 279,
+        "community_id": "15"
+      },
+      "16": {
+        "community_node_num": 185,
+        "community_id": "16"
+      },
+      "17": {
+        "community_node_num": 198,
+        "community_id": "17"
+      },
+      "18": {
+        "community_node_num": 403,
+        "community_id": "18"
+      },
+      "19": {
+        "community_node_num": 23,
+        "community_id": "19"
+      },
+      "20": {
+        "community_node_num": 14,
+        "community_id": "20"
+      },
+      "21": {
+        "community_node_num": 108,
+        "community_id": "21"
+      },
+      "22": {
+        "community_node_num": 299,
+        "community_id": "22"
+      },
+      "23": {
+        "community_node_num": 45,
+        "community_id": "23"
+      },
+      "24": {
+        "community_node_num": 168,
+        "community_id": "24"
+      },
+      "25": {
+        "community_node_num": 24,
+        "community_id": "25"
+      },
+      "26": {
+        "community_node_num": 12,
+        "community_id": "26"
+      },
+      "27": {
+        "community_node_num": 7,
+        "community_id": "27"
+      },
+      "28": {
+        "community_node_num": 84,
+        "community_id": "28"
+      },
+      "29": {
+        "community_node_num": 313,
+        "community_id": "29"
+      },
+      "30": {
+        "community_node_num": 39,
+        "community_id": "30"
+      },
+      "31": {
+        "community_node_num": 8,
+        "community_id": "31"
+      },
+      "32": {
+        "community_node_num": 45,
+        "community_id": "32"
+      },
+      "1": {
+        "community_node_num": 5,
+        "community_id": "33"
+      }
+    }
+  },
+  "links": {
+    "0": {
+      "source": "0",
+      "target": "6"
+    },
+    "1": {
+      "source": "27",
+      "target": "33"
+    },
+    "2": {
+      "source": "2",
+      "target": "7"
+    },
+    "3": {
+      "source": "3",
+      "target": "3"
+    },
+    "4": {
+      "source": "4",
+      "target": "4"
+    },
+    "5": {
+      "source": "5",
+      "target": "5"
+    },
+    "6": {
+      "source": "6",
+      "target": "0"
+    },
+    "7": {
+      "source": "7",
+      "target": "2"
+    },
+    "8": {
+      "source": "8",
+      "target": "8"
+    },
+    "9": {
+      "source": "9",
+      "target": "9"
+    },
+    "10": {
+      "source": "10",
+      "target": "10"
+    },
+    "11": {
+      "source": "11",
+      "target": "11"
+    },
+    "12": {
+      "source": "12",
+      "target": "12"
+    },
+    "13": {
+      "source": "13",
+      "target": "13"
+    },
+    "14": {
+      "source": "14",
+      "target": "14"
+    },
+    "15": {
+      "source": "15",
+      "target": "15"
+    },
+    "16": {
+      "source": "16",
+      "target": "16"
+    },
+    "17": {
+      "source": "17",
+      "target": "17"
+    },
+    "18": {
+      "source": "18",
+      "target": "18"
+    },
+    "19": {
+      "source": "19",
+      "target": "19"
+    },
+    "20": {
+      "source": "20",
+      "target": "20"
+    },
+    "21": {
+      "source": "21",
+      "target": "21"
+    },
+    "22": {
+      "source": "22",
+      "target": "22"
+    },
+    "23": {
+      "source": "23",
+      "target": "23"
+    },
+    "24": {
+      "source": "24",
+      "target": "24"
+    },
+    "25": {
+      "source": "25",
+      "target": "25"
+    },
+    "26": {
+      "source": "26",
+      "target": "26"
+    },
+    "27": {
+      "source": "1",
+      "target": "27"
+    },
+    "28": {
+      "source": "28",
+      "target": "28"
+    },
+    "29": {
+      "source": "29",
+      "target": "29"
+    },
+    "30": {
+      "source": "30",
+      "target": "30"
+    },
+    "31": {
+      "source": "31",
+      "target": "31"
+    },
+    "32": {
+      "source": "32",
+      "target": "32"
+    },
+    "33": {
+      "source": "33",
+      "target": "1"
+    }
+  }
+}

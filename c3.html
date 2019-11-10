@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sankey</title>
+    <script src="/js/d3.v4.min.js"></script>
+</head>
+<body>
+    <div id="Sankey"></div>
+    <script>
+        var Sankey_width = 4500;
+        var Sankey_height = 4500;
+        const margin = {top: 10, right: 10, bottom: 10, left: 10};
+
+      
+        // let color = d3.scaleOrdinal(d3.schemeCategory20);
+
+
+        d3.json('/data/sankey_data_gai.json', function(datas){
+
+            let node_top = datas['nodes']['top_community'];
+            let node_top_dataset = []
+            for(let key in node_top){
+                node_top_dataset.push(node_top[key]['community_node_num']);
+            }
+
+            let node_bottom = datas['nodes']['bottom_community'];
+            let node_bottom_dataset = [];
+            for(let key in node_bottom){
+                node_bottom_dataset.push(node_bottom[key]['community_node_num']);
+            }
+
+            let links_dataset = []
+            for(let key in datas['links']){
+                links_dataset.push(datas['links'][key])
+            }
+            // console.log(links_dataset)
+
+            const padding_width = 1;
+            const padding_height = 20;
+            const top_y = 10;
+            const bottom_y = 200;
+
+            let last_width = 0;
+            let rect_top = []
+            for(let i in node_top_dataset){
+                rect_top.push({'x': last_width, 'width': node_top_dataset[i]/20})
+                last_width += node_top_dataset[i]/20 + padding_width;
+            }
+
+            last_width = 0;
+            let rect_bottom = []
+            for(let i in node_bottom_dataset){
+                rect_bottom.push({'x':last_width, 'width': node_bottom_dataset[i]/20})
+                last_width += node_bottom_dataset[i]/20 + padding_width;
+            }
+
+            var svg = d3.select('#Sankey')
+                    .append('svg')
+                    .attr('width', Sankey_width)
+                    .attr('height', Sankey_height)
+                    .attr('transform', 'translate(' + margin.top + ',' + margin.left + ')');
+  
+            var top_nodes = svg.selectAll('sankey_top_node')
+                            .data(node_top_dataset)
+                            .enter()
+                            .append('rect')
+                            .attr('class', 'sankey_top_node')
+                            .attr('id',function(d, i){
+                                return 'sankey_community_top_' + String(i);
+                            })
+                            .attr('x', function(d, i){
+                                return rect_top[i]['x'];
+                            })
+                            .attr('y', top_y)
+                            .attr('width',  function(d){return d/20})
+                            .attr('height', padding_height)
+                            .attr('fill', 'steelblue');
+                            
+            var bottom_nodes = svg.selectAll('sankey_bottom_node')
+                            .data(node_bottom_dataset)
+                            .enter()
+                            .append('rect')
+                            .attr('class', 'sankey_bottom_node')
+                            .attr('id',function(d, i){
+                                return 'sankey_community_bottom_' + String(i);
+                            })
+                            .attr('x', function(d, i){
+                                return rect_bottom[i]['x'];
+                            })
+                            .attr('y', bottom_y)
+                            .attr('width',  function(d){return d/20})
+                            .attr('height', padding_height)
+                            .attr('fill', 'steelblue');
+
+            var links = svg.selectAll('sankey_link')
+                            .data(links_dataset)
+                            .enter()
+                            .append('path')
+                            .attr('d', function(d, i){
+                                console.log(d)
+                                let dx = 10;
+                                let dy = 100;
+                                let x1 = rect_top[parseInt(d['source'])]['x'];
+                                let y1 = top_y;
+                                let x2 = rect_bottom[parseInt(d['target'])]['x'];
+                                let y2 = bottom_y;
+
+                                var path = d3.path();
+                                let cpx1 = x1 - dx;
+                                let cpy1 = y1 + dy;
+                                let cpx2 = x2 + dx;
+                                let cpy2 = y2 - dy;
+                                path.moveTo(x1, y1);
+                                path.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x2, y2);                                
+                            })
+                            .style('fill', 'none')
+                            .style('stroke', 'steelbule')
+                            .style('stroke-width', function(d, i){
+                                return rect_top[i]['width'];
+                            })
+            console.log(links)
+
+        })
+
+    </script>
+</body>
+</html>

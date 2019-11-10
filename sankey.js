@@ -59,8 +59,8 @@ d3.sankey = function() {
           xi = d3.interpolateNumber(x0, x1),
           x2 = xi(curvature),
           x3 = xi(1 - curvature),
-          y0 = d.source.y + d.sy + d.value / 2,
-          y1 = d.target.y + d.ty + d.value / 2;
+          y0 = d.source.y + d.sy + d.dy / 2,
+          y1 = d.target.y + d.ty + d.dy / 2;
       return "M" + x0 + "," + y0
            + "C" + x2 + "," + y0
            + " " + x3 + "," + y1
@@ -179,12 +179,12 @@ d3.sankey = function() {
       nodesByBreadth.forEach(function(nodes) {
         nodes.forEach(function(node, i) {
           node.y = i;
-          node.value = node.value * ky;
+          node.dy = node.value * ky;
         });
       });
 
       links.forEach(function(link) {
-        link.value = link.value * ky;
+        link.dy = link.value * ky;
       });
     }
 
@@ -221,7 +221,7 @@ d3.sankey = function() {
     function resolveCollisions() {
       nodesByBreadth.forEach(function(nodes) {
         var node,
-            value,
+            dy,
             y0 = 0,
             n = nodes.length,
             i;
@@ -230,21 +230,21 @@ d3.sankey = function() {
         nodes.sort(ascendingDepth);
         for (i = 0; i < n; ++i) {
           node = nodes[i];
-          value = y0 - node.y;
-          if (value > 0) node.y += value;
-          y0 = node.y + node.value + nodePadding;
+          dy = y0 - node.y;
+          if (dy > 0) node.y += dy;
+          y0 = node.y + node.dy + nodePadding;
         }
 
         // If the bottommost node goes outside the bounds, push it back up.
-        value = y0 - nodePadding - size[1];
-        if (value > 0) {
-          y0 = node.y -= value;
+        dy = y0 - nodePadding - size[1];
+        if (dy > 0) {
+          y0 = node.y -= dy;
 
           // Push any overlapping nodes back up.
           for (i = n - 2; i >= 0; --i) {
             node = nodes[i];
-            value = node.y + node.value + nodePadding - y0;
-            if (value > 0) node.y -= value;
+            dy = node.y + node.dy + nodePadding - y0;
+            if (dy > 0) node.y -= dy;
             y0 = node.y;
           }
         }
@@ -265,11 +265,11 @@ d3.sankey = function() {
       var sy = 0, ty = 0;
       node.sourceLinks.forEach(function(link) {
         link.sy = sy;
-        sy += link.value;
+        sy += link.dy;
       });
       node.targetLinks.forEach(function(link) {
         link.ty = ty;
-        ty += link.value;
+        ty += link.dy;
       });
     });
 
@@ -283,7 +283,7 @@ d3.sankey = function() {
   }
 
   function center(node) {
-    return node.y + node.value / 2;
+    return node.y + node.dy / 2;
   }
 
   function value(link) {

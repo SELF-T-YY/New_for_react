@@ -36,6 +36,7 @@
                 .attr('class','MyRect')
                 .attr("transform","translate(" + padding.left + "," + padding.top + ")")
                 .attr('x',function(d,i){
+                    console.log(d);
                     return xScale(i) + rectWidth/2;
                 }).attr('y',function(d,i){
                     return yScale(d);
