@@ -1,101 +1,70 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/js/d3.v4.min.js"></script>
+    <script src="/sankey.js"></script>
+</head>
+<body>
+    <script>
+        var _svg = d3.select("body")
+        .append("svg")
+        .attr("width","400")
+        .attr("height","300");
+        
 
-<!-- Load d3.js -->
-<script src="/js/d3.v4.min.js"></script>
+        link_data_1 = {dx:10, dy:100, x1:50, y1:50, x2:300, y2:300}
+        link_data_2 = {dx:10, dy:100, x1:100, y1:50, x2:350, y2:300}
 
-<!-- Load the sankey.js function -->
-<script src="/sankey.js"></script>
+//         var path = d3.path();
+//         var cpx1 = link_data_1.x1 - link_data_1.dx;
+//         var cpy1 = link_data_1.y1 + link_data_1.dy;
+//         var cpx2 = link_data_1.x2 + link_data_1.dx;
+//         var cpy2 = link_data_1.y2 - link_data_1.dy;
+//         path.moveTo(link_data_1.x1,link_data_1.y1);
+//         path.bezierCurveTo(cpx1,cpy1,cpx2,cpy2,link_data_1.x2,link_data_1.y2);
+//         console.log(cpx1,cpy1,cpx2,cpy2,link_data_1.x2,link_data_1.y2)
 
-<!-- Create a div where the graph will take place -->
-<div id="my_dataviz"></div>
+//         console.log(path.toString());
+//         _svg.append('path')
+//             .attr('d', path.toString())
+//             .style('fill','none')
+//             .style('stroke','red')
+//             .style('stroke-width','1')
+//             // .style('stroke-linecap','square')
 
-<!-- Add style to links or they won't appear properly-->
-<style>
-.link {
-  fill: none;
-  stroke: #000;
-  stroke-opacity: .2;
-}
-.link:hover {
-  stroke-opacity: .5;
-}
-</style>
-<script>
+//         var dx = 10, dy = 100, x1 = 100, y1 = 50, x2 = 350, y2 = 300;
+//         var path = d3.path();
+//         var cpx1 = link_data_2.x1 - link_data_2.dx;
+//         var cpy1 = link_data_2.y1 + link_data_2.dy;
+//         var cpx2 = link_data_2.x2 + link_data_2.dx;
+//         var cpy2 = link_data_2.y2 - link_data_2.dy;
+//         path.moveTo(link_data_2.x1,link_data_2.y1);
+//         path.bezierCurveTo(cpx1,cpy1,cpx2,cpy2,link_data_2.x2,link_data_2.y2);
+//         console.log(cpx1,cpy1,cpx2,cpy2,link_data_1.x2,link_data_1.y2)
 
-    // set the dimensions and margins of the graph
-    var margin = {top: 10, right: 10, bottom: 10, left: 10},
-        width = 450 - margin.left - margin.right,
-        height = 480 - margin.top - margin.bottom;
-    console.log("sad");
-    // append the svg object to the body of the page
-    var svg = d3.select("#my_dataviz").append("svg")
-        .attr("width", 1000)
-        .attr("height", 1000)
-        .append("g")
-        .attr("transform",
-              "translate(" + 100 + "," + 100+ ")");
-    
-    // Color scale used
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
-    
-    // Set the sankey diagram properties
-    var sankey = d3.sankey()
-        .nodeWidth(36)
-        .nodePadding(290)
-        .size([width, height]);
-    
-    // load the data
-    d3.json("/sankey.json", function(error, graph) {
-    
-      // Constructs a new Sankey generator with the default settings.
-      sankey
-          .nodes(graph.nodes)
-          .links(graph.links)
-          .layout(1);
-    
-      // add in the links
-      var link = svg.append("g")
-        .selectAll(".link")
-        .data(graph.links)
-        .enter()
-        .append("path")
-          .attr("class", "link")
-          .attr("d", sankey.link() )
-          .style("stroke-width", function(d) { return Math.max(1, d.dy); })
-          .sort(function(a, b) { return b.dy - a.dy; })
-          .attr('transform', 'rotate(90) translate(0,-450)')
+// console.log(path.toString());
+//         _svg.append('path')
+//             .attr('d', path.toString())
+//             .style('fill','none')
+//             .style('stroke','red')
+//             .style('stroke-width','1');
 
-          // .attr('transform', 'rotate(90) translate(' + (height) + ',' + (width) + ')')
 
-    
-      // add in the nodes
-      var node = svg.append("g")
-        .selectAll(".node")
-        .data(graph.nodes)
-        .enter().append("g")
-          .attr("class", "node")
-          .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-          // .attr('transform', 'rotate(90) translate(400,-450)')
-          // .call(d3.drag()
-          //   .subject(function(d) { return d; })
-          //   .on("start", function() { this.parentNode.appendChild(this); })
-            // .on("drag", dragmove));
-    
-      // add the rectangles for the nodes
-      node
-        .append("rect")
-          .attr("height", function(d) { return d.dy; })
-          .attr("width", sankey.nodeWidth())
-          .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
-          .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
-        // Add hover text
-        // .append("title")
-        //   .text(function(d) { return d.name + "\n" + "There is " + d.value + " stuff in this node"; })
-          .attr('transform', 'rotate(90) translate(0,0)');
 
-    
-    });
-    
-    
+        _svg.append('path')
+            .attr('d',function(){
+                // M50,50C40,150,310,200,300,300
+                return 'M50,50C40,150,310,200,300,300H350C360,200,90,150,100,50'
+            })
+            .style('fill','red')
+            .style('stroke','red')
+            .style('stroke-width','0');
+
     </script>
+
+</body>
+</html>

@@ -5,7 +5,7 @@
         "community_node_num": 367,
         "community_id": "0"
       },
-      "27": {
+      "33": {
         "community_node_num": 3393,
         "community_id": "1"
       },
@@ -109,7 +109,7 @@
         "community_node_num": 12,
         "community_id": "26"
       },
-      "1": {
+      "27": {
         "community_node_num": 7,
         "community_id": "27"
       },
@@ -133,13 +133,13 @@
         "community_node_num": 45,
         "community_id": "32"
       },
-      "33": {
+      "1": {
         "community_node_num": 5,
         "community_id": "33"
       }
     },
     "bottom_community": {
-      "6": {
+      "0": {
         "community_node_num": 367,
         "community_id": "0"
       },
@@ -147,7 +147,7 @@
         "community_node_num": 3393,
         "community_id": "1"
       },
-      "7": {
+      "2": {
         "community_node_num": 1468,
         "community_id": "2"
       },
@@ -163,11 +163,11 @@
         "community_node_num": 58,
         "community_id": "5"
       },
-      "0": {
+      "6": {
         "community_node_num": 758,
         "community_id": "6"
       },
-      "2": {
+      "7": {
         "community_node_num": 336,
         "community_id": "7"
       },
@@ -280,15 +280,15 @@
   "links": {
     "0": {
       "source": "0",
-      "target": "6"
+      "target": "0"
     },
     "1": {
-      "source": "27",
+      "source": "33",
       "target": "33"
     },
     "2": {
       "source": "2",
-      "target": "7"
+      "target": "2"
     },
     "3": {
       "source": "3",
@@ -304,11 +304,11 @@
     },
     "6": {
       "source": "6",
-      "target": "0"
+      "target": "6"
     },
     "7": {
       "source": "7",
-      "target": "2"
+      "target": "7"
     },
     "8": {
       "source": "8",
@@ -387,7 +387,7 @@
       "target": "26"
     },
     "27": {
-      "source": "1",
+      "source": "27",
       "target": "27"
     },
     "28": {
@@ -411,7 +411,7 @@
       "target": "32"
     },
     "33": {
-      "source": "33",
+      "source": "1",
       "target": "1"
     }
   }
