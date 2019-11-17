@@ -67,32 +67,16 @@ var line_Color = 0xc6c6c6;
                                 .attr("r", function(d){
                                     return Math.log(d.num);
                                 })
-                                .attr("class", "A")
-                                .attr("fill", force_community_circle_Color)
-                                .call(d3.drag().on("start", dragstarted)//d3.drag() 创建一个拖曳行为
-                                .on("drag", dragged)
-                                .on("end", dragended))
-                                .on("click",function(d,d_)
-                                {
-                                    d3.selectAll(".A").attr("fill", force_community_circle_Color);
-                                    d3.select(this).attr("fill", "red");
-                                    
-                                    force_change_color(d_);
-                                    community_Distribution_change_color(d_);
+                                .attr("class", "community")
+                                .attr('id', function(d,i){
+                                    return 'community_' + i;
                                 })
+                                .attr("fill", 'steelblue')
+                                // .call(d3.drag().on("start", dragstarted)//d3.drag() 创建一个拖曳行为
+                                // .on("drag", dragged)
+                                // .on("end", dragended))
+                                .on("click",community_click_do);
 
-    
-        //  //添加描述节点的文字
-        //  var svg_texts = svg.selectAll("text")
-        //                     .data(nodes)
-        //                     .enter()
-        //                     .append("text")
-        //                     .style("fill", "black")
-        //                     .attr("dx", 20)
-        //                     .attr("dy", 8)
-        //                     .text(function(d){
-        //                         return d.name;
-        //                     });
     function dragstarted(d) {
         if (!d3.event.active) simulation.alphaTarget(0.3).restart();//设置目标α
         d.fx = d.x;
@@ -122,3 +106,4 @@ var line_Color = 0xc6c6c6;
             //    .attr("y", function(d){ return d.y; });
         }
     })
+

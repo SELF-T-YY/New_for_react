@@ -16,11 +16,10 @@
     <script src="js/d3.v4.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.2/pixi.min.js"></script>
-    <!-- <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script> -->
     <script src="https://unpkg.com/d3-sankey@0"></script>
     <script src="/js/chart.js"></script>
     <script src="/js/button.js"></script>
+    <script src='/js/function.js'></script>
 
 </head>
 <body style="overflow-x: hidden; overflow-y: hidden ">
@@ -34,19 +33,19 @@
                         <button id="button-dataSet">DataSet</button>
                         <input type="text" name="DataSet" value="oregonf" class="dataSetTextline">
                         <table border="DataOverview"  class="datalist">
-                            <tr>
+                            <tr class="noselect">
                                 <th></th>
                                 <th>Nodes</th>
                                 <th>Edges</th>
                                 <th>Community</th>
                             </tr>
-                            <tr>
+                            <tr class="noselect">
                                 <th>Origin:</th>
                                 <th>11174</th>
                                 <th>23410</th>
                                 <th>34</th>
                             </tr>
-                            <tr>
+                            <tr class="noselect">
                                 <th>Sample:</th>
                                 <th></th>
                                 <th></th>
@@ -68,7 +67,7 @@
                                 <input type="button" id="button-Reset" value="Reset" onclick="sampling_func()">
                                 <!-- <script src="/js/button.js"></script> -->
                             </div>
-                            <div id="L_1_3">
+                            <div id="L_1_3" class="noselect">
                                 Density: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="range" min="5" max="100" value="100" class="range" id="range1" step="5">
                                 <b class="b1">100</b>
@@ -137,7 +136,7 @@
                         <input type="button" id="button_move" class="button_force" onclick="button_move_click_on()">
                         <input type="button" id="button_point_click" class="button_force" onclick="button_choose_point_click_on()">
                         <input type="button" id="button_circle_choose" class="button_force" onclick="button_circle_choose_click_on()">
-                        <input type="button" id="button_reflash" class="button_force" onclick="">
+                        <input type="button" id="button_reflash" class="button_force" onclick="reflash()">
                     </div>
                 </div>
             </div>

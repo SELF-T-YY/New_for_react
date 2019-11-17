@@ -4,7 +4,7 @@
             "community_node_num": 367,
             "community_id": "0"
         },
-        "33": {
+        "1": {
             "community_node_num": 3393,
             "community_id": "1"
         },
@@ -132,7 +132,7 @@
             "community_node_num": 45,
             "community_id": "32"
         },
-        "1": {
+        "33": {
             "community_node_num": 5,
             "community_id": "33"
         }
@@ -142,7 +142,7 @@
             "community_node_num": 367,
             "community_id": "0"
         },
-        "33": {
+        "1": {
             "community_node_num": 3393,
             "community_id": "1"
         },
@@ -270,7 +270,7 @@
             "community_node_num": 45,
             "community_id": "32"
         },
-        "1": {
+        "33": {
             "community_node_num": 5,
             "community_id": "33"
         }

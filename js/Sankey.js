@@ -1,170 +1,132 @@
-// import Chart from "/js/chart.js";
+var Sankey_height = document.getElementById('Down_1').offsetHeight;
+var Sankey_width = document.getElementById('Down_1').offsetWidth;
+const margin = {top: 10, right: 5, bottom: 10, left: 10};
+const padding_width = 2;
+const padding_height = 20;
+const top_y = 10;
+const bottom_y = Sankey_height - 80;
+const scaleX = 25;
 
-d3.json('/data/text.json', function(data){
 
-    /* ----------------------------配置参数------------------------  */
-    var chart = d3.select("#Down_1_1").select('svg').append('g')
-                        .attr("height", 400)
-                        .attr("width", 400)
-    const config = {
-        margins: {top: 80, left: 50, bottom: 50, right: 50},
-        textColor: 'black',
-        title: '基础桑基图'
+d3.json('/data/sankey_data_gai.json', function(datas){
+
+    let node_top = datas['nodes']['top_community'];
+    let node_top_dataset = []
+    for(let key in node_top){
+        node_top_dataset.push(node_top[key]['community_node_num']);
     }
 
-//     chart.margins(config.margins);
-
-    /* ----------------------------数据转换------------------------  */
-    const sankey = d3.sankey()
-                        .nodeWidth(50)
-                        .nodePadding(30)
-                        .size([chart.width, chart.height])
-                        .nodeId((d) => d.id);
-
-    const {nodes, links} = sankey({
-                                nodes: data.nodes,
-                                links: data.links
-                            });
-
-    /* ----------------------------渲染节点------------------------  */
-    chart.renderNodes = function(){
-        const rects = chart.body().append('g')
-                                  .attr('class', 'rects')
-                                  .selectAll('.node')
-                                  .data(nodes);
-
-              rects.enter()
-                     .append('g')
-                     .attr('class', 'node')
-                     .attr('index', (d)=> d.id)
-                     .attr('linkNodes', (d)=> {
-                         const nextNodes = d.sourceLinks.map((link) => link.target.id).join('');
-                         const prevNodes = d.targetLinks.map((link) => link.source.id).join('');
-                         return nextNodes + d.id + prevNodes;
-                     })
-                     .append('rect')
-                   .merge(rects)
-                     .attr('x', (d) => d.x0)
-                     .attr('y', (d) => d.y0)
-                     .attr('width', (d) => d.x1 - d.x0)
-                     .attr('height', (d) => d.y1 - d.y0)
-                     .attr('fill', (d) => chart._colors(d.index % 10));
-
-              rects.exit()
-                     .remove();
-
+    let node_bottom = datas['nodes']['bottom_community'];
+    let node_bottom_dataset = [];
+    for(let key in node_bottom){
+        node_bottom_dataset.push(node_bottom[key]['community_node_num']);
     }
 
-    /* ----------------------------渲染连线------------------------  */
-    chart.renderLines = function(){
-        const lines = chart.body().append('g')
-                                  .attr('class', 'lines')
-                                  .selectAll('path')
-                                  .data(links);
-
-               lines.enter()
-                      .append('path')
-                    .merge(lines)
-                      .attr('linkNodes', (d) => d.source.id + '-' + d.target.id)
-                      .attr('d', d3.sankeyLinkHorizontal())
-                      .attr('stroke', (d) => chart._colors(d.source.index % 10))
-                      .attr('stroke-width', (d) => d.width)
-                      .attr('stroke-opacity', '0.4')
-                      .attr('fill', 'none');
-
-               lines.exit()
-                      .remove();
+    let links_dataset = []
+    for(let key in datas['links']){
+        links_dataset.push(datas['links'][key])
     }
 
-    /* ----------------------------渲染文本标签------------------------  */
-    chart.renderTexts = function(){
-        d3.selectAll('.text').remove();
 
-        chart.body().selectAll('.node')
-                        .append('text')
-                        .attr('class', 'text')
-                        .attr('x', (d) => (d.x0 + d.x1)/2)
-                        .attr('y', (d) => (d.y0 + d.y1)/2)
-                        .attr('stroke', config.textColor)
-                        .attr('text-anchor', 'middle')
-                        .attr('dy', 6)
-                        .text((d) => d.id);
+
+
+    let last_width = 0;
+    let rect_top = []
+    for(let i in node_top_dataset){
+        rect_top.push({'x': last_width, 'width': node_top_dataset[i]/scaleX})
+        last_width += (node_top_dataset[i]/scaleX + padding_width);
     }
 
-    /* ----------------------------渲染图标题------------------------  */
-    chart.renderTitle = function(){
-        chart.svg().append('text')
-                .classed('title', true)
-                .attr('x', chart.width()/2)
-                .attr('y', 0)
-                .attr('dy', '2em')
-                .text(config.title)
-                .attr('fill', config.textColor)
-                .attr('text-anchor', 'middle')
-                .attr('stroke', config.textColor);
+    // const sankey_width_will_be = last_width;
+    // const sankey_scaleX = sankey_width_will_be / Sankey_width;
 
+    // last_width = 0;
+    // for(let i in node_top_dataset){
+    //     rect_top.push({'x': last_width, 'width': node_top_dataset[i]/20*sankey_scaleX })
+    //     last_width += node_top_dataset[i]/20 + padding_width;
+    //     last_width *= sankey_scaleX;
+    // }
+
+    last_width = 0;
+    let rect_bottom = []
+    for(let i in node_bottom_dataset){
+        rect_bottom.push({'x':last_width, 'width': node_bottom_dataset[i]/scaleX})
+        last_width += (node_bottom_dataset[i]/scaleX + padding_width);
+        // last_width *= sankey_scaleX;
     }
 
-    /* ----------------------------绑定鼠标交互事件------------------------  */
-    chart.addMouseOn = function(){
+    var svg = d3.select('#Down_1_1')
+            .append('svg')
+            .attr('width', Sankey_width)
+            .attr('height', Sankey_height)
+            .attr('transform', 'translate(' + margin.top  + ',' + margin.left + ')')            
 
-        // 悬停在节点上
-        d3.selectAll('.node')
-            .on('mouseover', function(d){
-                d3.selectAll('.node, path')
-                    .attr('fill-opacity', '0.1')
-                    .attr('stroke-opacity', '0.1');
+    var top_nodes = svg.selectAll('sankey_top_node')
+                    .data(node_top_dataset)
+                    .enter()
+                    .append('rect')
+                    .attr('class', 'sankey_top_node')
+                    .attr('id',function(d, i){
+                        return 'sankey_community_top_' + String(i);
+                    })
+                    .attr('x', function(d, i){
+                        return rect_top[i]['x'];
+                    })
+                    .attr('y', top_y)
+                    .attr('width',  function(d){return d/scaleX})
+                    .attr('height', padding_height)
+                    .attr('fill', 'steelblue')
+                    .on("click",community_click_do);
+                    
 
-                d3.selectAll('[linkNodes*=' + d.id + ']')
-                    .attr('fill-opacity', '1')
-                    .attr('stroke-opacity', '0.4');
+    var bottom_nodes = svg.selectAll('sankey_bottom_node')
+                        .data(node_bottom_dataset)
+                        .enter()
+                        .append('rect')
+                        .attr('class', 'sankey_bottom_node')
+                        .attr('id',function(d, i){
+                            return 'sankey_community_bottom_' + i;
+                        })
+                        .attr('x', function(d, i){
+                            return rect_bottom[i]['x'];
+                        })
+                        .attr('y', bottom_y)
+                        .attr('width',  function(d){return d/scaleX})
+                        .attr('height', padding_height)
+                        .attr('fill', 'steelblue')
+                        .on("click",community_click_do);
 
 
+    var links = svg.selectAll('sankey_link')
+                    .data(links_dataset)
+                    .enter()
+                    .append('path')
+                    .attr('class', 'sankey_community_path')
+                    .attr('id', function(d,i){
+                        return 'sankey_community_path_' + i;
+                    })
+                    .attr('d', straightLine)
+                    .style('fill', 'steelblue')
+                    .style('opacity', 0.5)
+                    .on("click",community_click_do);
 
-            })
-            .on('mouseleave', function(){
-                d3.selectAll('.node, path')
-                    .attr('fill-opacity', '1')
-                    .attr('stroke-opacity', '0.4');
-            })
+    // function sankey_click_do(d,i){
+    //     sankey_change_color(i);
+    //     force_change_color(i);
+    //     community_Distribution_change_color(i);
+    // }
 
-        // 悬停在连线上
-        d3.selectAll('path')
-            .on('mouseover', function(){
-                d3.selectAll('.node, path')
-                    .attr('fill-opacity', '0.1')
-                    .attr('stroke-opacity', '0.1');
 
-                const e = d3.event;
-                const hoverNodes = d3.select(e.target)
-                                        .attr('stroke-opacity', '0.4')
-                                        .attr('linkNodes').split('-');
-
-                hoverNodes.forEach((id) => {
-                    d3.selectAll('[index=' + id + ']')
-                    .attr('fill-opacity', '1')
-                });
-            })
-            .on('mouseleave', function(){
-                d3.selectAll('.node, path')
-                    .attr('fill-opacity', '1')
-                    .attr('stroke-opacity', '0.4');
-            })
+    function straightLine(d,i) {
+        let dy = (bottom_y - top_y)/2;
+        let x1 = rect_top[parseInt(d['source'])]['x'];
+        let y1 = top_y + padding_height;
+        let x2 = rect_bottom[parseInt(d['target'])]['x'];
+        let y2 = bottom_y;
+        var rect_width = rect_top[i]['width'];
+        return 'M' + x1 + ',' + y1 +
+                'C' + x1 + ',' + dy + ',' + x2 + ',' + dy + ',' + x2 + ',' + y2 +
+                'h' + rect_width +
+                'C' + (x2 + rect_width) + ',' + dy + ',' + (x1 + rect_width) + ',' + dy + ',' + (x1 + rect_width) + ',' + y1
     }
-
-    chart.render = function(){
-
-        chart.renderTitle();
-
-        chart.renderNodes();
-
-        chart.renderLines();
-
-        chart.renderTexts();
-
-        chart.addMouseOn();
-    }
-
-//     chart.renderChart();
-
-});
+})

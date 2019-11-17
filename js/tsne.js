@@ -1,10 +1,3 @@
-/*
- * @Author: ChenShan 
- * @Date: 2019-09-27 21:07:57 
- * @Last Modified by: ChenShan
- * @Last Modified time: 2019-09-30 21:51:35
- */
-
 var tsne_filename = "../data/oregonf_tsne_5000.csv";
 var tsne_draw_id = "#Right_1";
 var tsne_selected_color = "rgb(255,0,0,1.0)"

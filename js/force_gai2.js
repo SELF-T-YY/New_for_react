@@ -45,7 +45,7 @@ function drawforce(data){
                 node["y"] = datas[key]["y"];
                 f_nodes.push(node);
             }
-            console.log(f_nodes);
+            // console.log(f_nodes);
 
             d3.csv("/data/oregonf.csv",function(error,csvdata){
 
@@ -59,7 +59,7 @@ function drawforce(data){
                 }
 
 
-                console.log(f_nodes);
+                // console.log(f_nodes);
 
 
                 const lines = new PIXI.Graphics();
@@ -210,6 +210,7 @@ function drawforce(data){
                     // console.log(this.drawingCircle);
                     if(this.drawingCircle == true)
                     {
+                        reflash();
                         const newPosition = getMousePos(this);
                         const circle_r = Math.sqrt(Math.pow(newPosition.x / scaleAll_xy - mouse_down_position.x / scaleAll_xy, 2) + Math.pow(newPosition.y / scaleAll_xy - mouse_down_position.y / scaleAll_xy, 2));
 
@@ -344,48 +345,3 @@ function drawforce(data){
 }
 
 drawforce();
-
-function if_button_move_click(flag)
-{
-    if_move = flag;
-}
-function if_button_point_click(flag)
-{
-    if_choose_point = flag;
-}
-function if_button_circle_choose(flag)
-{
-    if_circle_choose = flag;
-}
-
-
-function force_change_color(community_num)
-{
-    // console.log(community_num);
-    d3.json("/data/community_id.json", function(data_community)
-    {
-        // let nodes = new Array();
-        d3.json("/data/force_data_gai.json", function(datas){
-
-                console.log(datas);
-                console.log(data_community);
-
-                var circles_change_color = 0xff00ff;
-                choosed_point_data = data_community[community_num];
-                circles_choose.clear();
-                circles_choose_change_color.clear();
-                // change_color(choosed_point_data);
-                console.log(choosed_point_data)
-                for(let node in  choosed_point_data)
-                {
-                    const now_x = (datas[choosed_point_data[node]].x);
-                    const now_y = (datas[choosed_point_data[node]].y);
-                    circles_choose_change_color.beginFill(circles_change_color);
-                    circles_choose_change_color.drawCircle(now_x,now_y,5);
-                    circles_choose_change_color.endFill();
-                }
-                app.stage.addChild(circles_choose_change_color);
-        })
-
-    })
-}

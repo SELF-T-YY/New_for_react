@@ -9,14 +9,6 @@ const c_height = 350;
 
 function draw_bar_chart(data)
 {
-
-    // var svg = d3.select('#Down_2_1').append('svg');
-    // svg.append('rect')
-    //     .attr('width', width)
-    //     .attr('height', height)
-    //     // .attr('class', 'myclass');
-
-
     d3.json('/data/community_num.json', function do_data(datas)
     {
         let count = 0
@@ -54,36 +46,12 @@ function draw_bar_chart(data)
                         .attr('height',function(d,i){
                             return c_height-padding.bottom-padding.top-yScale(d);
                         }).attr('fill','steelblue')
-                        .attr("id",function(d_, g){
-                            return "B" + String(g);
+                        .attr("id",function(d, i){
+                            return "community_Distribution_" + i;
                         })
-                        .attr("class", "B")
-                        .on("click",function(d_, g)
-                        {
-                            d3.selectAll(".B").attr("fill", 'steelblue');
-                            d3.select(this).attr("fill", "red");
-                            // console.log(d_)
-                            console.log(g)
-                            force_change_color(g);
-                        });
+                        .attr("class", "community_Distribution")
+                        .on("click",community_click_do);
                 
-        // var texts = svg.selectAll('MyText')
-        //         .data(dataset)
-        //         .enter()
-        //         .append('text')
-        //         .attr('class','MyText')
-        //         .attr("transform","translate(" + padding.left + "," + padding.top + ")")
-        //         .attr('x',function(d,i){
-        //             return xScale(i) + rectWidth/2;
-        // }).attr('y',function(d,i){
-        //             return yScale(d);
-        //         }).attr('dx',function(){
-        //             return (xScale.bandwidth() - rectWidth)/2;//V4版本
-        //         }).attr('dy',function(){
-        //             return 20;
-        //         }).text(function(d){
-        //             return d;
-        //         });
 
         svg.append('g')
                 .attr('class','axis').attr("transform","translate(" + padding.left + "," + (c_height - padding.bottom) + ")").call(d3.axisBottom(xScale));//d3.axisBottom(xScale)  --V4版本
@@ -93,12 +61,9 @@ function draw_bar_chart(data)
 }
 draw_bar_chart();
 
+// function community_Distribution_click_do(d,i){
+//     force_change_color(i);
+//     community_Distribution_change_color(i);
+//     sankey_change_color(i);
+// }
 
-function community_Distribution_change_color(community_num)
-{
-    let svg = d3.select('#Down_2_1').select('svg');
-    const rect_name = "#B" + String(community_num);
-    let rect = svg.selectAll('MyRect')
-                    .select(rect_name)
-                    .attr("fill", "red");
-}

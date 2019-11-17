@@ -14,9 +14,6 @@
         var Sankey_height = 4500;
         const margin = {top: 10, right: 10, bottom: 10, left: 10};
 
-      
-        // let color = d3.scaleOrdinal(d3.schemeCategory20);
-
 
         d3.json('/data/sankey_data_gai.json', function(datas){
 
@@ -36,8 +33,6 @@
             for(let key in datas['links']){
                 links_dataset.push(datas['links'][key])
             }
-            // console.log(links_dataset)
-
             const padding_width = 5;
             const padding_height = 20;
             const top_y = 10;
@@ -95,100 +90,18 @@
                             .attr('height', padding_height)
                             .attr('fill', 'steelblue');
 
-
-
-            // links_dataset.forEach(function (d, i) {
-            //     var path = svg.append('path')
-            //                     .attr('id',function (d, i) {
-            //                         return 'sankey_path_' + String(i);
-            //                     })
-            //                     .attr('d', function(d) {
-            //                         console.log(d)
-            //                         let dx = 10;
-            //                         let dy = 100;
-            //                         let x1 = rect_top[parseInt(d['source'])]['x'];
-            //                         let y1 = top_y;
-            //                         let x2 = rect_bottom[parseInt(d['target'])]['x'];
-            //                         let y2 = bottom_y;
-            //                         // console.log(x1)
-
-            //                         var path_do = d3.path();
-            //                         let cpx1 = x1 - dx;
-            //                         let cpy1 = y1 + dy;
-            //                         let cpx2 = x2 + dx;
-            //                         let cpy2 = y2 - dy;
-            //                         path_do.moveTo(x1, y1);
-            //                         path_do.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x2, y2);
-            //                         console.log(path_do.toString());
-            //                         return path_do.toString();
-            //                     })
-            //                     .style('fill', 'none')
-            //                     .style('stroke', 'steelbule')
-            //                     .style('stroke-width', function(d, i){
-            //                         // return rect_top[i]['width'];
-            //                         return 20;
-            //                     });
-            // })
-            // console.log(links_dataset)
-
-
-
-            // for(var i in links_dataset){
-            //     svg.append('path')
-            //                     .attr('d', function(){
-            //                         console.log(i)
-            //                         let dx = 10;
-            //                         let dy = 100;
-            //                         var d = links_dataset[i];
-            //                         let x1 = rect_top[parseInt(d['source'])]['x'];
-            //                         let y1 = top_y + padding_height;
-            //                         let x2 = rect_bottom[parseInt(d['target'])]['x'];
-            //                         let y2 = bottom_y;
-            //                         // console.log(x1)
-
-            //                         var path_do = d3.path();
-            //                         let cpx1 = x1 - dx;
-            //                         let cpy1 = y1 + dy;
-            //                         let cpx2 = x2 + dx;
-            //                         let cpy2 = y2 - dy;
-            //                         path_do.moveTo(x1, y1);
-            //                         path_do.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x2, y2);
-            //                         console.log(path_do.toString());
-            //                         return path_do.toString();
-            //                     })
-            //                     .style('stroke-opacity', 0.5)
-            //                     .style('fill', 'none')
-            //                     .style('stroke', 'red')
-            //                     .style('stroke-width', function(d, i){
-            //                         return String(rect_top[i]['width']);
-            //                         // return '20';
-            //                     })
-            //                     // .style('stroke-width','2');                
-            // }
-
-            // var totalLength = path.node().getTotalLength();
-
             function straightLine(d,i) {
                 let dx = 0;
                 let dy = (bottom_y - top_y)/2;
-                // var d = links_dataset[33];
                 let x1 = rect_top[parseInt(d['source'])]['x'];
                 let y1 = top_y + padding_height;
                 let x2 = rect_bottom[parseInt(d['target'])]['x'];
                 let y2 = bottom_y;
-                // console.log(x1)
-
                 var rect_width = rect_top[i]['width'];
-
-                // var path_do = d3.path();
                 let cpx1 = x1;
                 let cpy1 = dy;
                 let cpx2 = x2;
                 let cpy2 = dy;
-                // path_do.moveTo(x1 + rect_top[i]['width']/2, y1);
-                // path_do.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x2 + rect_top[i]['width']/2, y2);
-                // console.log(path_do.toString());
-                // return path_do.toString();
                 return 'M' + x1 + ',' + y1 +
                         'C' + x1 + ',' + dy + ',' + x2 + ',' + dy + ',' + x2 + ',' + y2 +
                         'h' + rect_width +
@@ -201,37 +114,9 @@
                             .enter()
                             .append('path')
                             .attr('d', straightLine)
-                            // .attr("stroke-dasharray", totalLength + " " + totalLength)
-                            // .attr("stroke-dashoffset", totalLength)
-                            // .attr('d', function(d,i){
-                            //     console.log(d)
-                            //     let dx = 10;
-                            //     let dy = 100;
-                            //     // var d = links_dataset[33];
-                            //     let x1 = rect_top[parseInt(d['source'])]['x'];
-                            //     let y1 = top_y + padding_height;
-                            //     let x2 = rect_bottom[parseInt(d['target'])]['x'];
-                            //     let y2 = bottom_y;
-                            //     // console.log(x1)
-
-                            //     var path_do = d3.path();
-                            //     let cpx1 = x1 - dx;
-                            //     let cpy1 = y1 + dy;
-                            //     let cpx2 = x2 + dx;
-                            //     let cpy2 = y2 - dy;
-                            //     path_do.moveTo(x1 + rect_top[i]['width']/2, y1);
-                            //     path_do.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x2 + rect_top[i]['width']/2, y2);
-                            //     console.log(path_do.toString());
-                            //     return path_do.toString();
-                            // })
                             .style('fill', 'red')
                             .style('stroke', 'red')
                             .style('opacity', 0.5)
-                            .style('stroke-width', function(d, i){
-                                // return rect_top[i]['width'];
-                                return 0;
-                            })
-            console.log(links)
 
         })
 
