@@ -60,10 +60,3 @@ function draw_bar_chart(data)
     })
 }
 draw_bar_chart();
-
-// function community_Distribution_click_do(d,i){
-//     force_change_color(i);
-//     community_Distribution_change_color(i);
-//     sankey_change_color(i);
-// }
-

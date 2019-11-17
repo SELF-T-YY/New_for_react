@@ -1,148 +1,70 @@
-var tsne_filename = "../data/oregonf_tsne_5000.csv";
-var tsne_draw_id = "#Right_1";
-var tsne_selected_color = "rgb(255,0,0,1.0)"
-var tsne_unselected_color = "rgb(23, 37, 90,0.6)"
-var tsne_height = 350;
-var tsne_width = 410;
-var tsne_svg = d3.select(tsne_draw_id)
-                            .append("svg")
-                            .attr("id","tsneNodes")
-                            .style("position","absolute")
-                            .attr("height",tsne_height)
-                            .attr("width",tsne_width);
-function darwtsnenodes(filename,draw_id){
-    d3.csv(filename,function(error,data){
-        tsneData = data;
-        for(var i = 0 ;i < data.length ; i++){
-            tsneData[i].x = parseFloat(data[i].x);
-            tsneData[i].y = parseFloat(data[i].y);
-            tsneData[i].id = parseInt(data[i].id);
+const tsne_width = document.getElementById('Right_1_1').offsetWidth;
+const tsne_height = document.getElementById('Right_1_1').offsetHeight;
+
+const tsne_circle_color = 'steelblue';
+
+
+function draw_tsne(input_data){
+    d3.json('/data/oregonf_tsne_5000.csv', function(tsne_datas){
+        let dataset = [];
+        for(let key in tsne_datas){
+            let data = {};
+            data.x = parseFloat(tsne_datas[key].x);
+            data.y = parseFloat(tsne_datas[key].y);
+            data.id = parseInt(tsne_datas[key].id);
+            dataset.push(data);
         }
-        var x_max = d3.max(tsneData,function(d){return d.x;})
-        var x_min = d3.min(tsneData,function(d){return d.x;})
-        var y_max = d3.max(tsneData,function(d){return d.y;})
-        var y_min = d3.min(tsneData,function(d){return d.y;})
+
+
+        var svg = d3.select('#Right_1_1')
+                    .append('svg')
+                    .attr('width', tsne_width)
+                    .attr('height', tsne_height)
+                    
+
+        var x_max = d3.max(dataset,function(d){
+            return d.x;
+        })
+        var x_min = d3.min(dataset,function(d){
+            return d.x;
+        })
+        var y_max = d3.max(dataset,function(d){
+            return d.y;
+        })
+        var y_min = d3.min(dataset,function(d){
+            return d.y;
+        })
+
+
         var xScale = d3.scaleLinear()
                         .domain([x_min,x_max])
-                        .range([5,tsne_width]);
+                        .range([10,tsne_width]);
         var yScale = d3.scaleLinear()
                         .domain([y_min,y_max])
-                        .range([5,tsne_height]);
-        tsne_svg.append("g")
-                    .selectAll("circle")
-                    .data(tsneData)
-                    .enter()
-                    .append("circle")
-                    .attr("class","tsne_node")
-                    .attr("cx",function(d){
-                        return xScale(d.x);
-                    })
-                    .attr("cy",function(d){
-                        return yScale(d.y);
-                    })
-                    .attr("id",function(d){
-                        return "tsne_node_"+d.id;
-                    })
-                    .attr("r",1.2)
-                    .attr("fill",tsne_unselected_color)
-                    .on("click",function(d)
-                    {
-                        clearSelectPoint();  
-                    });
-        function tsne_point_click(id)
-        {
-            d3.select("#tsne_node_"+id).style("fill",tsne_selected_color);
+                        .range([10,tsne_height]);
+
+        for(var i = 0 ; i < dataset.length; i++){
+            dataset[i].x = parseInt(xScale(dataset[i].x));
+            dataset[i].y = parseInt(yScale(dataset[i].y));
         }
+
+
+        svg.append('g')
+            .selectAll('.tsne_circle')
+            .data(dataset)
+            .enter()
+            .append('circle')
+            .attr('r', 1)
+            .attr('fill', tsne_circle_color)
+            .attr('cx', function(d){ return d['x']; })
+            .attr('cy', function(d){ return d['y']; })
+            .attr('class', 'tsne_circle')
+            .attr('id', function(d,i){ return 'tsne_circle_' + d['id']; })
+            
+
         
-        function tsne_change_color(nodes,svg)
-        {
-            svg.selectAll("circle").style("opacity",0.6);
-            for(var i = 0;i < data.length;i++)
-            {
-                d3.selectAll("#tsne_node_"+data[i]).style("fill",tsne_selected_color);
-            }
-        }
-        
-        function brush_tsne_force(selectpoints)
-        {
-            for(var i = 0;i < selectpoints.length;i++)
-            {
-                ;
-                // 选择力道途中对应id的节点改变颜色
-                // d3.select()
-            }
-        }
-        
-        function brush_tsne(selectpoints){
-            for( var i = 0;i<selectpoints.length;i++){
-                d3.select("#tsne_node_"+selectpoints[i].id).style("fill",selectedColor);
-            }
-        }
-        function clearSelectPoint(){
-            d3.selectAll("circle").style("fill",tsne_unselected_color);
-        }
-        var brush = d3.brush();
-        function brushed(){}
-        function brushend(){
-            d3.selectAll("circle").style("fill",tsne_unselected_color);
-            var event = d3.event.selection;
-            var x1=event[0][0], y1=event[0][1], x2=event[1][0], y2=event[1][1];
-            var x_max=d3.max([x1,x2]), y_max=d3.max([y1,y2]), x_min=d3.min([x1,x2]), y_min=d3.min([y1,y2]);
-            var selectpoints=[];
-            for(var i=0;i<tsneData.length;i++){
-                var x=parseFloat($("#tsne_node_"+tsneData[i].id)[0].attributes.cx.value);
-                var y=parseFloat($("#tsne_node_"+tsneData[i].id)[0].attributes.cy.value);
-                if(x>=x_min&&x<=x_max&&y>=y_min&&y<=y_max){
-                    selectpoints.push(tsneData[i].id);
-                    // console.log(tsneData[i].id);
-                    tsne_point_click(tsneData[i].id);
-                    // forceselect(tsneData[i].id);
-                    d3.select("#tsne_node_"+tsneData[i].id).style("fill",tsne_selected_color);
-                }
-            }
-        brush_tsne_force(selectpoints);
-        }
-        tsne_svg.append("g")
-                .attr("class","brush")
-                .call(brush.on("start brush",brushed).on("end",brushend));
-        brushed();
+
     })
 }
-darwtsnenodes(tsne_filename,tsne_draw_id);
-function change_heatmap_node()
-{
-    var v=d3.select('#node_heatmap_select').attr('vlaue');
-    console.log(v);
-    if(v=='Nodes')
-    {
-        d3.select(".heatmap-canvas").remove();
-        darwtsnenodes(tsne_filename,tsne_draw_id);   
-    }
-    else
-    {
-        d3.select("#tsneNodes").remove();
-        drawheatmap(heatmap_filename,heatmap_draw_id);        
-    }
-    console.log('yes');
-}
 
-
-function tmep_fuction(text)
-{
-    if(text.innerHTML=="Heatmap"){
-        d3.select("#tsneNodes").remove();
-        drawheatmap(heatmap_filename,heatmap_draw_id);
-        // document.getElementById("heatmap").style.display = "block" ;
-        // document.getElementById("nodediv").style.display = "none" ;
-        text.innerHTML="Nodes"
-    }
-    else {
-        // document.getElementById("nodediv").style.display = "block" ;
-        // document.getElementById("heatmap").style.display = "none" ;
-        text.innerHTML="Heatmap"
-        // drawnodes('#nodesvg',nodeData);
-        var t = d3.select(".heatmap-canvas");
-        t.remove();
-        darwtsnenodes(tsne_filename,tsne_draw_id);
-    }
-}
+draw_tsne();
