@@ -18,23 +18,27 @@ function if_button_circle_choose(flag){
 }
 
 
-function force_change_color(community_num){
+function force_change_color(i){
+    // d3.selectAll('.tsne_node').attr('fill', tsne_unselected_color);
     d3.json("/data/community_id.json", function(data_community)
     {
         d3.json("/data/force_data_gai.json", function(datas){
                 var circles_change_color = 0xff00ff;
-                choosed_point_data = data_community[community_num];
+                choosed_point_data = data_community[i];
                 circles_choose.clear();
                 circles_choose_change_color.clear();
                 for(let node in  choosed_point_data)
                 {
                     const now_x = (datas[choosed_point_data[node]].x);
                     const now_y = (datas[choosed_point_data[node]].y);
+                    d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
                     circles_choose_change_color.beginFill(circles_change_color);
                     circles_choose_change_color.drawCircle(now_x,now_y,5);
                     circles_choose_change_color.endFill();
                 }
                 app.stage.addChild(circles_choose_change_color);
+
+                
         })
 
     })
@@ -54,11 +58,19 @@ function community_change_color(i){
     d3.select('#community_' + i).attr('fill', 'red');
 }
 
+
+function connected_change_color(i){
+    d3.selectAll('.connected').attr('fill', 'steelblue');
+    d3.select('#connected_' + i).attr('fill', 'red');
+}
+
+
 function community_click_do(d,i){
     community_change_color(i);
     sankey_change_color(i);
     force_change_color(i);
     community_Distribution_change_color(i);
+    connected_change_color(i);
 }
 
 function reflash(){
