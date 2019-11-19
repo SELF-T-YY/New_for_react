@@ -124,6 +124,16 @@ html,body{
     height: 94%;
 }
 
+#Right_1_2{
+    position: absolute;
+    left: 1%;
+    top: 4%;
+    width: 33px;
+    height: 66px;
+    border: 2px solid rgba(151, 151, 151, 0.692);
+    border-radius: 10%;
+}
+
 #Right_2{
     width: 100%;
     height: 49.5%;
@@ -198,6 +208,17 @@ html,body{
     top: 99px;
 }
 
+#buttom_tsne_choose{
+    background-image: url(/images/框选.svg);
+    position: absolute;
+    top: 0px;
+}
+
+#buttom_tsne_reflash{
+    background-image: url(/images/刷新.svg);
+    position: absolute;
+    bottom: 0;
+}
 
 .button_force{
     width: 33px;
@@ -211,6 +232,18 @@ html,body{
     inset-block: 0;
 }
 
+
+.button_tsne{
+    width: 33px;
+    height: 33px;
+    background-color: white;
+    border: 1px solid #D3D3D3;
+    outline:none;
+    background-color: white;
+    vertical-align: "middle";
+    align-items: center;
+    inset-block: 0;
+}
 
 
 .mytitle{

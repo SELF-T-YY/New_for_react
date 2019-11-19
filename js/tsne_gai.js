@@ -90,7 +90,7 @@ function darwtsnenodes(filename,draw_id){
                     d3.select("#tsne_node_"+tsneData[i].id).style("fill",tsne_selected_color);
                 }
             }
-        brush_tsne_force(selectpoints);
+            brush_tsne_force(selectpoints);
         }
         tsne_svg.append("g")
                 .attr("class","brush")
@@ -102,7 +102,7 @@ darwtsnenodes(tsne_filename,tsne_draw_id);
 function change_heatmap_node()
 {
     var v=d3.select('#node_heatmap_select').attr('vlaue');
-    console.log(v);
+    // console.log(v);
     if(v=='Nodes')
     {
         d3.select(".heatmap-canvas").remove();

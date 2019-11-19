@@ -6,7 +6,7 @@ const tsne_circle_choose_color = '#ff00ff'
 
 function draw_tsne(input_data){
     d3.csv('/data/oregonf_tsne_5000.csv', function(tsne_datas){
-        
+
         let dataset = [];
         for(let key = 0; key < tsne_datas.length; key++){
             let data = {};
@@ -59,51 +59,47 @@ function draw_tsne(input_data){
             .attr('cx', function(d){ return d['x']; })
             .attr('cy', function(d){ return d['y']; })
             .attr('class', 'tsne_circle')
-            .attr('id', function(d,i){ return 'tsne_circle_' + d['id']; })
+            .attr('id', function(d){
+                return 'tsne_circle_' + d['id']; 
+            })
             
 
-        var brush = d3.brush();
+        var brush = d3.brush()
+                        .extent([
+                            [0,0],
+                            [c_width,c_height]
+                        ])
+                        .on('start brush', brushed)
+                        .on('end', brushend);
         svg.append('g')
-            .attr('class', 'brush')
-            .call(brush.on('start brush', brushed).on('end', brushend()));
-        brushed();
+            .attr('id', 'tsne_brush')
+            .call(brush)
 
-        function brushed(){}
+        function brushed(){
+            d3.select('#tsne_brush').style('opacity', 1)
+
+        }
         function brushend(){
-            d3.selectAll("circle").style("fill",tsne_unselected_color);
             var event = d3.event.selection;
-            var x1=event[0][0], y1=event[0][1], x2=event[1][0], y2=event[1][1];
-            var x_max=d3.max([x1,x2]), y_max=d3.max([y1,y2]), x_min=d3.min([x1,x2]), y_min=d3.min([y1,y2]);
-            var selectpoints=[];
-            for(var i=0;i<tsneData.length;i++){
-                var x=parseFloat($("#tsne_node_"+tsneData[i].id)[0].attributes.cx.value);
-                var y=parseFloat($("#tsne_node_"+tsneData[i].id)[0].attributes.cy.value);
-                if(x>=x_min&&x<=x_max&&y>=y_min&&y<=y_max){
-                    selectpoints.push(tsneData[i].id);
-                    d3.select("#tsne_node_"+tsneData[i].id).style("fill",tsne_selected_color);
+            
+            var x1 = event[0][0];
+            var y1 = event[0][1];
+            var x2 = event[1][0];
+            var y2 = event[1][1];
+            var x_max = d3.max([x1,x2]);
+            var y_max = d3.max([y1,y2]);
+            var x_min = d3.min([x1,x2]);
+            var y_min = d3.min([y1,y2]);
+            var circle_choosed = [];
+            for(var key in dataset){
+                var x = dataset[key].x;
+                var y = dataset[key].y;
+                if(x >= x_min && x <= x_max && y >= y_min && y <= y_max){
+                    circle_choosed.push(dataset[key]['id']);
                 }
             }
-            // d3.selectAll('.tsne_circle').style('fill', tsne_circle_color);
-            // var event = d3.event;
-            
-            // var x1 = event[0][0];
-            // var y1 = event[0][1];
-            // var x2 = event[1][0];
-            // var y2 = event[1][1];
-            // var x_max = d3.max([x1,x2]);
-            // var y_max = d3.max([y1,y2]);
-            // var x_min = d3.min([x1,x2]);
-            // var y_min = d3.min([y1,y2]);
-            // var circle_choosed = [];
-            // for(var key in dataset){
-            //     var x = parseFloat(d3.select('#tsne_circle_' + dataset[key]['id']).attributes.cx.value);
-            //     var y = parseFloat(d3.select('#tsne_circle_' + dataset[key]['id']).attributes.cy.value);
-            //     if(x >= x_min && x <= x_max && y >= y_min && y <= y_max){
-            //         circle_choosed.push(dataset[key]['id']);
-            //         d3.select('#tsne_circle_' + dataset[key]['id']).attr('fill', tsne_circle_choose_color);
-            //     }
-
-            // }
+            tsne_chanege_color_by_list(circle_choosed);
+            tsne_choose_force_change_color(circle_choosed);
         }
         
 
@@ -112,6 +108,3 @@ function draw_tsne(input_data){
 
 draw_tsne();
 
-function tsne_chanege_color(){
-
-}

@@ -165,14 +165,17 @@
                             <option value="Heatmaps">Heatmaps</option>
                         </select>
                     </div>
-                    <div id="Right_1_canvas" >
-                        <button class="title_btn" id = "node_brush_btn"></button>
-                        <button class="title_btn" id = "node_clear_btn"></button>
-                    </div>
+                    <!-- <div id="Right_1_canvas" >
+
+                    </div> -->
                 </div>
                 <div id="Right_1_1">
-                    <script src="/js/tsne_gai.js"></script>
-                    <script src="/js/heatmap.js"></script>                    
+                    <script src="/js/Tsne.js"></script>
+                    <script src="/js/heatmap.js"></script>
+                    <div id="Right_1_2">
+                        <input type="button" id="buttom_tsne_choose" class="button_tsne" onclick="button_move_click_on()">
+                        <input type="button" id="buttom_tsne_reflash" class="button_tsne" onclick="reflash()">
+                    </div>                
                 </div>
 
             </div>

@@ -25,6 +25,7 @@ function force_change_color(i){
         d3.json("/data/force_data_gai.json", function(datas){
                 var circles_change_color = 0xff00ff;
                 choosed_point_data = data_community[i];
+                // console.log(choosed_point_data)
                 circles_choose.clear();
                 circles_choose_change_color.clear();
                 for(let node in  choosed_point_data)
@@ -37,10 +38,33 @@ function force_change_color(i){
                     circles_choose_change_color.endFill();
                 }
                 app.stage.addChild(circles_choose_change_color);
-
-                
+                //tsne该颜色
+                tsne_chanege_color_by_list(choosed_point_data);
+                // d3.select('#tsne_brush').remove()
+                d3.select('#tsne_brush').style('opacity', 0)
         })
 
+    })
+}
+
+
+function tsne_choose_force_change_color(circle_list){
+    d3.json("/data/force_data_gai.json", function(datas){
+        var circles_change_color = 0xff00ff;
+        choosed_point_data = circle_list;
+        // console.log(choosed_point_data)
+        circles_choose.clear();
+        circles_choose_change_color.clear();
+        for(let node in  choosed_point_data)
+        {
+            const now_x = (datas[choosed_point_data[node]].x);
+            const now_y = (datas[choosed_point_data[node]].y);
+            d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
+            circles_choose_change_color.beginFill(circles_change_color);
+            circles_choose_change_color.drawCircle(now_x,now_y,5);
+            circles_choose_change_color.endFill();
+        }
+        app.stage.addChild(circles_choose_change_color);
     })
 }
 
@@ -64,6 +88,12 @@ function connected_change_color(i){
     d3.select('#connected_' + i).attr('fill', 'red');
 }
 
+function tsne_chanege_color_by_list(circle_list){
+    d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
+    for(let key in circle_list){
+        d3.select('#tsne_circle_' + circle_list[key]).attr('fill','red');
+    }
+}
 
 function community_click_do(d,i){
     community_change_color(i);
@@ -81,4 +111,6 @@ function reflash(){
     d3.selectAll('.sankey_community_path').style('opacity', 0.5)
     circles_choose.clear();
     circles_choose_change_color.clear();
+    d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
+    d3.select('#tsne_brush').style('opacity', 0)
 }
