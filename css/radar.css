@@ -26,3 +26,21 @@
     fill: white;
     stroke-width: 3;
 }
+
+
+
+.webs polygon {
+    fill: white;
+    fill-opacity: 0.5;
+    stroke: gray;
+    stroke-dasharray: 10 5;
+}
+
+.areas polygon {
+    fill-opacity: 0.5;
+    stroke-width: 3;
+}
+.areas circle {
+    fill: white;
+    stroke-width: 3;
+}

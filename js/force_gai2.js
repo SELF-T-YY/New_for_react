@@ -38,12 +38,11 @@ function drawforce(data){
     d3.json("/data/force_data_gai.json", function(datas){
         for(let key in datas){
             let node = {};
-            node["id"] = datas[key]['id'];
+            node["id"] = key;
             node["x"] = datas[key]["x"];
             node["y"] = datas[key]["y"];
             f_nodes.push(node);
         }
-        // console.log(f_nodes);
 
         d3.csv("/data/oregonf.csv",function(error,csvdata){
 
@@ -57,7 +56,6 @@ function drawforce(data){
             }
 
 
-            // console.log(f_nodes);
 
 
             const lines = new PIXI.Graphics();
@@ -98,11 +96,9 @@ function drawforce(data){
             {
                 if(if_move == true){
                     this.dragging = true;
-                    // console.log("dragging");
                 }
                 else {
                     this.dragging = false;
-                    // console.log("not dragging");
                 }
                 if(if_circle_choose)this.drawingCircle = true;
                 else this.drawingCircle = false;
@@ -118,6 +114,7 @@ function drawforce(data){
                 
                 else if(this.drawingCircle)
                 {
+                    reflash();
                     this.drawingCircle = false;
                     const newPosition = getMousePos(this);
                     const circle_x = mouse_down_position.x;
@@ -136,14 +133,19 @@ function drawforce(data){
 
                     circles_choose.clear();
                     circles_choose_change_color.clear();
+                    console.log(choosed_point_data)
+                    var circle_list = []
                     for(let node in  choosed_point_data)
                     {
                         const now_x = (choosed_point_data[node].x);
                         const now_y = (choosed_point_data[node].y);
+                        circle_list.push(choosed_point_data[node].id);
                         circles_choose_change_color.beginFill(circles_change_color);
                         circles_choose_change_color.drawCircle(now_x,now_y,5);
                         circles_choose_change_color.endFill();
                     }
+                    console.log(circle_list)
+                    tsne_chanege_color_by_list(circle_list);
                     app.stage.addChild(circles_choose_change_color);
                 }
 
@@ -164,11 +166,9 @@ function drawforce(data){
                             choosed_point_data.push(f_nodes[node]);
                         }
                     }
-                    console.log(choosed_point_data);
 
                     circles_choose.clear();
                     circles_choose_change_color.clear();
-                    // change_color(choosed_point_data);
                     for(let node in  choosed_point_data)
                     {
                         const now_x = (choosed_point_data[node].x);
@@ -203,10 +203,8 @@ function drawforce(data){
                     circles_choose_change_color.y = moveAll_y;
                 }
 
-                // console.log(this.drawingCircle);
                 if(this.drawingCircle == true)
                 {
-                    reflash();
                     const newPosition = getMousePos(this);
                     const circle_r = Math.sqrt(Math.pow(newPosition.x / scaleAll_xy - mouse_down_position.x / scaleAll_xy, 2) + Math.pow(newPosition.y / scaleAll_xy - mouse_down_position.y / scaleAll_xy, 2));
 
@@ -261,10 +259,6 @@ function drawforce(data){
             }
             
 
-            
-
-            // data = ['id', 'id']
-            // nodes = [{id:"12123", x:...., y:,,,,}]
             function change_color(nodes)
             {
                 for(let node in  nodes)

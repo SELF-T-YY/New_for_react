@@ -113,4 +113,5 @@ function reflash(){
     circles_choose_change_color.clear();
     d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
     d3.select('#tsne_brush').style('opacity', 0)
+    d3.selectAll('.connected').attr('fill', 'steelblue');
 }

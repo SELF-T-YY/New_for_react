@@ -34,11 +34,11 @@ print(partition)
 max_num = 0
 fw = open(r'../data/oregonf_community.csv', 'w+')
 for key in partition.keys():
-    max_num = max(max_num,partition.get(key))
+    max_num = max(max_num, partition.get(key))
     fw.writelines(str(key)+','+str(partition.get(key))+'\n')
 print(max_num)
 fw.close()
-# # temp_num += 5
-#
-#
-#
+# temp_num += 5
+
+
+

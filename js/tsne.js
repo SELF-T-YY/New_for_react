@@ -75,11 +75,19 @@ function draw_tsne(input_data){
             .attr('id', 'tsne_brush')
             .call(brush)
 
+        // var if_brushend = false;
         function brushed(){
-            d3.select('#tsne_brush').style('opacity', 1)
-
+            // if(!if_brushend){
+            //     reflash();
+                d3.select('#tsne_brush').style('opacity', 1)
+            // }
+            // if_brushend = false;
         }
         function brushend(){
+            reflash();
+            d3.select('#tsne_brush').style('opacity', 1);
+
+            // if_brushend = true;
             var event = d3.event.selection;
             
             var x1 = event[0][0];

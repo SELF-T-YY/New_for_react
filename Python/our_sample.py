@@ -5,7 +5,7 @@ import tqdm
 import os
 
 
-def calculate_r(fpi, bi, alpha=1, beta=1, ra=10):
+def calculate_r(fpi, bi, alpha=1, beta=1, ra=7):
     r = ra/(alpha * fpi + beta * bi)
     return r
 
@@ -59,12 +59,12 @@ def poisson_disc(p_dict, elem_time=100):
     ans_dict = {}
     p_temp_dict = {}
     temp_dict = p_dict
-    a = 0
+    # a = 0
     p_key = random.choice(list(temp_dict))
     p_temp_dict.update({p_key: temp_dict[p_key]})
     temp_dict.pop(p_key)
     ans_dict.update({p_key: p_temp_dict[p_key]})
-    lena = len(list(temp_dict.keys()))
+    # lena = len(list(temp_dict.keys()))
     while temp_dict:
         # print(p_key)
         if_next = False
@@ -90,9 +90,9 @@ def poisson_disc(p_dict, elem_time=100):
             for remove_p in around_p:
                 temp_dict.pop(remove_p)
 
-        lenb = len(list(temp_dict.keys()))
-
-        print("%.2f%%" % ((lena-lenb)/lena * 100))
+        # lenb = len(list(temp_dict.keys()))
+        #
+        # print("%.2f%%" % ((lena-lenb)/lena * 100))
     return ans_dict
 
 
@@ -143,11 +143,20 @@ def poisson_disc(p_dict, elem_time=100):
     # return ans_dict
 
 
+
+
+
+
+#oregonf_OUR_a_1_b_1_Rate_20.json
+#oregonf_OUR_a_1_b_1_Rate_10.json--------------ra 7
 with open(r'../data/oregonf_tsne_5000_addedges.json') as f:
     data_dict = json.load(f)
+    len1 = len(list(data_dict.keys()))
     calculate_r_for_all(data_dict)
     final_dict = poisson_disc(data_dict)
     print(final_dict)
-    f_file = open(r'../data/1.json', 'w+')
+    len2 = len(list(final_dict.keys()))
+    print(len1/len2)
+    f_file = open(r'../data/oregonf_OUR_a_1_b_1_Rate_10.json', 'w+')
     ans_json = json.dumps(final_dict)
     f_file.write(ans_json)
