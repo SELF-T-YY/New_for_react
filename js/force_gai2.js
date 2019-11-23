@@ -3,6 +3,9 @@ var if_choose_point = false;
 var if_circle_choose = false;
 var force_community_num = 0;
 
+const force_file_name = "/data/force_data_gai.json"
+
+
 const force_width = 775;
 const force_height = 509;
 
@@ -13,20 +16,19 @@ var app = new PIXI.Application({
     resolution : 1,
 });
 
+
 document.querySelector('#Centre_2').appendChild(app.view);
 app.renderer.backgroundColor = 0xffffff;
 
 
-function drawforce(data){
+function drawforce(filename){
     let scaleAll_xy = 1;//整体缩放
     let moveAll_x = 0;//整体x移动
     let moveAll_y = 0;//整体y移动
     
     const circles_change_color = 0xff00ff;
     
-    // let f_nodes = [];
-    // let f_links = [];
-    
+
     let f_nodes = [];
     let f_links = [];
     
@@ -35,7 +37,7 @@ function drawforce(data){
     var circle_Choose_Color = 0x3A435E;
 
 
-    d3.json("/data/force_data_gai.json", function(datas){
+    d3.json(filename, function(datas){
         for(let key in datas){
             let node = {};
             node["id"] = key;
@@ -275,4 +277,4 @@ function drawforce(data){
     })
 }
 
-drawforce();
+drawforce(force_file_name);

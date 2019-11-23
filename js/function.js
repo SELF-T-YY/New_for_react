@@ -115,3 +115,10 @@ function reflash(){
     d3.select('#tsne_brush').style('opacity', 0)
     d3.selectAll('.connected').attr('fill', 'steelblue');
 }
+
+
+function readjson(filename){
+    d3.json(filename, function(ans){
+        return ans;
+    })
+}
