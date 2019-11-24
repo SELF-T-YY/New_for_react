@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <link rel="stylesheet" href="/css/Frame.css">
     <link rel="stylesheet" href="/css/title_factors.css">
     <link rel="stylesheet" href="/css/data_introduction.css">
@@ -47,9 +46,9 @@
                             </tr>
                             <tr class="noselect">
                                 <th>Sample:</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th id="sample_nodes_num"></th>
+                                <th id="sample_edges_num"></th>
+                                <th id="sample_community_num"></th>
                             </tr>
                         </table>
                     </div>
@@ -60,12 +59,18 @@
                     </div>
                     <div id="L_2">
                             <div id="L_1_2">
-                                <select name="Left-select" id="Left-s">
-                                        <option value="TIES">Sampling Methods</option>
+                                <select name="Left-select" id="Left-s" >
+                                        <option value="Sampling_Methods">Sampling Methods</option>
+                                        <option value="OUR">OUR</option>
+                                        <option value="SRW">SRW</option>
+                                        <option value="RNS">RNS</option>
+                                        <option value="ISRW">ISRW</option>
+                                        <option value="FF">FF</option>
+                                        <option value="TIES">TIES</option>
                                 </select>
-                                <input type="button" id="button-sample" value="Sample" onclick="sampling_func()">
+                                <input type="button" id="button-sample" value="Sample" onclick="buttom_sample_click()">
                                 <input type="button" id="button-Reset" value="Reset" onclick="sampling_func()">
-                                <!-- <script src="/js/button.js"></script> -->
+                                <script src="/js/buttom_gai.js"></script>
                             </div>
                             <div id="L_1_3" class="noselect">
                                 Density: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -73,11 +78,11 @@
                                 <b class="b1">100</b>
                                 <br>
                                 Betweeness：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="range" min="0" max="100" value="100" class="range" id="range2"> 
-                                <b class="b2">100</b>                       
+                                <input type="range" min="0" max="100" value="100" class="range" id="range2" step="5"> 
+                                <b class="b2">100</b>
                                 <br>
-                                Samoleing Rate: &nbsp;
-                                <input type="range" min="0" max="100" value="100" class="range" id="range3">
+                                Sampling Rate: &nbsp;
+                                <input type="range" min="0" max="100" value="100" class="range" id="range3" step="5">
                                 <b class="b3">100</b>
                                 <br>
                                 <script>

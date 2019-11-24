@@ -1,12 +1,7 @@
 import community
 import networkx as nx
 
-# temp_num = 5
-# while(temp_num!=50):
 G = nx.Graph()
-
-# fr_node = open("Data/textdata/text"+str(3)+"_nodes.csv", "r")
-# fr_node = open("Data/ori_nodes.csv","r")
 
 nodes = []
 edges = []
@@ -38,7 +33,3 @@ for key in partition.keys():
     fw.writelines(str(key)+','+str(partition.get(key))+'\n')
 print(max_num)
 fw.close()
-# temp_num += 5
-
-
-
