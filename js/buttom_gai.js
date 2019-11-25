@@ -29,10 +29,17 @@ function buttom_sample_click(){
 
     var file_path = NaN;
     if(!(sample_name == NaN || sample_rate == NaN)){
+        reflash();
+        
         file_path = '/data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json';
+        
         force_file_name = file_path;
         drawforce_again();
+        
+        document.getElementById('tsne_svg').remove()
+        draw_tsne();
 
+        drawRadar(parseInt(sample_rate))
     }
 
 

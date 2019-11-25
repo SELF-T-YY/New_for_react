@@ -41,6 +41,25 @@ function draw_bar_chart(data)
         var yScale = d3.scaleLinear()//V4版本
                 .domain([0,d3.max(rect_data)])
                 .range([c_height-padding.bottom-padding.top,0]);
+        
+        var rects_re = svg.selectAll('MyRect_re')
+                        .data(rect_data)
+                        .enter()
+                        .append('rect')
+                        .attr('class','MyRect_re')
+                        .attr("transform","translate(" + padding.left + "," + padding.top + ")")
+                        .attr('x',function(d,i){
+                            return xScale(i) + rectWidth/2;
+                        }).attr('y',function(d,i){
+                            return yScale(d);
+                        }).attr('width',xScale.bandwidth() - rectWidth)
+                        .attr('height',function(d,i){
+                            return c_height-padding.bottom-padding.top-yScale(d);
+                        }).attr('fill','steelblue')
+                        .style('opacity', 0.5)
+                        .attr("class", "community_Distribution")
+
+
         var rects = svg.selectAll('MyRect')
                         .data(rect_data)
                         .enter()
@@ -69,3 +88,16 @@ function draw_bar_chart(data)
     })
 }
 draw_bar_chart();
+
+
+function draw_community_disribution_again(){
+    force_file_name
+    let community_num = {}
+    d3.json(force_file_name,function(force_date){
+        d3.json('/data/community_id.json', function do_data(datas){
+            for(let key in datas){
+
+            }
+        }
+    })
+}

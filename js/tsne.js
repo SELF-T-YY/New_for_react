@@ -4,7 +4,7 @@ const tsne_height = document.getElementById('Right_1_1').offsetHeight;
 const tsne_circle_color = '#3A435E';
 const tsne_circle_choose_color = '#ff00ff'
 
-function draw_tsne(input_data){
+function draw_tsne(){
     d3.csv('/data/oregonf_tsne_5000.csv', function(tsne_datas){
         let tsne_dataset = [];
         let force_node = []
@@ -14,7 +14,7 @@ function draw_tsne(input_data){
             for(let key in t_nodes){
                 force_node.push(t_nodes[key]['id']);
             }
-            console.log(force_node)
+            // console.log(force_node)
             for(let key = 0; key < tsne_datas.length; key++){
                 let data = {};
                 data.x = parseFloat(tsne_datas[key].x);
@@ -23,7 +23,7 @@ function draw_tsne(input_data){
                 if(tsne_datas[key].id in force_node)
                     tsne_dataset.push(data);
             }
-            console.log(tsne_dataset)
+            // console.log(tsne_dataset)
 
             var svg = d3.select('#Right_1_1')
                         .append('svg')
@@ -94,7 +94,7 @@ function draw_tsne(input_data){
                 d3.select('#tsne_brush').style('opacity', 1);
 
                 var event = d3.event.selection;
-                
+                console.log(event)
                 var x1 = event[0][0];
                 var y1 = event[0][1];
                 var x2 = event[1][0];

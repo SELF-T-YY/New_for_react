@@ -23,7 +23,12 @@ function force_change_color(i){
     d3.json("/data/community_id.json", function(data_community)
     {
         d3.json(force_file_name, function(force_datas){
-                let datas = force_datas;
+                let temp_datas = force_datas['nodes'];
+                let datas = {};
+                for(let key in temp_datas){
+                    data_id = temp_datas[key]['id'];
+                    datas[data_id] = temp_datas[key];
+                }
                 var circles_change_color = 0xff00ff;
                 choosed_point_data = data_community[i];
                 // console.log(choosed_point_data)
@@ -52,7 +57,8 @@ function force_change_color(i){
 
 
 function tsne_choose_force_change_color(circle_list){
-    d3.json(force_file_name, function(datas){
+    d3.json(force_file_name, function(filename){
+        let datas = filename['nodes']
         var circles_change_color = 0xff00ff;
         choosed_point_data = circle_list;
         // console.log(choosed_point_data)
@@ -60,12 +66,15 @@ function tsne_choose_force_change_color(circle_list){
         circles_choose_change_color.clear();
         for(let node in  choosed_point_data)
         {
-            const now_x = (datas[choosed_point_data[node]].x);
-            const now_y = (datas[choosed_point_data[node]].y);
-            d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
-            circles_choose_change_color.beginFill(circles_change_color);
-            circles_choose_change_color.drawCircle(now_x,now_y,5);
-            circles_choose_change_color.endFill();
+            if(choosed_point_data[node] in datas){
+                const now_x = (datas[choosed_point_data[node]].x);
+                const now_y = (datas[choosed_point_data[node]].y);
+                d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
+                circles_choose_change_color.beginFill(circles_change_color);
+                circles_choose_change_color.drawCircle(now_x,now_y,5);
+                circles_choose_change_color.endFill();                
+            }
+
         }
         app.stage.addChild(circles_choose_change_color);
     })
