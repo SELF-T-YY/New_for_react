@@ -231,7 +231,7 @@ function drawforce(if_draw_again){
         function handle(delta) {
             if (delta <0){//向下滚动
                 scaleAll_xy *= 1.2;
-            }else{//向上滚动 
+            }else{//向上滚动
                 scaleAll_xy /= 1.2;
             }
             force_PIXIJS_circles.scale.x = scaleAll_xy;

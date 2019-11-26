@@ -128,9 +128,3 @@ function reflash(){
     d3.selectAll('.connected').attr('fill', 'steelblue');
 }
 
-
-function readjson(filename){
-    d3.json(filename, function(ans){
-        return ans;
-    })
-}

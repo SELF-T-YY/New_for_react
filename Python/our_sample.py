@@ -55,7 +55,7 @@ def dict_key_value_max(all_dict, p_dict):
     return max_betweenness_key
 
 
-def poisson_disc(p_dict, elem_time=100):
+def poisson_disc(p_dict):
     ans_dict = {}
     p_temp_dict = {}
     temp_dict = p_dict
@@ -143,10 +143,6 @@ def poisson_disc(p_dict, elem_time=100):
     # return ans_dict
 
 
-
-
-
-
 #oregonf_OUR_a_1_b_1_Rate_20.json
 #oregonf_OUR_a_1_b_1_Rate_10.json--------------ra 7
 with open(r'../data/oregonf_tsne_5000_addedges.json') as f:
@@ -157,6 +153,6 @@ with open(r'../data/oregonf_tsne_5000_addedges.json') as f:
     print(final_dict)
     len2 = len(list(final_dict.keys()))
     print(len1/len2)
-    f_file = open(r'../data/oregonf_OUR_a_1_b_1_Rate_10.json', 'w+')
-    ans_json = json.dumps(final_dict)
-    f_file.write(ans_json)
+    # f_file = open(r'../data/oregonf_OUR_a_1_b_1_Rate_10.json', 'w+')
+    # ans_json = json.dumps(final_dict)
+    # f_file.write(ans_json)

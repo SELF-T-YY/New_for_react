@@ -5,6 +5,7 @@ const force_community_height = 210;
 const force_community_circle_Color = 0x3A435E;
 const line_Color = 0xc6c6c6;
 
+function draw_community(data){
     d3.json('/data/community_num.json', function (datas)
     {
         var count = 0;
@@ -106,4 +107,7 @@ const line_Color = 0xc6c6c6;
             //    .attr("y", function(d){ return d.y; });
         }
     })
+}
 
+
+draw_community();

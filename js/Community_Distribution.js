@@ -3,8 +3,10 @@ const filter_color = 0x123123;
 const rest_color = 0x354985;
 const choose_color = 0xff00ff;
 
-const c_width = 540;
-const c_height = 350;
+var c_width = 540;
+var c_height = 350;
+
+var community_num_file_name = NaN
 
 
 function draw_bar_chart(data)
@@ -38,7 +40,7 @@ function draw_bar_chart(data)
                 .domain(d3.range(0,rect_data.length))
                 .range([0,c_width-padding.left-padding.right]);
 //V4版本-end
-        var yScale = d3.scaleLinear()//V4版本
+        yScale = d3.scaleLinear()//V4版本
                 .domain([0,d3.max(rect_data)])
                 .range([c_height-padding.bottom-padding.top,0]);
         
@@ -89,15 +91,22 @@ function draw_bar_chart(data)
 }
 draw_bar_chart();
 
-
 function draw_community_disribution_again(){
-    force_file_name
-    let community_num = {}
-    d3.json(force_file_name,function(force_date){
-        d3.json('/data/community_id.json', function do_data(datas){
-            for(let key in datas){
+    const padding = {left:30, right: 10, top:20, bottom:200};
 
-            }
+    d3.json(community_num_file_name, function(community_num){
+        var dataset = []
+        for(var key in community_num){
+            var data = {};
+            data['id'] = key;
+            data['num'] = Math.log10(community_num[key]);
+            dataset.push(data);
+
+            var rect = d3.select('#community_Distribution_' + key)
+                            .transition()
+                            .duration(2000)
+                            .attr('y', yScale(data['num']))
+                            .attr('height',c_height-padding.bottom-padding.top-yScale(data['num']));
         }
     })
 }

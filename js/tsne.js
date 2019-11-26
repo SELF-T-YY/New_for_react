@@ -77,7 +77,7 @@ function draw_tsne(){
             var brush = d3.brush()
                             .extent([
                                 [0,0],
-                                [c_width,c_height]
+                                [tsne_width,tsne_height]
                             ])
                             .on('start brush', brushed)
                             .on('end', brushend);
