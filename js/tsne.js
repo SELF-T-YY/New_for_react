@@ -72,48 +72,54 @@ function draw_tsne(){
                 .attr('id', function(d){
                     return 'tsne_circle_' + d['id']; 
                 })
+                .on('click', brush_draw())
+
+            
+            function brush_draw(){
+                var brush = d3.brush()
+                                .extent([
+                                    [0,0],
+                                    [tsne_width,tsne_height]
+                                ])
+                                .on('start brush', brushed)
+                                .on('end', brushend);
+                svg.append('g')
+                    .attr('id', 'tsne_brush')
+                    .call(brush)
+
+
+                function brushed(){
+                        d3.select('#tsne_brush').style('opacity', 1)
+                }
+                function brushend(){
+                    reflash();
+                    d3.select('#tsne_brush').style('opacity', 1);
+
+                    var event = d3.event.selection;
+                    console.log(event)
+                    var x1 = event[0][0];
+                    var y1 = event[0][1];
+                    var x2 = event[1][0];
+                    var y2 = event[1][1];
+                    var x_max = d3.max([x1,x2]);
+                    var y_max = d3.max([y1,y2]);
+                    var x_min = d3.min([x1,x2]);
+                    var y_min = d3.min([y1,y2]);
+                    var circle_choosed = [];
+                    for(var key in tsne_dataset){
+                        var x = tsne_dataset[key].x;
+                        var y = tsne_dataset[key].y;
+                        if(x >= x_min && x <= x_max && y >= y_min && y <= y_max){
+                            circle_choosed.push(tsne_dataset[key]['id']);
+                        }
+                    }
+                    tsne_chanege_color_by_list(circle_choosed);
+                    tsne_choose_force_change_color(circle_choosed);
+                }
+            }
                 
 
-            var brush = d3.brush()
-                            .extent([
-                                [0,0],
-                                [tsne_width,tsne_height]
-                            ])
-                            .on('start brush', brushed)
-                            .on('end', brushend);
-            svg.append('g')
-                .attr('id', 'tsne_brush')
-                .call(brush)
 
-
-            function brushed(){
-                    d3.select('#tsne_brush').style('opacity', 1)
-            }
-            function brushend(){
-                reflash();
-                d3.select('#tsne_brush').style('opacity', 1);
-
-                var event = d3.event.selection;
-                console.log(event)
-                var x1 = event[0][0];
-                var y1 = event[0][1];
-                var x2 = event[1][0];
-                var y2 = event[1][1];
-                var x_max = d3.max([x1,x2]);
-                var y_max = d3.max([y1,y2]);
-                var x_min = d3.min([x1,x2]);
-                var y_min = d3.min([y1,y2]);
-                var circle_choosed = [];
-                for(var key in tsne_dataset){
-                    var x = tsne_dataset[key].x;
-                    var y = tsne_dataset[key].y;
-                    if(x >= x_min && x <= x_max && y >= y_min && y <= y_max){
-                        circle_choosed.push(tsne_dataset[key]['id']);
-                    }
-                }
-                tsne_chanege_color_by_list(circle_choosed);
-                tsne_choose_force_change_color(circle_choosed);
-            }
 
 
         })

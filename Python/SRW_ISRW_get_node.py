@@ -20,11 +20,6 @@ for name in sample_name:
                     nodes_new.append(str(key['source']))
                 if str(key['target']) not in nodes_new:
                     nodes_new.append(str(key['target']))
-        #     print(nodes_new)
-        #     print(edges_new)
-        #     break
-        # break
-
 
             text_json = json.load(open(r'E:\项目\New_for_react\data\force_data_gai.json'))
             nodes = []

@@ -274,21 +274,25 @@ function drawforce_again(){
             f_nodeID_key[f_nodes[key]['id']] = key;
         }
 
-        // force_PIXIJS_lines = new PIXI.Graphics();
         for(var i = 0 ; i < f_links.length ; i++){
-            // console.log(f_nodes[f_nodeID_key[f_links[i].source]].x)
-            // console.log()
             force_PIXIJS_lines.lineStyle(0.4,line_Color,1);
-            force_PIXIJS_lines.moveTo(f_nodes[f_nodeID_key[f_links[i].source]].x,f_nodes[f_nodeID_key[f_links[i].source]].y);
-            force_PIXIJS_lines.lineTo(f_nodes[f_nodeID_key[f_links[i].target]].x,f_nodes[f_nodeID_key[f_links[i].target]].y);
+            try{
+                force_PIXIJS_lines.moveTo(f_nodes[f_nodeID_key[f_links[i].source]].x,f_nodes[f_nodeID_key[f_links[i].source]].y);
+                force_PIXIJS_lines.lineTo(f_nodes[f_nodeID_key[f_links[i].target]].x,f_nodes[f_nodeID_key[f_links[i].target]].y);
+            }catch(e){
+                // console.log('---------------------'+ i + '-----------------')
+                // console.log(f_links[i])
+                // console.log(e)
+            }
         }
-        app.stage.addChild(force_PIXIJS_lines);
-        // force_PIXIJS_circles = new PIXI.Graphics();
+
         for(var key in f_nodes){
             force_PIXIJS_circles.beginFill(force_community_circle_Color);
             force_PIXIJS_circles.drawCircle(f_nodes[key].x,f_nodes[key].y,5);
             force_PIXIJS_circles.endFill();
         }
         app.stage.addChild(force_PIXIJS_circles);
+        app.stage.addChild(force_PIXIJS_lines);
+
     })
 }
