@@ -84,9 +84,13 @@ function draw_bar_chart(data)
                 
 
         svg.append('g')
-                .attr('class','axis').attr("transform","translate(" + padding.left + "," + (c_height - padding.bottom) + ")").call(d3.axisBottom(xScale));//d3.axisBottom(xScale)  --V4版本
+                .attr('class','axis')
+                .attr("transform","translate(" + padding.left + "," + (c_height - padding.bottom) + ")")
+                .call(d3.axisBottom(xScale));//d3.axisBottom(xScale)  --V4版本
         svg.append('g')
-                .attr('class','axis').attr("transform","translate(" + padding.left + "," + padding.top + ")").call(d3.axisLeft(yScale));//d3.axisLeft(yScale) --V4版本
+                .attr('class','axis')
+                .attr("transform","translate(" + padding.left + "," + padding.top + ")")
+                .call(d3.axisLeft(yScale));//d3.axisLeft(yScale) --V4版本
     })
 }
 draw_bar_chart();
