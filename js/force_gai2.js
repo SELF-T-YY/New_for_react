@@ -291,8 +291,8 @@ function drawforce_again(){
             force_PIXIJS_circles.drawCircle(f_nodes[key].x,f_nodes[key].y,5);
             force_PIXIJS_circles.endFill();
         }
-        app.stage.addChild(force_PIXIJS_circles);
         app.stage.addChild(force_PIXIJS_lines);
+        app.stage.addChild(force_PIXIJS_circles);
 
     })
 }
