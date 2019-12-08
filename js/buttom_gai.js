@@ -32,10 +32,12 @@ function buttom_sample_click(){
         reflash();
         
         file_path = '/data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json';
-        
+        force_re = '/data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name + '_' + sample_rate + '_nodes_edges.json'
+
         force_file_name = file_path;
-        drawforce_again();
-        
+        drawforce_again(file_path);
+        document.getElementById('s2').value = 'force_sample';
+
         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
         draw_tsne();
 
@@ -47,5 +49,20 @@ function buttom_sample_click(){
         
         draw_sankey_again();
 
+    }
+}
+
+function select2_change(){
+    var select_name = document.getElementById('s2');
+    var selected = select_name.options[select_name.selectedIndex].value;
+
+    if(selected == 'force_origin'){
+        drawforce_again(force_file_origin_name);
+    }
+    else if(selected == 'force_sample'){
+        drawforce_again(force_file_name);
+    }
+    else if(selected == 'force_re'){
+        drawforce_again(force_re);
     }
 }

@@ -5,6 +5,7 @@ var force_community_num = 0;
 
 var force_file_name = "/data/oregonf/force_data_nodes_edges.json"
 var force_file_origin_name = "/data/oregonf/force_data_nodes_edges.json"
+var force_re = ''
 // var force_file_name = "/data/oregonf/ISRW/oregonf_sample_tsne_ISRW_15_nodes_edges.json"
 
 
@@ -262,10 +263,10 @@ function drawforce(if_draw_again){
 
 drawforce();
 
-function drawforce_again(){
+function drawforce_again(file_name){
     force_PIXIJS_lines.clear();
     force_PIXIJS_circles.clear();
-    d3.json(force_file_name, function(datas){
+    d3.json(file_name, function(datas){
         console.log(datas);
         f_nodes = datas['nodes'];
         f_links = datas['edges'];
