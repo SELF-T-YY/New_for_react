@@ -35,7 +35,7 @@ function draw_sankey(){
         }
 
         let last_width = 0;
-        let rect_top = []
+        rect_top = []
         for(let i in node_top_dataset){
             rect_top.push({'x': last_width, 'width': node_top_dataset[i]/scaleX})
             last_width += (node_top_dataset[i]/scaleX + padding_width);
@@ -139,8 +139,7 @@ function draw_sankey_again(){
 
     d3.selectAll('.sankey_bottom_node').remove();
     d3.selectAll('.sankey_community_path').remove();
-    sankey_file_name = '/data/oregonf/all_oregonf_rate_community_num_for_sankey/oregonf_sample_tsne_FF_5_community_num_for_sankey.json'
-
+    // sankey_file_name = '/data/oregonf/all_oregonf_rate_community_num_for_sankey/oregonf_sample_tsne_FF_5_community_num_for_sankey.json'
     d3.json(sankey_file_name, function(sankey_data){
         // let rect_bottom = [];
         // let dataset = [];
@@ -152,12 +151,12 @@ function draw_sankey_again(){
         //     last_width += sankey_data[key]['num']/scaleX + padding_width;
         // }
 
-
+        var svg = d3.select('#sankey_svg')
         let last_width = 0;
         let dataset = []
         let rect_buttom_change = {}
         let community_num_count = 0;
-    
+
         for(let key in sankey_data){
             community_num_count ++;
             dataset.push(key);
@@ -165,51 +164,121 @@ function draw_sankey_again(){
             last_width += sankey_data[key]['num']/scaleX + padding_width;
         }
 
-        const scaleX_again = (sankey_width_will_be - padding_width * 34) / (last_width - padding_width * (community_num_count));
-        // const scaleX_again = sankey_width_will_be / last_width;
-        // console.log(scaleX_again)
-        const scaleX_width = 34 / community_num_count * padding_width;
-        last_width = 0;
-        for(let i in rect_buttom_change){
-            rect_buttom_change[i] = {'x': last_width, 'width': rect_buttom_change[i]['width'] * scaleX_again}
-            last_width += rect_buttom_change[i]['width'] + scaleX_width;
+        //储存rect_bottom的初始位置
+        var community_in_rect_bottom = rect_buttom_change;
+        var sample_rect_bottom = [];
+
+
+        //储存rect_top的初始位置
+        var community_in_rect_top = [];
+        for(let i in rect_top){
+            community_in_rect_top.push(rect_top[i]['x']);
         }
+        var sample_rect_top = []
+        // last_width = 0;
+        for(let key in sankey_data){
+            var community_num_belong = sankey_data[key];
+            var community_belong = community_num_belong['community_belong'];
+            for(var i in community_belong){
+
+                //==========top================
+                // console.log(i);
+                let belong = community_belong[i]["%"];
+                // var x1 = last_width;
+                var x1 = community_in_rect_top[i];
+                var belong_width = rect_top[parseInt(i)]['width'] * belong
+                // last_width += belong_width;
+                community_in_rect_top[i] += belong_width;
+                var x2 = community_in_rect_top[i];
+                sample_rect_top.push({'x': x1, 'width': belong_width});
+
+                svg.selectAll('sankey_top_node')
+                    .append('rect')
+                    .attr('class', 'sankey_top_node sankey_community_top_' + String(i))
+                    .attr('x', x1)
+                    .attr('y', top_y)
+                    .attr('width', belong_width)
+                    .attr('height', padding_height)
+                    //=======color===============
+                    .attr('fill', 'steelblue')
+                    // .attr('click', community_click_do)
 
 
-        console.log(dataset)
-        console.log(rect_buttom_change)
-        var svg = d3.select('#sankey_svg')
-        var bottom_nodes = svg.selectAll('sankey_bottom_node')
-                            .data(dataset)
-                            .enter()
-                            .append('rect')
-                            .attr('class', 'sankey_bottom_node')
-                            .attr('id',function(d){
-                                return 'sankey_community_bottom_change' + d;
-                            })
-                            .attr('x', function(d){
-                                return rect_buttom_change[d]['x'];
-                            })
-                            .attr('y', bottom_y)
-                            .attr('width',  function(d){return rect_buttom_change[d]['width']})
-                            .attr('height', padding_height)
-                            .attr('fill', 'steelblue')
-                            .on("click",community_click_do);
+
+                //==========bottom================
+                var x3 = community_in_rect_bottom[i];
+                var x4 = x3 + belong_width;
+                community_in_rect_bottom[i] = x4;
+
+                svg.selectAll('sankey_bottom_node')
+                    .append('rect')
+                    .attr('class', 'sankey_bottom_node sankey_community_bottom_' + String(i))
+                    .attr('x', x3)
+                    .attr('width', belong_width)
+                    .attr('height', padding_height)
+                    //=========color==============
+                    .attr('fill', 'steelblue')
+                    // .attr('click', community_click_do)
+                    
+
+                //=============path==============
+                svg.selectAll('sankey_link')
+                    .append('path')
+                    .attr('class', 'sankey_community_path sankey_community_path_' + String(i) + ' sankey_sample_path_' + String(key))
+                    .attr('d', straightLine(x1,x2,x3,x4))
+                    //==============color==============
+                    .style('fill', 'steelblue')
+                    .style('opacity', 0.5)
+                    // .attr('click', community_click_do)
+
+                
+
+            }
+        }
+        // const scaleX_again = (sankey_width_will_be - padding_width * 34) / (last_width - padding_width * (community_num_count));
+        // // const scaleX_again = sankey_width_will_be / last_width;
+        // // console.log(scaleX_again)
+        // const scaleX_width = 34 / community_num_count * padding_width;
+        // last_width = 0;
+        // for(let i in rect_buttom_change){
+        //     rect_buttom_change[i] = {'x': last_width, 'width': rect_buttom_change[i]['width'] * scaleX_again}
+        //     last_width += rect_buttom_change[i]['width'] + scaleX_width;
+        // }
+
+
+        // console.log(dataset)
+        // console.log(rect_buttom_change)
+
+        //==============================re
+        // var svg = d3.select('#sankey_svg')
+        // var bottom_nodes = svg.selectAll('sankey_bottom_node')
+        //                     .data(dataset)
+        //                     .enter()
+        //                     .append('rect')
+        //                     .attr('class', 'sankey_bottom_node')
+        //                     .attr('id',function(d){
+        //                         return 'sankey_community_bottom_change' + d;
+        //                     })
+        //                     .attr('x', function(d){
+        //                         return rect_buttom_change[d]['x'];
+        //                     })
+        //                     .attr('y', bottom_y)
+        //                     .attr('width',  function(d){return rect_buttom_change[d]['width']})
+        //                     .attr('height', padding_height)
+        //                     .attr('fill', 'steelblue')
+                            // .on("click",community_click_do);
 
 
 
 
-        function straightLine(d,i) {
+        function straightLine(x1,x2,x3,x4) {
             let dy = (bottom_y - top_y)/2;
-            let x1 = rect_top[parseInt(d['source'])]['x'];
             let y1 = top_y + padding_height;
-            let x2 = rect_bottom[parseInt(d['target'])]['x'];
             let y2 = bottom_y;
-            var rect_width = rect_top[i]['width'];
             return 'M' + x1 + ',' + y1 +
-                    'C' + x1 + ',' + dy + ',' + x2 + ',' + dy + ',' + x2 + ',' + y2 +
-                    'h' + rect_width +
-                    'C' + (x2 + rect_width) + ',' + dy + ',' + (x1 + rect_width) + ',' + dy + ',' + (x1 + rect_width) + ',' + y1
+                    'C' + x1 + ',' + dy + ',' + x3 + ',' + dy + ',' + x3 + ',' + y2 +
+                    'h' + (x2-x1) +
+                    'C' + x4 + ',' + dy + ',' + x2 + ',' + dy + ',' + x2 + ',' + y1
         }
 
     })

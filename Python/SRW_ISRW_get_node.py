@@ -28,9 +28,11 @@ for name in sample_name:
             # print(nodes_new)
             nodes = []
             for node in nodes_new:
-                # if node in text_json:
-                    # print(node)
-                nodes.append({'id': node})
+                if node not in text_json:
+                    print(node)
+                    nodes.append({'id': node})
+                else:
+                    nodes.append({'id': node, 'x':text_json[node]['x'], 'y': text_json[node]['y']})
             data['nodes'] = nodes
             data['edges'] = edges_new
             # print(nodes)

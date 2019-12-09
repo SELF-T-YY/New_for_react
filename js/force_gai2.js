@@ -8,6 +8,7 @@ var force_file_origin_name = "/data/oregonf/force_data_nodes_edges.json"
 var force_re = ''
 // var force_file_name = "/data/oregonf/ISRW/oregonf_sample_tsne_ISRW_15_nodes_edges.json"
 
+var force_circle_r = 5;
 
 const force_width = 775;
 const force_height = 509;
@@ -128,7 +129,7 @@ function drawforce(if_draw_again){
                     const now_y = (choosed_point_data[node].y);
                     circle_list.push(choosed_point_data[node].id);
                     circles_choose_change_color.beginFill(circles_change_color);
-                    circles_choose_change_color.drawCircle(now_x,now_y,5);
+                    circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
                     circles_choose_change_color.endFill();
                 }
                 console.log(circle_list)
@@ -142,7 +143,7 @@ function drawforce(if_draw_again){
                 const newPosition = getMousePos(this);
                 const circle_x = newPosition.x;
                 const circle_y = newPosition.y;
-                const circle_r = 5;
+                const circle_r = force_circle_r;
                 let choosed_point_data = [];
                 for(let node in f_nodes)
                 {
@@ -161,7 +162,7 @@ function drawforce(if_draw_again){
                     const now_x = (choosed_point_data[node].x);
                     const now_y = (choosed_point_data[node].y);
                     circles_choose_change_color.beginFill(circles_change_color);
-                    circles_choose_change_color.drawCircle(now_x,now_y,5);
+                    circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
                     circles_choose_change_color.endFill();
                 }
                 app.stage.addChild(circles_choose_change_color);
@@ -253,7 +254,7 @@ function drawforce(if_draw_again){
                 const now_x = (nodes[node].x - moveAll_x) * scaleAll_xy;
                 const now_y = (nodes[node].y - moveAll_y) * scaleAll_xy;
                 circles_choose_change_color.beginFill(circles_change_color);
-                circles_choose_change_color.drawCircle(now_x,now_y,5*scaleAll_xy*scaleAll_xy);
+                circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r*scaleAll_xy*scaleAll_xy);
                 circles_choose_change_color.endFill();
             }
             app.stage.addChild(circles_choose_change_color);
@@ -289,7 +290,7 @@ function drawforce_again(file_name){
 
         for(var key in f_nodes){
             force_PIXIJS_circles.beginFill(force_community_circle_Color);
-            force_PIXIJS_circles.drawCircle(f_nodes[key].x,f_nodes[key].y,5);
+            force_PIXIJS_circles.drawCircle(f_nodes[key].x,f_nodes[key].y,force_circle_r);
             force_PIXIJS_circles.endFill();
         }
         app.stage.addChild(force_PIXIJS_lines);

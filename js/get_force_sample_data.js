@@ -28,7 +28,8 @@ function drawforce(data, filewritepath){
                         .force('link', d3.forceLink(links).id(d => d['id']))
                         .force('charge', d3.forceManyBody())
                         .force('center', d3.forceCenter(force_width/2, force_height/2))
-                        // .on('tick',function({}))
+                        .on('tick',function(){})
+
 
                         .on('end', ()=>{
                             var x_max = d3.max(nodesID, d => d['x'])

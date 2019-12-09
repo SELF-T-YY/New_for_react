@@ -145,6 +145,11 @@ html,body{
     margin-top: 2px;
     margin-right: 5px;
 }
+#s2{
+    float: right;
+    margin-top: 2px;
+    margin-right: 5px;
+}
 #Left-s{
     width: 50%;
     height: 30%;

@@ -12,10 +12,24 @@ class Stack:
         return len(self.data)
 
     def pop(self):
-        self.data.remove(Stack.size(self) - 1)
+        if self.empty():
+            print('Stack is empty!!!')
+        else:
+            return self.data.pop()
 
-    def posh(self, data):
+    def push(self, data):
         self.data.append(data)
 
     def top(self):
-        return self.data[Stack.size(self) - 1]
+        return self.data[-1]
+
+    # def __main__.Stack_class:
+
+
+if __name__ == '__main__':
+    a = Stack()
+    a.push(1)
+    a.push(2)
+
+    print(a.pop())
+    print(a.pop())
