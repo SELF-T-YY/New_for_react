@@ -87,7 +87,7 @@ def poisson_disc(p_dict):
                 continue
             p_key = dict_key_value_max(temp_dict, p_temp_dict[p_key])
             pan_stack.push(p_key)
-            print(pan_stack.data)
+            # print(pan_stack.data)
             p_temp_dict.update({p_key: temp_dict[p_key]})
             temp_dict.pop(p_key)
             ans_list.append(p_key)
@@ -121,6 +121,7 @@ class Stack:
     def top(self):
         return self.data[-1]
 
+# ===================10=======a 1 === b 1====ra 10
 
 with open(r'../data/oregonf_tsne_5000_addedges.json') as f:
     data_dict = json.load(f)
@@ -130,6 +131,6 @@ with open(r'../data/oregonf_tsne_5000_addedges.json') as f:
     print(final_list)
     len2 = len(final_list)
     print(len2 / len1)
-    # f_file = open(r'../data/oregonf_OUR_a_1_b_1_Rate_10.json', 'w+')
-    # ans_json = json.dumps(final_dict)
-    # f_file.write(ans_json)
+    f_file = open(r'../data/oregonf_OUR_a_1_b_1_Rate_10.json', 'w+')
+    ans_json = json.dumps(final_list)
+    f_file.write(ans_json)

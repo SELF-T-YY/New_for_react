@@ -33,7 +33,7 @@ function buttom_sample_click(){
         
         file_path = '/data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json';
         force_re = '/data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name + '_' + sample_rate + '_nodes_edges.json'
-        sankey_file_name = '/data/oregonf/all_oregonf_rate_community_num_for_sankey/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num_for_sankey.json'
+        sankey_file_name = '/data/oregonf/all_oregonf_rate_community_num_for_sankey_gai/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num_for_sankey.json'
 
         force_file_name = file_path;
         force_circle_r = 5;
