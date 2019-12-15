@@ -78,33 +78,30 @@ function draw_community(data){
                                 // .on("end", dragended))
                                 .on("click",community_click_do);
 
-    function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();//设置目标α
-        d.fx = d.x;
-        d.fy = d.y;
+        function dragstarted(d) {
+            if (!d3.event.active) simulation.alphaTarget(0.3).restart();//设置目标α
+                d.fx = d.x;
+                d.fy = d.y;
         }
 
         function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
         }
 
         function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
+            if (!d3.event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
         }
         function ticked() {
             svg_links.attr("x1", function(d) { return d.source.x; })
-                .attr("y1", function(d) { return d.source.y; })
-                .attr("x2", function(d) { return d.target.x; })
-                .attr("y2", function(d) { return d.target.y; });
+                    .attr("y1", function(d) { return d.source.y; })
+                    .attr("x2", function(d) { return d.target.x; })
+                    .attr("y2", function(d) { return d.target.y; });
 
             svg_nodes.attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; });
-            
-            // svg_texts.attr("x", function(d){ return d.x; })
-            //    .attr("y", function(d){ return d.y; });
+                    .attr("cy", function(d) { return d.y; });
         }
     })
 }
