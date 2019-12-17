@@ -37,8 +37,8 @@ function draw_bar_chart(data)
                     .attr('height', c_height);
 //V4版本-start
         var xScale = d3.scaleBand()
-                .domain(d3.range(0,rect_data.length))
-                .range([0,c_width-padding.left-padding.right]);
+                .domain(d3.range(0, rect_data.length))
+                .range([0, c_width - padding.left - padding.right]);
 //V4版本-end
         yScale = d3.scaleLinear()//V4版本
                 .domain([0,d3.max(rect_data)])
@@ -70,19 +70,21 @@ function draw_bar_chart(data)
                         .attr("transform","translate(" + padding.left + "," + padding.top + ")")
                         .attr('x',function(d,i){
                             return xScale(i) + rectWidth/2;
-                        }).attr('y',function(d,i){
+                        })
+                        .attr('y',function(d,i){
                             return yScale(d);
-                        }).attr('width',xScale.bandwidth() - rectWidth)
+                        })
+                        .attr('width',xScale.bandwidth() - rectWidth)
                         .attr('height',function(d,i){
                             return c_height-padding.bottom-padding.top-yScale(d);
-                        }).attr('fill','steelblue')
+                        })
+                        .attr('fill','steelblue')
                         .attr("id",function(d, i){
                             return "community_Distribution_" + dataset[i].id;
                         })
                         .attr("class", "community_Distribution")
                         .on("click",function(d,i){community_click_do(d, dataset[i].id)});
-                
-
+                        
         svg.append('g')
                 .attr('class','axis')
                 .attr("transform","translate(" + padding.left + "," + (c_height - padding.bottom) + ")")
@@ -109,8 +111,8 @@ function draw_community_disribution_again(){
             var rect = d3.select('#community_Distribution_' + key)
                             .transition()
                             .duration(2000)
-                            .attr('y', yScale(data['num']))
-                            .attr('height',c_height-padding.bottom-padding.top-yScale(data['num']));
+                            .attr('y', yScale(data['num'] * 0.4))
+                            .attr('height',c_height-padding.bottom-padding.top-yScale(data['num'] * 0.4) );
         }
     })
 }

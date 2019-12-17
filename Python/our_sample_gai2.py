@@ -5,7 +5,7 @@ import networkx as nx
 import os
 
 
-def calculate_r(fpi, bi, alpha=0.1, beta=1, ra=42):
+def calculate_r(fpi, bi, alpha=0.1, beta=1, ra=5):
     bata = 1 - alpha
     ra = ra/1000000
     r = ra/(alpha * fpi + beta * bi)
@@ -149,7 +149,7 @@ class Stack:
 
 
 # with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
-with open(r'../data/oregonf/test.json')as f:
+with open(r'../data/oregonf/bet_test.json')as f:
     data_dict = json.load(f)
     len1 = len(list(data_dict.keys()))
     calculate_r_for_all(data_dict)
@@ -157,6 +157,6 @@ with open(r'../data/oregonf/test.json')as f:
     print(final_list)
     len2 = len(final_list)
     print(len2 / len1 * 100)
-    f_file = open(r'../data/oregonf/test_run.json', 'w+')
+    f_file = open(r'../data/oregonf/bet_test_run.json', 'w+')
     ans_json = json.dumps(final_list)
     f_file.write(ans_json)
