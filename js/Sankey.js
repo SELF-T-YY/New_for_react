@@ -30,11 +30,18 @@ function draw_sankey(){
         let community_num_count = 0;
         let node_top = datas['nodes']['top_community'];
         node_top_dataset = []
+
+        //===================data_for_community=======================
+        let community_data = [];
         for(let key in node_top){
-            community_num_count ++
+            community_num_count ++;
             node_top_dataset.push(node_top[key]['community_node_num']);
+            community_data.push({'id': key, 'num': node_top[key]['community_node_num'], 'color': 'steelblue'});
         }
         community_num_all = community_num_count;
+        
+        //画community图
+        // draw_community(community_data);
 
         let node_bottom = datas['nodes']['bottom_community'];
         let node_bottom_dataset = [];
@@ -152,6 +159,7 @@ function draw_sankey_again(){
     d3.json(sankey_file_name, function(sankey_data){
         d3.json(sankey_color_file_name, function(sankey_color){
             
+
             for(let i in sankey_color){
                 if(sankey_color[i]/2 < 0.1) rect_top[i]['color'] = colorArr[0];
                 else if(sankey_color[i]/2 < 0.2) rect_top[i]['color'] = colorArr[1];
@@ -171,9 +179,7 @@ function draw_sankey_again(){
             let communitty_bottom = [];
             let count = 0;
             
-            //===========data_for_community==============
-            let community_data = {};
-
+            
             console.log(sankey_data)
             for(let key in sankey_data){
                 dataset.push(key);
@@ -181,7 +187,7 @@ function draw_sankey_again(){
                 communitty_bottom.push({'x': last_width, 'width': sankey_data[key]['num']/scaleX})
                 last_width += sankey_data[key]['num']/scaleX + padding_width;
             }
-
+            
             document.getElementById('sample_community_num').innerText = parseInt(count);
             //储存rect_bottom的初始位置
             var community_in_rect_bottom = [];
@@ -197,12 +203,16 @@ function draw_sankey_again(){
                 community_in_rect_top.push(rect_top[i]['x']);
             }
             var sample_rect_top = [];
-    
+            
             //储存link的位置和id
             var sample_link = [];
 
+            //==============data_for_community==============
+            let community_data = [];
+            
             for(let key in sankey_data){
-                
+
+                var color_sample;
                 var community_num_belong = sankey_data[key];
                 var community_belong = community_num_belong['community_belong'];
                 for(var i in community_belong){
@@ -226,9 +236,12 @@ function draw_sankey_again(){
                     
                     //=============path==============
                     sample_link.push({'x1': x1, 'x2': x2, 'x3': x3, 'x4': x4, 'class': 'sankey_community_path sankey_community_path_' + String(i) + ' sankey_sample_path_' + String(key), 'color': color_sample})
-                    
                 }
+                community_data.push({'id': key, 'num': sankey_data[key]['num'], 'color': color_sample});
             }
+
+             //画community图
+            // draw_community(community_data);
             
             //================top======================
             svg.selectAll('sankey_top_node')

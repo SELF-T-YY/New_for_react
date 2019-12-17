@@ -1,10 +1,13 @@
 import math
 import json
 import random
+import networkx as nx
 import os
 
 
-def calculate_r(fpi, bi, alpha=1, beta=1, ra=10):
+def calculate_r(fpi, bi, alpha=0.1, beta=1, ra=42):
+    bata = 1 - alpha
+    ra = ra/1000000
     r = ra/(alpha * fpi + beta * bi)
     return r
 
@@ -21,12 +24,25 @@ def distance(p1, p2):
 def ns_around_p(p, p_dict):
     ans_dict = {}
     for temp_p in p_dict:
-        if abs(float(p['x']) - float(p_dict[temp_p]['x'])) > float(p['pr']) \
-            or \
-                abs(float(p['y']) - float(p_dict[temp_p]['y']) > float(p['pr'])):
-            continue
+        # if abs(float(p['x']) - float(p_dict[temp_p]['x'])) > float(p['pr']) \
+        #     or \
+        #         abs(float(p['y']) - float(p_dict[temp_p]['y']) > float(p['pr'])):
+        #     continue
         if distance(p, p_dict[temp_p]) <= float(p['pr']):
             ans_dict.update({p_dict[temp_p]['id']: p_dict[temp_p]})
+    return ans_dict
+
+
+def ns_around_p_inR2_outR1_both(p, p_dict):
+    ans_dict = {}
+    for temp_p in p_dict:
+        dis = distance(p, p_dict[temp_p])
+        if dis <= float(p['pr']):
+            continue
+
+        if dis <= float(p['pr']*2):
+            if dis > float(p_dict[temp_p]['pr']):
+                ans_dict.update({p_dict[temp_p]['id']: p_dict[temp_p]})
     return ans_dict
 
 
@@ -34,7 +50,6 @@ def ns_around_p(p, p_dict):
 # save-------False
 def remove_or_save(p, pd_p):
     max_r = max(float(p['pr']), float(pd_p['pr']))
-
     if distance(p, pd_p) < max_r:
         return True
     else:
@@ -85,9 +100,11 @@ def poisson_disc(p_dict):
 
             if p_key == -1:
                 continue
-            p_key = dict_key_value_max(temp_dict, p_temp_dict[p_key])
+            p_key = dict_key_value_max(ns_around_p_inR2_outR1_both(p_temp_dict[p_key], temp_dict), p_temp_dict[p_key])
             pan_stack.push(p_key)
             # print(pan_stack.data)
+            if p_key == -1:
+                continue
             p_temp_dict.update({p_key: temp_dict[p_key]})
             temp_dict.pop(p_key)
             ans_list.append(p_key)
@@ -122,15 +139,24 @@ class Stack:
         return self.data[-1]
 
 
-# ===================10=======a 1 === b 1====ra 10
-with open(r'../data/oregonf_tsne_5000_addedges.json') as f:
+# =================== 5=======a 0.1 === b 0.9====ra 300
+# ===================10=======a 0.1 === b 0.9====ra 170
+# ===================15=======a 0.1 === b 0.9====ra 110
+# ===================20=======a 0.1 === b 0.9====ra 85
+# ===================25=======a 0.1 === b 0.9====ra 70
+# ===================30=======a 0.1 === b 0.9====ra 60
+# ===================35=======a 0.1 === b 0.9====ra 50
+
+
+# with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
+with open(r'../data/oregonf/test.json')as f:
     data_dict = json.load(f)
     len1 = len(list(data_dict.keys()))
     calculate_r_for_all(data_dict)
     final_list = poisson_disc(data_dict)
     print(final_list)
     len2 = len(final_list)
-    print(len2 / len1)
-    f_file = open(r'../data/oregonf_OUR_a_1_b_1_Rate_10.json', 'w+')
+    print(len2 / len1 * 100)
+    f_file = open(r'../data/oregonf/test_run.json', 'w+')
     ans_json = json.dumps(final_list)
     f_file.write(ans_json)

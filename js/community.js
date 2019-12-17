@@ -5,7 +5,7 @@ const force_community_height = 210;
 const force_community_circle_Color = 0x3A435E;
 const line_Color = 0xc6c6c6;
 
-function draw_community(data){
+function draw_community(datas){
     d3.json('/data/community_num.json', function (datas)
     {
         var count = 0;
@@ -63,19 +63,15 @@ function draw_community(data){
                                 .data(nodes)
                                 .enter()
                                 .append("circle")
-                                .attr("cx", function(d) { return d.x; })
-                                .attr("cy", function(d) { return d.y; })
-                                .attr("r", function(d){
-                                    return Math.log(d.num);
-                                })
+                                .attr("cx", d => (d.x))
+                                .attr("cy", d => (d.y))
+                                // .attr('fill', d =>(d['color']))
+                                .attr("r", d =>(Math.log(d.num)))
                                 .attr("class", "community")
                                 .attr('id', function(d,i){
                                     return 'community_' + i;
                                 })
                                 .attr("fill", 'steelblue')
-                                // .call(d3.drag().on("start", dragstarted)//d3.drag() 创建一个拖曳行为
-                                // .on("drag", dragged)
-                                // .on("end", dragended))
                                 .on("click",community_click_do);
 
         function dragstarted(d) {

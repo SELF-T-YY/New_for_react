@@ -73,3 +73,26 @@ function select2_change(){
         drawforce_again(force_re);
     }
 }
+
+function select_community_change(){
+    reflash();
+
+    var select_name = document.getElementById('s1');
+    var selected = select_name.options[select_name.selectedIndex].value;
+
+    if(selected == 'Community'){
+        draw_community();
+    }
+    else if(selected == 'Connected'){
+        
+    }
+    else if(selected == 'Disribution'){
+
+    }
+    else if(selected == 'Degree'){
+
+    }
+    else if(selected == 'Betweeness'){
+        
+    }
+}
