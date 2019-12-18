@@ -5,8 +5,8 @@ import networkx as nx
 import os
 
 
-def calculate_r(fpi, bi, alpha=0.1, beta=1, ra=5):
-    bata = 1 - alpha
+def calculate_r(fpi, bi, alpha=0.1, beta=1, ra=104):
+    beta = 1 - alpha
     ra = ra/1000000
     r = ra/(alpha * fpi + beta * bi)
     return r
@@ -146,10 +146,13 @@ class Stack:
 # ===================25=======a 0.1 === b 0.9====ra 70
 # ===================30=======a 0.1 === b 0.9====ra 60
 # ===================35=======a 0.1 === b 0.9====ra 50
+# ===================40=======a 0.1 === b 0.9====ra 40？？
+
+# ===================40=======a 0.2 === b 0.8====ra 50
 
 
-# with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
-with open(r'../data/oregonf/bet_test.json')as f:
+with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
+# with open(r'../data/oregonf/bet_test.json')as f:
     data_dict = json.load(f)
     len1 = len(list(data_dict.keys()))
     calculate_r_for_all(data_dict)
@@ -157,6 +160,8 @@ with open(r'../data/oregonf/bet_test.json')as f:
     print(final_list)
     len2 = len(final_list)
     print(len2 / len1 * 100)
-    f_file = open(r'../data/oregonf/bet_test_run.json', 'w+')
+    # f_file = open(r'../data/oregonf/bet_test_run.json', 'w+')
+    f_file = open(r'../data/cs/gai_a_0.1_b_0.9_rate_80.json', 'w+')
+    # f_file = open(r'../data/oregonf/our_sample_gai/our_sample_gai_a_0.2_b_0.8_rata_40.json', 'w+')
     ans_json = json.dumps(final_list)
     f_file.write(ans_json)
