@@ -4,7 +4,7 @@ import random
 import os
 
 
-def calculate_r(fpi, bi, alpha=0.9, beta=0.1, ra=100):
+def calculate_r(fpi, bi, alpha=0.9, beta=0.1, ra=250):
     ra = ra / 1000000
     r = ra/(alpha * fpi + beta * bi)
     return r
@@ -134,6 +134,6 @@ with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
     print(final_list)
     len2 = len(final_list)
     print(len2 / len1)
-    f_file = open(r'../data/oregonf_OUR_a_0.9_b_0.1_Rate_10.json', 'w+')
+    f_file = open(r'../data/cs/2.json', 'w+')
     ans_json = json.dumps(final_list)
     f_file.write(ans_json)

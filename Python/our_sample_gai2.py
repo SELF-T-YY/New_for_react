@@ -5,7 +5,7 @@ import networkx as nx
 import os
 
 
-def calculate_r(fpi, bi, alpha=0.1, beta=1, ra=104):
+def calculate_r(fpi, bi, alpha=0.1, beta=1, ra=50):
     beta = 1 - alpha
     ra = ra/1000000
     r = ra/(alpha * fpi + beta * bi)
@@ -161,7 +161,7 @@ with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
     len2 = len(final_list)
     print(len2 / len1 * 100)
     # f_file = open(r'../data/oregonf/bet_test_run.json', 'w+')
-    f_file = open(r'../data/cs/gai_a_0.1_b_0.9_rate_80.json', 'w+')
+    f_file = open(r'../data/cs/1.json', 'w+')
     # f_file = open(r'../data/oregonf/our_sample_gai/our_sample_gai_a_0.2_b_0.8_rata_40.json', 'w+')
     ans_json = json.dumps(final_list)
     f_file.write(ans_json)

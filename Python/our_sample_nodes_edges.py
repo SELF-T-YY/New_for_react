@@ -15,12 +15,12 @@ for rate in sample_rate:
     # file_write_path = r'../data/oregonf/our_sample_nodes_edges/our_sample_a_0.1_b_0.9_rate_'\
     #                   + str(rate) + '_nodes_egdes.json'
 
-    # file_path = r'../data/oregonf/our_sample/oregonf_OUR_a_4_b_6_Rate_' + str(rate) + '.json'
-    # file_write_path = r'../data/oregonf/our_sample_nodes_edges/our_sample_a_4_b_6_rate_'\
-    #                   + str(rate) + '_nodes_egdes.json'
+    file_path = r'../data/oregonf/our_sample/oregonf_OUR_a_4_b_6_Rate_' + str(rate) + '.json'
+    file_write_path = r'../data/oregonf/our_sample_nodes_edges/our_sample_a_4_b_6_rate_'\
+                      + str(rate) + '_nodes_egdes.json'
 
-    file_path = r'../data/cs/gai_a_0.1_b_0.9_rate_80.json'
-    file_write_path = r'../data/cs/cs_gai_a_0.1_b_0.9_rate_80.json'
+    file_path = r'../data/cs/2.json'
+    file_write_path = r'../data/cs/2_.josn'
 
     with open(file_path) as f:
         ans_nodes_list = []
