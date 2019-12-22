@@ -76,8 +76,8 @@ function getdata(){
         for(let rate in sample_rate){
             // const filepath = '../data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name[name] + '_' + sample_rate[rate] + '_nodes_edges.json'
             // const filewritepath = '../data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name[name] + '_' + sample_rate[rate] + '_nodes_edges.json'
-            const filepath = '../data/oregonf/our_sample_nodes_edges/our_sample_a_0.1_b_0.9_rate_'+ sample_rate[rate] + '_nodes_egdes.json'
-            const filewritepath = '../data/oregonf/all_oregonf_rate_force_data/our_sample_a_0.1_b_0.9_force_data_rate_' + sample_rate[rate] + '_nodes_edges.json'
+            const filepath = '../data/oregonf/our_sample_nodes_edges/our_sample_a_4_b_6_rate_'+ sample_rate[rate] + '_nodes_egdes.json'
+            const filewritepath = '../data/oregonf/our_sample_force_data/our_sample_a_4_b_6_force_data_rate_' + sample_rate[rate] + '_nodes_edges.json'
             fs.readFile(filepath,function(e,data){
                 data = JSON.parse(data);
                 // console.log(data);

@@ -11,10 +11,17 @@ function buttom_sample_click(){
     if(select_n == 'FF' || select_n == 'SRW' || select_n == 'OUR' || select_n == 'RNS' || select_n == 'ISRW' || select_n == 'TIES'){
         sample_name = select_n;
     }
+    else if(select_n == 'OUR'){
+        sample_name = select_n;
+    }
 
+    var elem1 = document.querySelector('input[id="range1"]');
+    var elem2 = document.querySelector('input[id="range2"]');
     var elem3 = document.querySelector('input[id="range3"]');
     var nodes_num = 11174*elem3.value*0.01;
     var edges_num = 23410*elem3.value*0.01;
+
+
     document.getElementById("sample_nodes_num").innerText= parseInt(nodes_num);
     document.getElementById("sample_edges_num").innerText= parseInt(edges_num);
 
@@ -28,7 +35,38 @@ function buttom_sample_click(){
     // oregonf_sample_tsne_FF_5_nodes_edges.json
 
     var file_path = NaN;
-    if(!(sample_name == NaN || sample_rate == NaN)){
+    if(sample_name == "OUR"){
+        if(elem1.value == '10' || elem1.value == '20' || elem1.value == '40'){
+            const a = parseInt(elem1.value)/10;
+            const b = 10 - a;
+            reflash();
+            file_path = '/data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json';
+            force_re = '/data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name + '_' + sample_rate + '_nodes_edges.json'
+            sankey_file_name = '/data/oregonf/all_oregonf_rate_community_num_for_sankey_gai/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num_for_sankey.json'
+            sankey_color_file_name = '/data/oregonf/all_oregonf_rate_community_HX/oregonf_sample_tsne_' + sample_name +  '_' + sample_rate + '_HX.json'
+    
+            file_path = '/data/oregonf/our_sample_nodes_edges/our_sample_a_'+ a +'_b_'+ b +'_rate_' + sample_rate + '_nodes_egdes.json'
+            sankey_file_name = '/data/oregonf/our_sample_community_num_for_sankey/oregonf_OUR_a_'+a+'_b_'+b+'_Rate_'+sample_rate+'_for_sankey.json'
+            sankey_color_file_name = '/data/oregonf/our_sample_community_HX/oregonf_OUR_a_'+a+'_b_'+b+'_Rate_'+sample_rate+'_for_sankey_HX.json'
+
+
+            force_file_name = file_path;
+            force_circle_r = 5;
+            drawforce_again(file_path);
+            document.getElementById('s2').value = 'force_sample';
+    
+            if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
+            draw_tsne();
+    
+            drawRadar(parseInt(sample_rate));
+    
+            community_num_file_name = '/data/oregonf/all_oregonf_rate_community_num/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num.json';
+            draw_community_disribution_again();
+    
+            draw_sankey_again();
+        }       
+    }
+    else if(!(sample_name == NaN || sample_rate == NaN)){
         reflash();
         
         file_path = '/data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json';
@@ -95,4 +133,28 @@ function select_community_change(){
     else if(selected == 'Betweeness'){
         
     }
+}
+
+
+function range1(){
+    var elem1 = document.querySelector('input[id="range1"]');
+    var elem2 = document.querySelector('input[id="range2"]');
+
+    elem2.value = String(100 - elem1.value);
+    // document.querySelector('b[id="b1"]') = elem2.value;
+    // document.querySelector('b[id="b2"]') = elem1.value;
+    document.getElementById('b1').innerHTML = elem1.value;
+    document.getElementById('b2').innerHTML = elem2.value;
+}
+
+function range2(){
+    var elem1 = document.querySelector('input[id="range1"]');
+    var elem2 = document.querySelector('input[id="range2"]');
+
+    elem1.value = String(100 - elem2.value);
+    // document.querySelector('b[id="b1"]') = elem2.value;
+    // document.querySelector('b[id="b2"]') = elem1.value;
+    document.getElementById('b1').innerHTML  = elem1.value;
+    document.getElementById('b2').innerHTML  = elem2.value;
+
 }
