@@ -13,12 +13,12 @@ for i in range(1):
         b = 10 - a
         # file_name = 'oregonf_sample_tsne_' + name + '_' + rate + '_community_num_for_sankey.json'
         # file_path = os.path.join(r'../data/oregonf/all_oregonf_rate_community_num_for_sankey_gai//' + file_name)
-        file_path = r'../data/oregonf/our_sample_community_num_for_sankey/oregonf_OUR_a_' + str(a) + '_b_' + str(b) \
-                          + '_Rate_' + str(rate) + '_for_sankey.json'
+        file_path = r'../data/oregonf/our_sample_community_num_for_sankey2/oregonf_OUR_a_' + str(a) + '_b_' + str(b) \
+                          + '_Rate_' + str(rate) + 'for_sankey.json'
 
         # print(file_name)
 
-        file_write_path = r'../data/oregonf/our_sample_community_HX/oregonf_OUR_a_'\
+        file_write_path = r'../data/oregonf/our_sample_community_HX2/oregonf_OUR_a_'\
                           + str(a) + '_b_' + str(b) + '_Rate_' + str(rate) + '_for_sankey_HX.json'
         with open(file_path) as f:
             community_sample_dict = json.load(f)

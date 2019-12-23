@@ -16,27 +16,32 @@ for rate in sample_rate:
     #                   + str(rate) + '_nodes_egdes.json'
 
     file_path = r'../data/oregonf/our_sample/oregonf_OUR_a_4_b_6_Rate_' + str(rate) + '.json'
-    file_write_path = r'../data/oregonf/our_sample_nodes_edges/our_sample_a_4_b_6_rate_'\
+    file_write_path = r'../data/oregonf/our_sample_nodes_edges3/our_sample_a_4_b_6_rate_'\
                       + str(rate) + '_nodes_egdes.json'
 
-    file_path = r'../data/cs/2.json'
-    file_write_path = r'../data/cs/2_.josn'
+    # file_path = r'../data/cs/2.json'
+    # file_write_path = r'../data/cs/2_.josn'
 
     with open(file_path) as f:
         ans_nodes_list = []
         ans_edges_list = []
 
         nodes_list = json.load(f)
-        for node in nodes_list:
-            if node in all_nodes_dict:
-                ans_nodes_list.append({'id': node, 'x': all_nodes_dict[node]['x'], 'y': all_nodes_dict[node]['y']})
+        # for node in nodes_list:
+        #     if node in all_nodes_dict:
+        #         ans_nodes_list.append({'id': node, 'x': all_nodes_dict[node]['x'], 'y': all_nodes_dict[node]['y']})
 
         for edge in all_edges_dict:
             if edge['source'] in nodes_list and edge['target'] in nodes_list:
                 ans_edges_list.append(edge)
+                node1 = edge['source']
+                node2 = edge['target']
+                if node1 in all_nodes_dict:
+                    ans_nodes_list.append({'id': node1, 'x': all_nodes_dict[node1]['x'], 'y': all_nodes_dict[node1]['y']})
+                if node2 in all_nodes_dict:
+                    ans_nodes_list.append({'id': node2, 'x': all_nodes_dict[node2]['x'], 'y': all_nodes_dict[node2]['y']})
 
         ans_dict = {'nodes': ans_nodes_list, 'edges': ans_edges_list}
     fw = open(file_write_path, 'w+')
     fw.write(json.dumps(ans_dict))
     fw.close()
-    break

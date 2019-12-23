@@ -40,14 +40,10 @@ function buttom_sample_click(){
             const a = parseInt(elem1.value)/10;
             const b = 10 - a;
             reflash();
-            file_path = '/data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json';
-            force_re = '/data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name + '_' + sample_rate + '_nodes_edges.json'
-            sankey_file_name = '/data/oregonf/all_oregonf_rate_community_num_for_sankey_gai/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num_for_sankey.json'
-            sankey_color_file_name = '/data/oregonf/all_oregonf_rate_community_HX/oregonf_sample_tsne_' + sample_name +  '_' + sample_rate + '_HX.json'
-    
-            file_path = '/data/oregonf/our_sample_nodes_edges/our_sample_a_'+ a +'_b_'+ b +'_rate_' + sample_rate + '_nodes_egdes.json'
-            sankey_file_name = '/data/oregonf/our_sample_community_num_for_sankey/oregonf_OUR_a_'+a+'_b_'+b+'_Rate_'+sample_rate+'_for_sankey.json'
-            sankey_color_file_name = '/data/oregonf/our_sample_community_HX/oregonf_OUR_a_'+a+'_b_'+b+'_Rate_'+sample_rate+'_for_sankey_HX.json'
+            file_path = '/data/oregonf/our_sample_nodes_edges2/our_sample_a_'+ a +'_b_'+ b +'_rate_' + sample_rate + '_nodes_egdes.json'
+            force_re = '/data/oregonf/our_sample_force_data/our_sample_a_'+a+'_b_'+b+'_force_data_rate_'+sample_rate+'_nodes_edges.json'
+            sankey_file_name = '/data/oregonf/our_sample_community_num_for_sankey2/oregonf_OUR_a_'+a+'_b_'+b+'_Rate_'+sample_rate+'for_sankey.json'
+            sankey_color_file_name = '/data/oregonf/our_sample_community_HX2/oregonf_OUR_a_'+a+'_b_'+b+'_Rate_'+sample_rate+'_for_sankey_HX.json'
 
 
             force_file_name = file_path;
@@ -60,7 +56,7 @@ function buttom_sample_click(){
     
             drawRadar(parseInt(sample_rate));
     
-            community_num_file_name = '/data/oregonf/all_oregonf_rate_community_num/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num.json';
+            community_num_file_name = '../data/oregonf/our_sample_community_num2/our_sample_a_'+a+'_b_'+b+'_rate_'+sample_rate+'_community_num.json'
             draw_community_disribution_again();
     
             draw_sankey_again();
@@ -112,49 +108,49 @@ function select2_change(){
     }
 }
 
-function select_community_change(){
-    reflash();
+// function select_community_change(){
+//     reflash();
 
-    var select_name = document.getElementById('s1');
-    var selected = select_name.options[select_name.selectedIndex].value;
+//     var select_name = document.getElementById('s1');
+//     var selected = select_name.options[select_name.selectedIndex].value;
 
-    if(selected == 'Community'){
-        draw_community();
-    }
-    else if(selected == 'Connected'){
+//     if(selected == 'Community'){
+//         draw_community();
+//     }
+//     else if(selected == 'Connected'){
         
-    }
-    else if(selected == 'Disribution'){
+//     }
+//     else if(selected == 'Disribution'){
 
-    }
-    else if(selected == 'Degree'){
+//     }
+//     else if(selected == 'Degree'){
 
-    }
-    else if(selected == 'Betweeness'){
+//     }
+//     else if(selected == 'Betweeness'){
         
-    }
-}
+//     }
+// }
 
 
-function range1(){
-    var elem1 = document.querySelector('input[id="range1"]');
-    var elem2 = document.querySelector('input[id="range2"]');
+// function range1(){
+//     var elem1 = document.querySelector('input[id="range1"]');
+//     var elem2 = document.querySelector('input[id="range2"]');
 
-    elem2.value = String(100 - elem1.value);
-    // document.querySelector('b[id="b1"]') = elem2.value;
-    // document.querySelector('b[id="b2"]') = elem1.value;
-    document.getElementById('b1').innerHTML = elem1.value;
-    document.getElementById('b2').innerHTML = elem2.value;
-}
+//     elem2.value = String(100 - elem1.value);
+//     // document.querySelector('b[id="b1"]') = elem2.value;
+//     // document.querySelector('b[id="b2"]') = elem1.value;
+//     document.getElementById('b1').innerHTML = elem1.value;
+//     document.getElementById('b2').innerHTML = elem2.value;
+// }
 
-function range2(){
-    var elem1 = document.querySelector('input[id="range1"]');
-    var elem2 = document.querySelector('input[id="range2"]');
+// function range2(){
+//     var elem1 = document.querySelector('input[id="range1"]');
+//     var elem2 = document.querySelector('input[id="range2"]');
 
-    elem1.value = String(100 - elem2.value);
-    // document.querySelector('b[id="b1"]') = elem2.value;
-    // document.querySelector('b[id="b2"]') = elem1.value;
-    document.getElementById('b1').innerHTML  = elem1.value;
-    document.getElementById('b2').innerHTML  = elem2.value;
+//     elem1.value = String(100 - elem2.value);
+//     // document.querySelector('b[id="b1"]') = elem2.value;
+//     // document.querySelector('b[id="b2"]') = elem1.value;
+//     document.getElementById('b1').innerHTML  = elem1.value;
+//     document.getElementById('b2').innerHTML  = elem2.value;
 
-}
+// }

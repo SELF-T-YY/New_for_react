@@ -102,11 +102,18 @@ function draw_community_disribution_again(){
 
     d3.json(community_num_file_name, function(community_num){
         var dataset = []
+        for(var i =0;i<=33;i++){
+
+            var rect = d3.select('#community_Distribution_' + i)
+                            .transition()
+                            .duration(2000)
+                            // .attr('y', 0)
+                            .attr('height',0);
+        }
         for(var key in community_num){
             var data = {};
             data['id'] = key;
             data['num'] = Math.log10(community_num[key]);
-            dataset.push(data);
 
             var rect = d3.select('#community_Distribution_' + key)
                             .transition()

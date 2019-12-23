@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 
 sample_rate = (5, 10, 15, 20, 25, 30, 35, 40)
 for rate in sample_rate:
-    file_path = r'../data/oregonf/our_sample_nodes_edges/our_sample_a_4_b_6_rate_' \
+    file_path = r'../data/oregonf/our_sample_nodes_edges2/our_sample_a_4_b_6_rate_' \
                       + str(rate) + '_nodes_egdes.json'
-    file_write_path = r'../data/oregonf/our_sample_community/our_sample_a4_b_6_rate_' \
+    file_write_path = r'../data/oregonf/our_sample_community2/our_sample_a_4_b_6_rate_' \
                       + str(rate) + '_community.json'
 
     G = nx.Graph()
@@ -36,7 +36,18 @@ for rate in sample_rate:
         for key in partition.keys():
             max_num = max(max_num, partition.get(key))
         print(max_num)
+        ans_dict = {}
+        for key in partition:
+            if partition[key] not in ans_dict:
+                temp = [key]
+                ans_dict[partition[key]] = temp
+            else:
+                temp = ans_dict[partition[key]]
+                temp.append(key)
+                ans_dict[partition[key]] = temp
+    fw = open(file_write_path, 'w+')
+    fw.write(json.dumps(ans_dict))
+    fw.close()
 
-        for i in partition:
-            
+
 
