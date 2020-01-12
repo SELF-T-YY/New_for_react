@@ -1,7 +1,7 @@
 const d3 = require('d3')
 const fs = require('fs')
 
-// const sample_name = ['FF', 'ISRW', 'RNS', 'SRW', 'TIES']
+const sample_name = ['FF', 'ISRW', 'RNS', 'SRW', 'TIES']
 const sample_rate = ['5', '10', '15', '20', '25', '30', '35', '40']
 
 function drawforce(data, filewritepath){
@@ -76,8 +76,10 @@ function getdata(){
         for(let rate in sample_rate){
             // const filepath = '../data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name[name] + '_' + sample_rate[rate] + '_nodes_edges.json'
             // const filewritepath = '../data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name[name] + '_' + sample_rate[rate] + '_nodes_edges.json'
-            const filepath = '../data/oregonf/our_sample_nodes_edges3/our_sample_a_4_b_6_rate_'+ sample_rate[rate] + '_nodes_egdes.json'
-            const filewritepath = '../data/oregonf/our_sample_force_data2/our_sample_a_4_b_6_force_data_rate_' + sample_rate[rate] + '_nodes_edges.json'
+            // const filepath = '../data/oregonf/our_sample_nodes_edges3/our_sample_a_4_b_6_rate_'+ sample_rate[rate] + '_nodes_egdes.json'
+            // const filewritepath = '../data/oregonf/our_sample_force_data2/our_sample_a_4_b_6_force_data_rate_' + sample_rate[rate] + '_nodes_edges.json'
+            const filepath = '../data/cs/gai_a_0.1_b_0.9_rate_80.json'
+            const filewritepath ='../data/cs/csforce_date.json' 
             fs.readFile(filepath,function(e,data){
                 data = JSON.parse(data);
                 // console.log(data);
@@ -87,7 +89,7 @@ function getdata(){
             })
             // break
         // }
-        // break
+        break
     }
 }
 

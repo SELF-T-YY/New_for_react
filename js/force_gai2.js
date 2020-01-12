@@ -8,7 +8,9 @@ var force_file_origin_name = "/data/oregonf/force_data_nodes_edges.json"
 var force_re = ''
 // var force_file_name = "/data/oregonf/ISRW/oregonf_sample_tsne_ISRW_15_nodes_edges.json"
 
-var force_circle_r = 5;
+force_file_name = '/data/cs/csforce_date.json'
+
+var force_circle_r = 1;
 
 const force_width = 775;
 const force_height = 509;
@@ -58,7 +60,7 @@ function drawforce(if_draw_again){
         force_PIXIJS_circles = new PIXI.Graphics();
         for(var key in f_nodes){
             force_PIXIJS_circles.beginFill(force_community_circle_Color);
-            force_PIXIJS_circles.drawCircle(f_nodes[key].x,f_nodes[key].y,5);
+            force_PIXIJS_circles.drawCircle(f_nodes[key].x,f_nodes[key].y,force_circle_r);
             force_PIXIJS_circles.endFill();
         }
         app.stage.addChild(force_PIXIJS_circles);
