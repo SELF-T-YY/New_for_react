@@ -96,7 +96,7 @@ def choose_p_key(data_list, p_dict, all_dict):
     return p_key
 
 
-def poisson_disc(p_dict):
+def poisson_disc(p_dict, per):
     pan_stack = Stack()
     ans_list = []
     p_temp_dict = {}
@@ -108,7 +108,9 @@ def poisson_disc(p_dict):
             p_key = max_betweenness(temp_dict)
             # p_key = random.choice(list(temp_dict))
         else:
-            p_key = choose_p_key(pan_stack.data, temp_dict, p_dict)
+            if len(ans_list)/ len(p_dict)*100 > per:
+                break
+            p_key = choose_p_key(ans_list, temp_dict, p_dict)
         if p_key == -1:
             break
 
@@ -196,16 +198,25 @@ def reflash(p_dict):
 
 with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
     alpha = 0.1
-    ra = 20
+    ra = 1
     ra = ra/1000000
 
+    # our_sample_gai_a_0.1_b_0.9_rata_5     120
+    # our_sample_gai_a_0.1_b_0.9_rata_10    45
+    # our_sample_gai_a_0.1_b_0.9_rata_15    20
+    # our_sample_gai_a_0.1_b_0.9_rata_20    5
+    # our_sample_gai_a_0.1_b_0.9_rata_25
+    # our_sample_gai_a_0.1_b_0.9_rata_40
+
+
+    per = 25
     data_dict = json.load(f)
     len1 = len(list(data_dict.keys()))
     calculate_r_for_all(data_dict)
 
     max_len = 0
     for i in range(1):
-        final_list = poisson_disc(data_dict)
+        final_list = poisson_disc(data_dict, 40)
         final_list = reflash(final_list)
         len2 = len(final_list['nodes'])
         # len2 = len(final_list)
@@ -217,8 +228,7 @@ with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
         # print(final_list)
     print(ans_list)
     print(max_len, '%', sep='')
-    f_file = open(r'../data/oregonf/our_sample_gai5/cs.json', 'w+')
-
-    # f_file = open(r'../data/oregonf/our_sample_gai5/our_sample_gai_a_0.1_b_0.9_rata_40.json', 'w+')
+    # f_file = open(r'../data/oregonf/our_sample_gai5/cs.json', 'w+')
+    f_file = open(r'../data/oregonf/our_sample_gai5/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json', 'w+')
     ans_json = json.dumps(final_list)
     f_file.write(ans_json)
