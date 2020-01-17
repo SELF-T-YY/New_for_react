@@ -1,11 +1,20 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 2020/1/17 15:40
+# @Author  : SELF-T-YY
+# @Site    : 
+# @File    : our_sample_gai5_for_block2000.py
+# @Software: PyCharm
+
 import math
 import json
 import random
 import copy
 
-all_data_dict = json.load(open('../data/oregonf/force_data_nodes_edges.json'))
-all_nodes_dict = json.load(open('../data/force_data_gai.json'))
+
+all_data_dict = json.load(open('../data/block2000/block2000_force_data_gai.json'))
 all_edges_dict = all_data_dict['edges']
+all_nodes_dict = json.load((open('../data/block2000/block2000_nodes_id_x_y.json')))
 
 
 def calculate_r(fpi, bi, beta=1):
@@ -196,24 +205,32 @@ def reflash(p_dict):
     return {'nodes': ans_nodes, 'edges': ans_edges}
 
 
-with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
+# per = 10
+# f_name = r'../data/block2000/our_sample/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json'
+# with open(f_name) as f:
+#     data = json.load(f)
+#     data = reflash(data)
+#     # print(data)
+#     f_file = open(r'../data/block2000/our_sample_gai/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json', 'w+')
+#     ans_json = json.dumps(data)
+#     f_file.write(ans_json)
+
+
+with open(r'../data/block2000/block2000t_tsne_5000_addedges_gai.json') as f:
     alpha = 0.1
-    ra = 15
+    ra = 2500
     ra = ra/1000000
 
-    # our_sample_gai_a_0.1_b_0.9_rata_5     120
-    # our_sample_gai_a_0.1_b_0.9_rata_10    45
+    # 5
+    # 10    1500
+    # 15    1000
+    # 20    750
+    # 25    550
+    # 30    430
+    # 35    250
+    # 40    15
 
-    # our_sample_gai_a_0.1_b_0.9_rata_15    80
-    # our_sample_gai_a_0.1_b_0.9_rata_20    50
-    # our_sample_gai_a_0.1_b_0.9_rata_25    40
-    # our_sample_gai_a_0.1_b_0.9_rata_30    25
-    # our_sample_gai_a_0.1_b_0.9_rata_35
-
-    # our_sample_gai_a_0.1_b_0.9_rata_40
-
-
-    per = 35
+    per = 5
     data_dict = json.load(f)
     len1 = len(list(data_dict.keys()))
     calculate_r_for_all(data_dict)
@@ -221,9 +238,9 @@ with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
     max_len = 0
     for i in range(1):
         final_list = poisson_disc(data_dict, 40)
-        final_list = reflash(final_list)
-        len2 = len(final_list['nodes'])
-        # len2 = len(final_list)
+        # final_list = reflash(final_list)
+        # len2 = len(final_list['nodes'])
+        len2 = len(final_list)
         len_fin = len2 / len1 * 100
         print(len_fin, "%", sep='')
         if max_len < len_fin:
@@ -233,6 +250,6 @@ with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
     print(ans_list)
     print(max_len, '%', sep='')
     # f_file = open(r'../data/oregonf/our_sample_gai5/cs.json', 'w+')
-    f_file = open(r'../data/oregonf/our_sample_gai5/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json', 'w+')
+    f_file = open(r'../data/block2000/our_sample/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json', 'w+')
     ans_json = json.dumps(final_list)
     f_file.write(ans_json)
