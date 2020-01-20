@@ -7,7 +7,9 @@
 # @Software: PyCharm
 
 import json
-with open(r'../data/block2000/block2000t.txt') as f:
+# with open(r'../data/block2000/block2000t.txt') as f:
+with open(r'../data/two_ball/two-ball.txt') as f:
+
     nodes = []
     edges = []
 
@@ -24,6 +26,8 @@ with open(r'../data/block2000/block2000t.txt') as f:
 
     ans_json = {'nodes': nodes, 'edges': edges}
 
-    fw = open('block2000_force_data.json', 'w+')
+    # fw = open('block2000_force_data.json', 'w+')
+    fw = open(r'../data/two_ball/two-ball_force_data.json', 'w+')
+
     fw.write(json.dumps(ans_json))
     fw.close()

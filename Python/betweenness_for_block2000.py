@@ -9,7 +9,8 @@
 import json
 import networkx as nx
 
-with open(r'../data/block2000/block2000t_tsne_5000_addedges.json') as f:
+# with open(r'../data/block2000/block2000t_tsne_5000_addedges.json') as f:
+with open(r'../data/two_ball/two-ball_tsne_5000_addedges.json') as f:
     data_dict = json.load(f)
     grf = nx.Graph()
     for i in data_dict:
@@ -23,6 +24,8 @@ with open(r'../data/block2000/block2000t_tsne_5000_addedges.json') as f:
         if i in data_dict:
             data_dict[i]['betweenness'] = between[i]
             data_dict[i]['id'] = i
-    f_file = open(r'../data/block2000/block2000t_tsne_5000_addedges_gai.json', 'w+')
+    # f_file = open(r'../data/block2000/block2000t_tsne_5000_addedges_gai.json', 'w+')
+    f_file = open(r'../data/two_ball/two-ball_tsne_5000_addedges_gai.json.json', 'w+')
+
     ans_json = json.dumps(data_dict)
     f_file.write(ans_json)
