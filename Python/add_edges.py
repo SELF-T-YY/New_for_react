@@ -1,16 +1,19 @@
 import json
 
-with open(r'../data/oregonf_TSNE_5000_id_x_y_kde.json') as f:
+with open(r'../data/ca-HepPh.txt/ca-HepPh_id_x_y_kde.json') as f:
     data_dict = json.load(f)
     edges_dict = {}
     betweenness_dict = {}
-    with open(r'../data/oregonf.csv') as f_edges:
+    with open(r'../data/ca-HepPh.txt/CA-HepPh.txt') as f_edges:
+        f_edges.readline()
+        f_edges.readline()
+        f_edges.readline()
         f_edges.readline()
         while True:
             line = f_edges.readline()
             if not line:
                 break
-            line = line.replace('\n', '').split(',')
+            line = line.replace('\n', '').split('\t')
             if line[0] in data_dict and line[1] in data_dict:
                 if line[0] not in edges_dict:
                     edges_dict[line[0]] = list([line[1]])
@@ -33,9 +36,12 @@ with open(r'../data/oregonf_TSNE_5000_id_x_y_kde.json') as f:
                         betweenness_dict[line[1]] = betweenness_dict[line[1]] + 1
     for key in data_dict:
         temp_dict = data_dict[key]
-        temp_dict.update({"edges": edges_dict[key], "betweenness": betweenness_dict[key]})
+        if key not in edges_dict:
+            edges_dict[key] = []
+        temp_dict.update({"edges": edges_dict[key]})
         data_dict[key] = temp_dict
+    print(data_dict)
     # print(data_dict)
-    f_file = open(r'../data/oregonf_tsne_5000_addedges.json', 'w+')
+    f_file = open(r'../data/ca-HepPh.txt/ca-HepPh_id_x_y_kde_edges.json', 'w+')
     ans_json = json.dumps(data_dict)
     f_file.write(ans_json)
