@@ -20,9 +20,9 @@ import random
 import copy
 
 
-all_data_dict = json.load(open('../data/block2000/block2000_force_data_gai.json'))
+all_data_dict = json.load(open('../data/two_ball/two-ball_forceData.json'))
 all_edges_dict = all_data_dict['edges']
-all_nodes_dict = json.load((open('../data/block2000/block2000_nodes_id_x_y.json')))
+all_nodes_dict = json.load((open('../data/two_ball/two-ball_tsne_5000_addedges_gai.json')))
 
 
 def calculate_r(fpi, bi, beta=1):
@@ -228,10 +228,10 @@ def reflash(p_dict):
 
 
 with open(r'../data/two_ball/two-ball_tsne_5000_addedges_gai.json') as f:
-    alpha = 0.1
-    ra = 2900
+    alpha = 0.9
+    ra = 1
 
-    ra = ra/1000000
+    ra = ra/100000000000000000000000000000000000000000000000000000000000000
 
     # 5     2900
     # 10    2000
