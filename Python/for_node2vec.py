@@ -7,28 +7,24 @@
 # @Software: PyCharm
 
 from node2vec import Node2Vec
-# import node2vec
 import networkx as nx
 import json
 
-with open(r'../data/ca-HepPh.txt/CA-HepPh.txt') as f:
-# with open(r'../data/facebook_clean_data/artist_edges_xx.csv') as f:
-    f.readline()
-    f.readline()
-    f.readline()
-    f.readline()
+with open(r'../data/fb-pages-public-figure/fb-pages-public-figure.edges.txt') as f:
+# with open(r'../data/fb-pages-media/fb-pages-media.edges.txt') as f:
     node_list = []
     edge_list = []
     while True:
         line = f.readline()
         if not line:
             break
-        line = line.replace('\n', '').split('\t')
+        line = line.replace('\n', '').split(',')
         if line[0] not in node_list:
             node_list.append(line[0])
         if line[1] not in node_list:
             node_list.append(line[1])
-        edge_list.append([line[0], line[1]])
+        if line[0] != line[1]:
+            edge_list.append([line[0], line[1]])
     print('ReadOver!!!')
     G = nx.Graph()
     G.add_edges_from(edge_list)
@@ -45,5 +41,5 @@ with open(r'../data/ca-HepPh.txt/CA-HepPh.txt') as f:
     model.wv.most_similar('2')  # Output node names are always strings
 
     # Save embeddings for later use
-    model.wv.save_word2vec_format(r'../data/ca-HepPh.txt/CA-HepPh_vector.txt')
-
+    # model.wv.save_word2vec_format(r'../data/fb-pages-media/fb-pages-media-node.txt')
+    model.wv.save_word2vec_format(r'../data/fb-pages-public-figure/fppf.txt')

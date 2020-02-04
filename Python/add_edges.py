@@ -1,19 +1,15 @@
 import json
 
-with open(r'../data/ca-HepPh.txt/ca-HepPh_id_x_y_kde.json') as f:
+with open(r'../data/fb-pages-public-figure/fppf_id_x_y_kde.json') as f:
     data_dict = json.load(f)
     edges_dict = {}
     betweenness_dict = {}
-    with open(r'../data/ca-HepPh.txt/CA-HepPh.txt') as f_edges:
-        f_edges.readline()
-        f_edges.readline()
-        f_edges.readline()
-        f_edges.readline()
+    with open(r'../data/fb-pages-public-figure/fb-pages-public-figure.edges.txt') as f_edges:
         while True:
             line = f_edges.readline()
             if not line:
                 break
-            line = line.replace('\n', '').split('\t')
+            line = line.replace('\n', '').split(',')
             if line[0] in data_dict and line[1] in data_dict:
                 if line[0] not in edges_dict:
                     edges_dict[line[0]] = list([line[1]])
@@ -42,6 +38,6 @@ with open(r'../data/ca-HepPh.txt/ca-HepPh_id_x_y_kde.json') as f:
         data_dict[key] = temp_dict
     print(data_dict)
     # print(data_dict)
-    f_file = open(r'../data/ca-HepPh.txt/ca-HepPh_id_x_y_kde_edges.json', 'w+')
+    f_file = open(r'../data/fb-pages-public-figure/fppf_id_x_y_kde_edges.json', 'w+')
     ans_json = json.dumps(data_dict)
     f_file.write(ans_json)
