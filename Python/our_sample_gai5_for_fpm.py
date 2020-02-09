@@ -225,14 +225,14 @@ with open(r'../data/ca-HepPh.txt/ca-HepPh_id_x_y_kde_edges_betweenness.json') as
 
     ra = ra/100
 
-    # 5     65
-    # 10    40
-    # 15    30
-    # 20    23
-    # 25    18
-    # 30    15
-    # 35    11
-    # 40    2900/1^6
+    # 5
+    # 10
+    # 15
+    # 20
+    # 25
+    # 30
+    # 35
+    # 40
     per = 15
     data_dict = json.load(f)
     len1 = len(list(data_dict.keys()))

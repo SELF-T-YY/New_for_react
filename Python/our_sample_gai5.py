@@ -198,14 +198,17 @@ def reflash(p_dict):
 
 with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
     alpha = 0.1
-    ra = 15
+    ra = 5
     ra = ra/1000000
 
-    # our_sample_gai_a_0.1_b_0.9_rata_5     120
-    # our_sample_gai_a_0.1_b_0.9_rata_10    45
+    per = 40
+    times = 1
+
+    # our_sample_gai_a_0.1_b_0.9_rata_5     230-290
+    # our_sample_gai_a_0.1_b_0.9_rata_10    120
 
     # our_sample_gai_a_0.1_b_0.9_rata_15    80
-    # our_sample_gai_a_0.1_b_0.9_rata_20    50
+    # our_sample_gai_a_0.1_b_0.9_rata_20    60
     # our_sample_gai_a_0.1_b_0.9_rata_25    40
     # our_sample_gai_a_0.1_b_0.9_rata_30    25
     # our_sample_gai_a_0.1_b_0.9_rata_35
@@ -213,7 +216,8 @@ with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
     # our_sample_gai_a_0.1_b_0.9_rata_40
 
 
-    per = 35
+
+
     data_dict = json.load(f)
     len1 = len(list(data_dict.keys()))
     calculate_r_for_all(data_dict)
@@ -233,6 +237,6 @@ with open(r'../data/oregonf/oregonf_tsne_5000_betweenness.json') as f:
     print(ans_list)
     print(max_len, '%', sep='')
     # f_file = open(r'../data/oregonf/our_sample_gai5/cs.json', 'w+')
-    f_file = open(r'../data/oregonf/our_sample_gai5/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json', 'w+')
+    f_file = open(r'../data/oregonf/our_sample_adv/our_sample_times_' + str(times) + '_a_0.1_b_0.9_rata_' + str(per) + '.json', 'w+')
     ans_json = json.dumps(final_list)
     f_file.write(ans_json)
