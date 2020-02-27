@@ -11,9 +11,16 @@ import csv
 from sklearn.manifold import TSNE
 numpy.set_printoptions(threshold=numpy.inf)
 
+position = 'SW-10000-5-0d3-trial3'
+file_name = 'SW'
+file_path = r'../data/' + position + '/' + file_name + '.txt'
+file_write_path = r'../data/' + position + '/' + file_name + '_Tsne.csv'
 
-ans =TSNE(metric='cosine', method='barnes_hut', angle=0.2, n_iter=2000, n_components=2)
-with open(r'../data/fb-pages-public-figure/fppf.txt') as f:
+print('file_path:   {}'.format(file_path))
+print('file_write_path:   {}'.format(file_write_path))
+
+ans = TSNE(metric='cosine', method='barnes_hut', angle=0.2, n_iter=2000, n_components=2)
+with open(file_path) as f:
     a = -1
     y_list = []
     while True:
@@ -34,7 +41,7 @@ with open(r'../data/fb-pages-public-figure/fppf.txt') as f:
             x_array = numpy.vstack((x_array, b_array))
         print(a)
     x_tsne = ans.fit_transform(x_array)
-    f = open(r'../data/fb-pages-public-figure/fppf_Tsne.csv', 'a', newline='')
+    f = open(file_write_path, 'a', newline='')
 
     csv_write = csv.writer(f, dialect='excel')
     a=0

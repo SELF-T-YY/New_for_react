@@ -8,17 +8,19 @@
 
 from node2vec import Node2Vec
 import networkx as nx
-import json
 
-with open(r'../data/fb-pages-public-figure/fb-pages-public-figure.edges.txt') as f:
-# with open(r'../data/fb-pages-media/fb-pages-media.edges.txt') as f:
+with open(r'../data/SW-10000-5-0d3-trial3/SW-10000-5-0d3-trial3.edges') as f:
     node_list = []
     edge_list = []
+
+    f.readline()
+    f.readline()
+
     while True:
         line = f.readline()
         if not line:
             break
-        line = line.replace('\n', '').split(',')
+        line = line.replace('\n', '').split(' ')
         if line[0] not in node_list:
             node_list.append(line[0])
         if line[1] not in node_list:
@@ -42,4 +44,4 @@ with open(r'../data/fb-pages-public-figure/fb-pages-public-figure.edges.txt') as
 
     # Save embeddings for later use
     # model.wv.save_word2vec_format(r'../data/fb-pages-media/fb-pages-media-node.txt')
-    model.wv.save_word2vec_format(r'../data/fb-pages-public-figure/fppf.txt')
+    model.wv.save_word2vec_format(r'../data/SW-10000-5-0d3-trial3/SW.txt')

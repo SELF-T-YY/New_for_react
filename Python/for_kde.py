@@ -10,7 +10,15 @@ from sklearn.neighbors.kde import KernelDensity
 import numpy as np
 import json
 
-with open(r'../data/fb-pages-public-figure/fppf_Tsne.csv') as f:
+position = 'SW-10000-5-0d3-trial3'
+file_name = 'SW'
+file_path = r'../data/' + position + '/' + file_name + '_Tsne.csv'
+file_write_path = r'../data/' + position + '/' + file_name + '_id_x_y_kde.json'
+
+print('file_path:   {}'.format(file_path))
+print('file_write_path:   {}'.format(file_write_path))
+
+with open(file_path) as f:
     ans_dict = {}
     temp_list = []
     id_list = []
@@ -30,6 +38,6 @@ with open(r'../data/fb-pages-public-figure/fppf_Tsne.csv') as f:
         ans_dict[id_list[i]]['kde'] = kde_list[i]
         print(i)
     print(ans_dict)
-    fw = open(r'../data/fb-pages-public-figure/fppf_id_x_y_kde.json', 'w+')
+    fw = open(file_write_path, 'w+')
     fw.write(json.dumps(ans_dict))
     fw.close()

@@ -8,7 +8,7 @@ var force_file_origin_name = "/data/oregonf/force_data_nodes_edges.json"
 var force_re = ''
 // var force_file_name = "/data/oregonf/ISRW/oregonf_sample_tsne_ISRW_15_nodes_edges.json"
 
-force_file_name = '/data/cs/csforce_date.json'
+force_file_name = '/data/soc-sign-bitcoinotc.csv/SSB_force_gai.json'
 
 var force_circle_r = 1;
 

@@ -8,6 +8,7 @@ with open(r'../data/force_data_gai.json') as f:
         nodes.append(node)
 print(nodes)
 
+
 edges = []
 with open(r'../data/oregonf.csv') as f:
     f.readline()

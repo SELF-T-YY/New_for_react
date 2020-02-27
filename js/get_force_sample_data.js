@@ -80,8 +80,8 @@ function getdata(){
             // const filewritepath = '../data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name[name] + '_' + sample_rate[rate] + '_nodes_edges.json'
             // const filepath = '../data/oregonf/our_sample_nodes_edges3/our_sample_a_4_b_6_rate_'+ sample_rate[rate] + '_nodes_egdes.json'
             // const filewritepath = '../data/oregonf/our_sample_force_data2/our_sample_a_4_b_6_force_data_rate_' + sample_rate[rate] + '_nodes_edges.json'
-            const filepath = '../data/two_ball/two-ball_force_data.json'
-            const filewritepath ='../data/two_ball/two-ball_force_gai.json' 
+            const filepath = "E:/Project/New_for_react/data/soc-sign-bitcoinotc.csv/SSB_forceData.json"
+            const filewritepath ='E:/Project/New_for_react/data/soc-sign-bitcoinotc.csv/SSB_force_gai.json' 
             fs.readFile(filepath,function(e,data){
                 data = JSON.parse(data);
                 // console.log(data);

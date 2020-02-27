@@ -6,20 +6,30 @@
 # @File    : our_sample_gai5_for_fpp.py
 # @Software: PyCharm
 
+
 import math
 import json
 import random
 import copy
+from threading import Thread
 
+position = 'fb-pages-politician'
+file_name = 'fpp'
 
-all_data_dict = json.load(open('../data/fb-pages-politician/fpp_forceData.json'))
+all_data_dict = json.load(open('../data/' + position + '/' + file_name + '_forceData.json'))
 all_edges_dict = all_data_dict['edges']
-all_nodes_dict = json.load((open('../data/fb-pages-politician/fpp_id_x_y_kde.json')))
+all_nodes_dict = json.load((open('../data/' + position + '/' + file_name + '_id_x_y_kde.json')))
+
+file_path = r'../data/' + position + '/' + file_name + '_id_x_y_kde_edges_betweenness.json'
+file_write_path = r'../data/' + position + '/' + file_name + '_id_x_y_kde.json'
+
+print('file_path:   {}'.format(file_path))
+print('file_write_path:   {}'.format(file_write_path))
 
 
 def calculate_r(fpi, bi, beta=1):
     beta = 1 - alpha
-    temp = (alpha * fpi*100 + beta * bi)
+    temp = (alpha * fpi * 1000 + beta * bi)
     if temp == 0:
         temp = 1
     r = ra/temp
@@ -69,13 +79,13 @@ def remove_or_save(p, pd_p):
 
 def dict_key_value_max(all_dict, p_dict):
     edges_list = p_dict["edges"]
-    max_betweenness = 0
+    max_betweenness_temp = 0
     max_betweenness_key = -1
     for edge in edges_list:
         if edge not in all_dict:
             continue
-        if all_dict[edge]["betweenness"] > max_betweenness:
-            max_betweenness = all_dict[edge]["betweenness"]
+        if all_dict[edge]["betweenness"] > max_betweenness_temp:
+            max_betweenness_temp = all_dict[edge]["betweenness"]
             max_betweenness_key = edge
     return max_betweenness_key
 
@@ -83,14 +93,19 @@ def dict_key_value_max(all_dict, p_dict):
 def max_betweenness(all_dict):
     max_betweeness = 0
     max_betweeness_key = -1
+    temp_p_list = []
     for edge in all_dict:
         if all_dict[edge]["betweenness"] > max_betweeness:
             max_betweeness = all_dict[edge]["betweenness"]
             max_betweeness_key = edge
-    return max_betweeness_key
+            temp_p_list = [edge]
+        elif all_dict[edge]["betweenness"] == max_betweeness:
+            temp_p_list.append(edge)
+    return random.choice(temp_p_list)
 
 
 def choose_p_key(data_list, p_dict, all_dict):
+    temp_p_list = []
     p_list = []
     for p in data_list:
         for edge in all_dict[p]['edges']:
@@ -100,12 +115,13 @@ def choose_p_key(data_list, p_dict, all_dict):
         return -1
     else:
         max_betweeness = 0
-        p_key = -1
         for p in p_list:
             if all_dict[p]["betweenness"] > max_betweeness:
                 max_betweeness = all_dict[p]["betweenness"]
-                p_key = p
-    return p_key
+                temp_p_list = [p]
+            elif all_dict[p]["betweenness"] == max_betweeness:
+                temp_p_list.append(p)
+    return random.choice(temp_p_list)
 
 
 def poisson_disc(p_dict, per):
@@ -120,7 +136,7 @@ def poisson_disc(p_dict, per):
             p_key = max_betweenness(temp_dict)
             # p_key = random.choice(list(temp_dict))
         else:
-            if len(ans_list) / len(p_dict)*100 > per:
+            if len(ans_list) / len(p_dict) * 100 > per:
                 break
             p_key = choose_p_key(ans_list, temp_dict, p_dict)
         if p_key == -1:
@@ -208,53 +224,73 @@ def reflash(p_dict):
     return {'nodes': ans_nodes, 'edges': ans_edges}
 
 
-# per = 10
-# f_name = r'../data/block2000/our_sample/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json'
-# with open(f_name) as f:
-#     data = json.load(f)
-#     data = reflash(data)
-#     # print(data)
-#     f_file = open(r'../data/block2000/our_sample_gai/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json', 'w+')
-#     ans_json = json.dumps(data)
-#     f_file.write(ans_json)
+def test():
+    with open(file_path) as f:
+
+        data_dict = json.load(f)
+        len1 = len(list(data_dict.keys()))
+        calculate_r_for_all(data_dict)
+
+        max_len = 0
+        for i in range(1):
+            final_list = poisson_disc(data_dict, 40)
+            final_list = reflash(final_list)
+            len2 = len(final_list['nodes'])
+            len_fin = len2 / len1 * 100
+            print(len_fin, "%", sep='')
+            if max_len < len_fin:
+                ans_list = final_list
+                max_len = len_fin
+        print(ans_list)
+        print(max_len, '%', sep='')
 
 
-with open(r'../data/fb-pages-politician/fpp_id_x_y_kde_edges_betweenness.json') as f:
-    alpha = 0.1
+def run_do(times):
+    with open(file_path) as f:
 
-    ra = 13.5
+        data_dict = json.load(f)
+        len1 = len(list(data_dict.keys()))
+        calculate_r_for_all(data_dict)
 
-    per = 30
+        max_len = 0
+        for i in range(1):
+            final_list = poisson_disc(data_dict, 40)
+            final_list = reflash(final_list)
+            len2 = len(final_list['nodes'])
+            len_fin = len2 / len1 * 100
+            # print(len_fin, "%", sep='')
+            if max_len < len_fin:
+                ans_list = final_list
+                max_len = len_fin
+        # print(ans_list)
+        print(max_len, '%', sep='')
+        f_file_path = r'../data/' + position + '/our_sample_adv/our_sample_times_' + str(
+            times) + '_a_0.5_b_0.5_rata_' + str(per) + '.json'
+        print(f_file_path)
+        f_file = open(f_file_path, 'w+')
+        ans_json = json.dumps(final_list)
+        f_file.write(ans_json)
+        f_file.close()
 
-    ra = ra/100
 
-    # 5     40
-    # 10    28
-    # 15    22
-    # 20    18
-    # 25    16
-    # 30    13.5
-    # 35    12
-    # 40    10
+def run():
+    for t in range(0, 5):
+        Thread(target=run_do, args=(t, )).start()
 
-    data_dict = json.load(f)
-    len1 = len(list(data_dict.keys()))
-    calculate_r_for_all(data_dict)
 
-    max_len = 0
-    for i in range(1):
-        final_list = poisson_disc(data_dict, 40)
-        final_list = reflash(final_list)
-        len2 = len(final_list['nodes'])
-        # len2 = len(final_list)
-        len_fin = len2 / len1 * 100
-        print(len_fin, "%", sep='')
-        if max_len < len_fin:
-            ans_list = final_list
-            max_len = len_fin
-        # print(final_list)
-    print(ans_list)
-    print(max_len, '%', sep='')
-    f_file = open(r'../data/fb-pages-politician/our_sample/our_sample_gai_a_0.1_b_0.9_rata_' + str(per) + '.json', 'w+')
-    ans_json = json.dumps(final_list)
-    f_file.write(ans_json)
+alpha = 0.5
+ra = 64
+per = 35
+ra = ra/10
+
+# test()
+run()
+
+# 5
+# 10
+# 15
+# 20
+# 25
+# 30    40
+# 35    36
+# 40    32
