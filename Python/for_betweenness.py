@@ -10,8 +10,8 @@ import json
 import networkx as nx
 import numpy as np
 
-position = 'SW-10000-5-0d3-trial3'
-file_name = 'SW'
+position = 'soc-sign-bitcoinotc.csv'
+file_name = 'SSB'
 file_path = r'../data/' + position + '/' + file_name + '_id_x_y_kde_edges.json'
 file_write_path = r'../data/' + position + '/' + file_name + '_id_x_y_kde_edges_betweenness.json'
 

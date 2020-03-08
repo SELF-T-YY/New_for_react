@@ -10,8 +10,8 @@ function drawforce(data, filewritepath){
     
     var nodesID = []
     for(var n in nodeArr){
-        // nodesID.push({'id': nodeArr[n]['id']});
-        nodesID.push({'id': nodeArr[n]});
+        nodesID.push({'id': nodeArr[n]['id']});
+        // nodesID.push({'id': nodeArr[n]});
         
     }
 
@@ -80,8 +80,8 @@ function getdata(){
             // const filewritepath = '../data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name[name] + '_' + sample_rate[rate] + '_nodes_edges.json'
             // const filepath = '../data/oregonf/our_sample_nodes_edges3/our_sample_a_4_b_6_rate_'+ sample_rate[rate] + '_nodes_egdes.json'
             // const filewritepath = '../data/oregonf/our_sample_force_data2/our_sample_a_4_b_6_force_data_rate_' + sample_rate[rate] + '_nodes_edges.json'
-            const filepath = "E:/Project/New_for_react/data/soc-sign-bitcoinotc.csv/SSB_forceData.json"
-            const filewritepath ='E:/Project/New_for_react/data/soc-sign-bitcoinotc.csv/SSB_force_gai.json' 
+            const filepath = "E:/Project/New_for_react/data/soc-sign-bitcoinotc.csv/cs/our_sample_times_0_a_0.5_b_0.5_rata_20.json"
+            const filewritepath = 'E:/Project/New_for_react/data/soc-sign-bitcoinotc.csv/cs/20_force_gai.json' 
             fs.readFile(filepath,function(e,data){
                 data = JSON.parse(data);
                 // console.log(data);

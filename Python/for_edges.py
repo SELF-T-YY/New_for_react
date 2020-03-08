@@ -1,11 +1,11 @@
 import json
 
-position = 'SW-10000-5-0d3-trial3'
-file_name = 'SW'
+position = 'soc-sign-bitcoinotc.csv'
+file_name = 'SSB'
 file_path = r'../data/' + position + '/' + file_name + '_id_x_y_kde.json'
 file_write_path = r'../data/' + position + '/' + file_name + '_id_x_y_kde_edges.json'
 
-re_file_name = r'E:\Project\New_for_react\data\SW-10000-5-0d3-trial3\SW-10000-5-0d3-trial3.edges'
+re_file_name = r"E:\Project\New_for_react\data\soc-sign-bitcoinotc.csv\soc-sign-bitcoinotc.csv"
 
 
 print('file_path:   {}'.format(file_path))
@@ -22,7 +22,7 @@ with open(file_path) as f:
             line = f_edges.readline()
             if not line:
                 break
-            line = line.replace('\n', '').split(' ')
+            line = line.replace('\n', '').split(',')
             if line[0] in data_dict and line[1] in data_dict:
                 if line[0] not in edges_dict:
                     edges_dict[line[0]] = list([line[1]])

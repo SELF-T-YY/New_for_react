@@ -37,10 +37,20 @@ with open(r'../data/wiki-RfA.txt/wiki-RfA.txt', encoding='utf-8') as f:
         line_TXT = f.readline().replace('\n', '').split(':', 1)
         f.readline()
 
-        if line_SRC[0] != 'SRC':
-            break
-        # if line_SRC[1] == '':
-        #     break
+        if line_SRC[1] == "":
+            line_SRC[1] = 'NULL'
+        if line_TGT[1] == "":
+            line_TGT[1] = 'NULL'
+        if line_VOT[1] == "":
+            line_VOT[1] = 'NULL'
+        if line_RES[1] == "":
+            line_RES[1] = 'NULL'
+        if line_YEA[1] == "":
+            line_YEA[1] = 'NULL'
+        if line_DAT[1] == "":
+            line_DAT[1] = 'NULL'
+        if line_TXT[1] == "":
+            line_TXT[1] = 'NULL'
 
         all_edgesDict[edgeConst] = {
             line_SRC[0]: line_SRC[1],
@@ -55,7 +65,7 @@ with open(r'../data/wiki-RfA.txt/wiki-RfA.txt', encoding='utf-8') as f:
 
         nodesList.append(line_SRC[1])
         nodesList.append(line_TGT[1])
-        edgesList.append([line_SRC[1], line_TGT[1]])
+        edgesList.append({'source': line_SRC[1], 'target': line_TGT[1]})
 
     nodesList = list(set(nodesList))
     forceDataDict = {'nodes': nodesList, 'edges': edgesList}

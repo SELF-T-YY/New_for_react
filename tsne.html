@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/d3.v4.min.js"></script>
+</head>
+<body>
+    <div id="xx" style="height: 1000; width: 1000;"></div>
+    <script>
+        var tsne_filename = "/data/soc-sign-bitcoinotc.csv/cs/our_sample_times_0_a_0.5_b_0.5_rata_20.json";
+        // var tsne_filename = "/data/soc-sign-bitcoinotc.csv/SSB_Tsne.csv";
+
+        var community_filename = '/data/soc-sign-bitcoinotc.csv/cs/20.json'
+        // var community_filename = '/data/soc-sign-bitcoinotc.csv/SSB_community.json'
+
+        var tsne_draw_id = "#xx";
+        var tsne_selected_color = "rgb(255,0,0,1.0)"
+        var tsne_unselected_color = "rgb(23, 37, 90,0.6)"
+        var tsne_height = 350;
+        var tsne_width = 410;
+        var tsne_svg = d3.select(tsne_draw_id)
+                                    .append("svg")
+                                    .attr("id","tsneNodes")
+                                    .style("position","absolute")
+                                    .attr("height",tsne_height)
+                                    .attr("width",tsne_width);
+        // var community_colors = [
+        //     "#FF0000","#800000",
+        //     "#FFFF00","#808000",
+        //     "#00FF00","#008000",
+        //     "#00FFFF","#008080",
+        //     "#0000FF","#000080",
+        //     "#FF00FF","#800080",
+        //     "#6E2C00","#145A32",
+        //     "#4A235A","#641E16",
+        //     "#4D5656","#17202A"
+        // ]
+        var community_colors = [
+            "rgb(255, 0, 0)","rgb(128, 0, 0)",
+            "rgb(255, 255, 0)","rgb(128, 128, 0)",
+            "rgb(0, 255, 0)","rgb(0, 128, 0)",
+            "rgb(0, 255, 255)","rgb(0, 128, 128)",
+            "rgb(0, 0, 255)","rgb(0, 0, 128)",
+            "rgb(255, 0, 255)","rgb(128, 0, 128)",
+            "rgb(120, 40, 31)","rgb(74,35,90)",
+            "rgb(27, 79, 114)","rgb(11, 83, 69)",
+            "rgb(126, 81, 9)","RGB(110, 44, 0)"
+        ]
+
+        function darwtsnenodes(filename,draw_id){
+            d3.json(filename,function(error,data){
+                d3.json(community_filename, function(err, community_data) {
+                    tsneData = data['nodes'];
+                    // console.log(data)
+                    data = data['nodes']
+                    for(var i = 0 ;i < data.length ; i++){
+                        tsneData[i].x = parseFloat(data[i].x);
+                        tsneData[i].y = parseFloat(data[i].y);
+                        tsneData[i].id = parseInt(data[i].id);
+                    }
+                    var x_max = d3.max(tsneData,function(d){return d.x;})
+                    var x_min = d3.min(tsneData,function(d){return d.x;})
+                    var y_max = d3.max(tsneData,function(d){return d.y;})
+                    var y_min = d3.min(tsneData,function(d){return d.y;})
+                    var xScale = d3.scaleLinear()
+                                    .domain([x_min,x_max])
+                                    .range([5,tsne_width]);
+                    var yScale = d3.scaleLinear()
+                                    .domain([y_min,y_max])
+                                    .range([5,tsne_height]);
+                    tsne_svg.append("g")
+                                .selectAll("circle")
+                                .data(tsneData)
+                                .enter()
+                                .append("circle")
+                                .attr("class","tsne_node")
+                                .attr("cx",function(d){
+                                    return xScale(d.x);
+                                })
+                                .attr("cy",function(d){
+                                    return yScale(d.y);
+                                })
+                                .attr("id",function(d){
+                                    return "tsne_node_"+d.id;
+                                })
+                                .attr("r",1.2)
+                                // .attr("fill",tsne_unselected_color)
+                                .attr("fill", function(d){
+                                    // return 'rgb(120, 40, 31)';
+                                    console.log(community_colors[d.id])
+                                    return community_colors[community_data[d.id]]
+                                })
+                                .on("click",function(d)
+                                {
+                                    clearSelectPoint();  
+                                });
+                    // function tsne_point_click(id)
+                    // {
+                    //     d3.select("#tsne_node_"+id).style("fill",tsne_selected_color);
+                    // }
+                    
+                    // function tsne_change_color(nodes,svg)
+                    // {
+                    //     svg.selectAll("circle").style("opacity",0.6);
+                    //     for(var i = 0;i < data.length;i++)
+                    //     {
+                    //         d3.selectAll("#tsne_node_"+data[i]).style("fill",tsne_selected_color);
+                    //     }
+                    // }
+                    
+                    // function brush_tsne_force(selectpoints)
+                    // {
+                    //     for(var i = 0;i < selectpoints.length;i++)
+                    //     {
+                    //         ;
+                    //         // 选择力道途中对应id的节点改变颜色
+                    //         // d3.select()
+                    //     }
+                    // }
+                    
+                    // function brush_tsne(selectpoints){
+                    //     for( var i = 0;i<selectpoints.length;i++){
+                    //         d3.select("#tsne_node_"+selectpoints[i].id).style("fill",selectedColor);
+                    //     }
+                    // }
+                    // function clearSelectPoint(){
+                    //     d3.selectAll("circle").style("fill",tsne_unselected_color);
+                    // }
+                    // var brush = d3.brush();
+                    // function brushed(){}
+                    // function brushend(){
+                    //     d3.selectAll("circle").style("fill",tsne_unselected_color);
+                    //     var event = d3.event.selection;
+                    //     var x1=event[0][0], y1=event[0][1], x2=event[1][0], y2=event[1][1];
+                    //     var x_max=d3.max([x1,x2]), y_max=d3.max([y1,y2]), x_min=d3.min([x1,x2]), y_min=d3.min([y1,y2]);
+                    //     var selectpoints=[];
+                    //     for(var i=0;i<tsneData.length;i++){
+                    //         var x=parseFloat($("#tsne_node_"+tsneData[i].id)[0].attributes.cx.value);
+                    //         var y=parseFloat($("#tsne_node_"+tsneData[i].id)[0].attributes.cy.value);
+                    //         if(x>=x_min&&x<=x_max&&y>=y_min&&y<=y_max){
+                    //             selectpoints.push(tsneData[i].id);
+                    //             // console.log(tsneData[i].id);
+                    //             tsne_point_click(tsneData[i].id);
+                    //             // forceselect(tsneData[i].id);
+                    //             d3.select("#tsne_node_"+tsneData[i].id).style("fill",tsne_selected_color);
+                    //         }
+                    //     }
+                    // brush_tsne_force(selectpoints);
+                    // }
+                    // tsne_svg.append("g")
+                    //         .attr("class","brush")
+                    //         .call(brush.on("start brush",brushed).on("end",brushend));
+                    // brushed();                  
+                });
+
+            })
+        }
+        darwtsnenodes(tsne_filename,tsne_draw_id);
+        // function change_heatmap_node()
+        // {
+        //     var v=d3.select('#node_heatmap_select').attr('vlaue');
+        //     console.log(v);
+        //     if(v=='Nodes')
+        //     {
+        //         d3.select(".heatmap-canvas").remove();
+        //         darwtsnenodes(tsne_filename,tsne_draw_id);   
+        //     }
+        //     else
+        //     {
+        //         d3.select("#tsneNodes").remove();
+        //         drawheatmap(heatmap_filename,heatmap_draw_id);        
+        //     }
+        //     console.log('yes');
+        // }
+
+
+        // function tmep_fuction(text)
+        // {
+        //     if(text.innerHTML=="Heatmap"){
+        //         d3.select("#tsneNodes").remove();
+        //         drawheatmap(heatmap_filename,heatmap_draw_id);
+        //         // document.getElementById("heatmap").style.display = "block" ;
+        //         // document.getElementById("nodediv").style.display = "none" ;
+        //         text.innerHTML="Nodes"
+        //     }
+        //     else {
+        //         // document.getElementById("nodediv").style.display = "block" ;
+        //         // document.getElementById("heatmap").style.display = "none" ;
+        //         text.innerHTML="Heatmap"
+        //         // drawnodes('#nodesvg',nodeData);
+        //         var t = d3.select(".heatmap-canvas");
+        //         t.remove();
+        //         darwtsnenodes(tsne_filename,tsne_draw_id);
+        //     }
+        // }
+    </script>
+</body>
+</html>

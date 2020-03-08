@@ -9,7 +9,7 @@
 import json
 
 
-with open(r"E:\Project\New_for_react\data\soc-sign-bitcoinotc.csv\soc-sign-bitcoinotc.csv") as f:
+with open(r"E:\Project\New_for_react\data\cit-HepTh\CH_re_gai_TRUE.csv") as f:
     nodes_list = []
     edges_list = []
     while True:
@@ -25,6 +25,6 @@ with open(r"E:\Project\New_for_react\data\soc-sign-bitcoinotc.csv\soc-sign-bitco
 
     ans_dict = {'nodes': nodes_list, 'edges': edges_list}
     # fw = open(r'../data/two_ball/two-ball_forceData.json', 'w+')
-    fw = open(r"E:\Project\New_for_react\data\soc-sign-bitcoinotc.csv\SSB_forceData.json", 'w+')
+    fw = open(r"E:\Project\New_for_react\data\cit-HepTh\CH_forceData.json", 'w+')
     fw.write(json.dumps(ans_dict))
     fw.close()

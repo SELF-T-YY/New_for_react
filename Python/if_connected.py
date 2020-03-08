@@ -7,18 +7,16 @@
 # @Software: PyCharm
 
 import networkx as nx
-import matplotlib as plt
+import csv
 
-with open(r'../data/cit-HepTh/Cit-HepTh.txt') as f:
-    for _ in range(0, 4):
-        f.readline()
+with open(r'../data/cit-HepTh/CH_re_gai.csv') as f:
     nodesList = []
     edgesList = []
     while True:
         line = f.readline()
         if not line:
             break
-        line = line.replace('\n', '').split('\t')
+        line = line.replace('\n', '').split(',')
         nodesList.append(line[0])
         nodesList.append(line[1])
         edgesList.append(line)
@@ -33,6 +31,18 @@ with open(r'../data/cit-HepTh/Cit-HepTh.txt') as f:
 
     for c in nx.connected_components(G):
         print(len(c))
+        nodesList_TRUE = list(c)
+        edgesList_TRUE = []
+        for edge in edgesList:
+            if edge[0] in nodesList_TRUE and edge[1] in nodesList_TRUE:
+                edgesList_TRUE.append(edge)
+
+        with open(r'../data/cit-HepTh/CH_re_gai_TRUE.csv', 'w', newline='') as fw:
+            writer = csv.writer(fw, dialect='excel')
+            for i in edgesList_TRUE:
+                writer.writerow(i)
+        break
+
         # print(G.subgraph(c))
         # file_name = r'../data/cit-HepTh/G/' + str(c) + '.txt'
         # fw = open(file_name, 'w+')

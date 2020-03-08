@@ -11,8 +11,8 @@ import csv
 from sklearn.manifold import TSNE
 numpy.set_printoptions(threshold=numpy.inf)
 
-position = 'SW-10000-5-0d3-trial3'
-file_name = 'SW'
+position = 'cit-HepTh'
+file_name = 'CH'
 file_path = r'../data/' + position + '/' + file_name + '.txt'
 file_write_path = r'../data/' + position + '/' + file_name + '_Tsne.csv'
 

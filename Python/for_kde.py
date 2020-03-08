@@ -10,8 +10,8 @@ from sklearn.neighbors.kde import KernelDensity
 import numpy as np
 import json
 
-position = 'SW-10000-5-0d3-trial3'
-file_name = 'SW'
+position = 'soc-sign-bitcoinotc.csv'
+file_name = 'SSB'
 file_path = r'../data/' + position + '/' + file_name + '_Tsne.csv'
 file_write_path = r'../data/' + position + '/' + file_name + '_id_x_y_kde.json'
 
@@ -29,7 +29,7 @@ with open(file_path) as f:
         line = line.replace('\n', '').split(',')
         id_list.append(line[0])
         temp_list.append([line[1], line[2]])
-        ans_dict[line[0]] = {'id': line[0], 'x': line[1], 'y': line[0]}
+        ans_dict[line[0]] = {'id': line[0], 'x': line[1], 'y': line[2]}
     X = np.array(temp_list)
     kde = KernelDensity(kernel='gaussian', bandwidth=0.2).fit(X)
     kde_list = np.exp(kde.score_samples(X))

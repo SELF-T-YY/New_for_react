@@ -9,7 +9,7 @@
 from node2vec import Node2Vec
 import networkx as nx
 
-with open(r'../data/SW-10000-5-0d3-trial3/SW-10000-5-0d3-trial3.edges') as f:
+with open(r'../data/cit-HepTh/CH_re_gai_TRUE.csv') as f:
     node_list = []
     edge_list = []
 
@@ -20,7 +20,7 @@ with open(r'../data/SW-10000-5-0d3-trial3/SW-10000-5-0d3-trial3.edges') as f:
         line = f.readline()
         if not line:
             break
-        line = line.replace('\n', '').split(' ')
+        line = line.replace('\n', '').split(',')
         if line[0] not in node_list:
             node_list.append(line[0])
         if line[1] not in node_list:
@@ -44,4 +44,4 @@ with open(r'../data/SW-10000-5-0d3-trial3/SW-10000-5-0d3-trial3.edges') as f:
 
     # Save embeddings for later use
     # model.wv.save_word2vec_format(r'../data/fb-pages-media/fb-pages-media-node.txt')
-    model.wv.save_word2vec_format(r'../data/SW-10000-5-0d3-trial3/SW.txt')
+    model.wv.save_word2vec_format(r'../data/cit-HepTh/CH.txt')

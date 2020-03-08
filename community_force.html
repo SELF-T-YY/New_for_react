@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.2/pixi.min.js"></script>
+</head>
+<body>
+    <script>
+        var force_community_num = 0;
+
+        force_file_name = "/data/soc-sign-bitcoinotc.csv/cs/20_force_gai.json"
+        community_file_name = '/data/soc-sign-bitcoinotc.csv/cs/20.json'
+
+        // force_file_name = "/data/soc-sign-bitcoinotc.csv/SSB_force_gai.json"
+        // community_file_name = '/data/soc-sign-bitcoinotc.csv/SSB_community.json'
+
+        var force_circle_r = 3;
+
+        const force_width = 775;
+        const force_height = 509;
+
+        var app = new PIXI.Application({
+            width:force_width,
+            height:force_height,
+            antialias: true,
+            resolution : 1,
+        });
+
+
+        document.querySelector('body').appendChild(app.view);
+        app.renderer.backgroundColor = 0xffffff;
+
+        let f_nodes = [];
+        let f_links = [];
+
+        function drawforce(if_draw_again){
+            var force_community_circle_Color = 0x3A435E;
+            var line_Color = 0xc6c6c6;
+            var circle_Choose_Color = 0x3A435E;
+            var community_colors = [0xFF0000,0x800000,0xFFFF00,0x808000,0x00FF00,0x008000,0x00FFFF,0x008080,0x0000FF,0x000080,0xFF00FF,0x800080,0x6E2C00,0x145A32,0x4A235A,0x641E16,0x4D5656,0x17202A]
+
+            d3.json(force_file_name, function(datas){
+                d3.json(community_file_name, function(community_datas){
+                    console.log(community_datas)
+                    console.log(datas);
+                    f_nodes = datas['nodes'];
+                    f_links = datas['edges'];
+                    f_nodeID_key = {}
+                    for(let key in f_nodes){
+                        f_nodeID_key[f_nodes[key]['id']] = key;
+                    }
+
+                    force_PIXIJS_lines = new PIXI.Graphics();
+                    for(var i = 0 ; i < f_links.length ; i++){
+                        force_PIXIJS_lines.lineStyle(0.2,line_Color,1);
+                        force_PIXIJS_lines.moveTo(f_nodes[f_nodeID_key[f_links[i].source]].x,f_nodes[f_nodeID_key[f_links[i].source]].y);
+                        force_PIXIJS_lines.lineTo(f_nodes[f_nodeID_key[f_links[i].target]].x,f_nodes[f_nodeID_key[f_links[i].target]].y);
+                    }
+                    app.stage.addChild(force_PIXIJS_lines);
+                    force_PIXIJS_circles = new PIXI.Graphics();
+                    for(var key in f_nodes){
+                        console.log(community_colors[community_datas[f_nodes[key].id]])
+                        force_PIXIJS_circles.beginFill(community_colors[community_datas[f_nodes[key].id]]);
+                        // force_PIXIJS_circles.beginFill(force_community_circle_Color)
+                        force_PIXIJS_circles.drawCircle(f_nodes[key].x,f_nodes[key].y,force_circle_r);
+                        force_PIXIJS_circles.endFill();
+                    }
+                    app.stage.addChild(force_PIXIJS_circles);
+                    mouse_down_position = {};
+                    document.getElementsByTagName("canvas")[0].id = "force_canvas";
+                    const canvas = document.getElementsByTagName("canvas");
+                    const canvas_force = canvas[0];
+
+                })
+
+            })
+        }
+
+        drawforce();
+
+        
+    </script>
+    
+</body>
+</html>

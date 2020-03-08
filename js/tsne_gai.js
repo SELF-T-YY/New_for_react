@@ -1,4 +1,6 @@
-var tsne_filename = "../data/oregonf_tsne_5000.csv";
+// var tsne_filename = "../data/oregonf_tsne_5000.csv";
+var tsne_filename = "../data/cit-HepTh/CH_Tsne.csv";
+
 var tsne_draw_id = "#Right_1_1";
 var tsne_selected_color = "rgb(255,0,0,1.0)"
 var tsne_unselected_color = "rgb(23, 37, 90,0.6)"
@@ -98,7 +100,11 @@ function darwtsnenodes(filename,draw_id){
         brushed();
     })
 }
-darwtsnenodes(tsne_filename,tsne_draw_id);
+
+// 
+// darwtsnenodes(tsne_filename,tsne_draw_id);
+darwtsnenodes("../data/cit-HepTh/CH_Tsne.csv",tsne_draw_id);
+
 function change_heatmap_node()
 {
     var v=d3.select('#node_heatmap_select').attr('vlaue');

@@ -1,36 +1,48 @@
-from community import community_louvain as community
-import networkx as nx
+import csv
 
-G = nx.Graph()
-
-nodes = []
-edges = []
-with open(r'../data/oregonf.csv') as f:
+ansDict = {}
+with open(r'../data/cit-HepTh/原始数据/cit-HepTh-dates.txt/Cit-HepTh-dates.txt') as f:
     f.readline()
     while True:
         line = f.readline()
         if not line:
             break
-        line = line.replace('\n', '').split(',')
-        if line[0] not in nodes:
-            nodes.append(line[0])
-        if line[1] not in nodes:
-            nodes.append(line[1])
-        edges.append((line[0], line[1]))
-pass
+        line = line.replace('\n', '').split('\t')
+        year = int(line[1].split('-')[0])
 
-print(edges)
-G.add_nodes_from(nodes)
-G.add_edges_from(edges)
+        nodeID = str(int(line[0]))
 
+        if list(nodeID)[0] == '1' and list(nodeID)[1] == '1':
+            # print(nodeID, end='------')
+            nodeID = ''.join(list(nodeID)[2:])
+            # print(nodeID)
 
-partition = community.best_partition(G)
+        if year >= 1990:
+            ansDict[nodeID] = line[1]
+    # print(ansDict)
+    print(len(ansDict.keys()))
+with open(r'../data/cit-HepTh/Cit-HepTh.txt') as f:
+    for _ in range(0, 4):
+        f.readline()
+    edgesList = []
+    nodesList = []
+    while True:
+        line = f.readline()
+        if not line:
+            break
+        line = line.replace('\n', '').split('\t')
+        # print(ansDict)
+        if line[0] in ansDict and line[1] in ansDict:
+            edgesList.append(line)
+            nodesList.append(line[0])
+            nodesList.append(line[1])
+    nodesList = set(nodesList)
+    # print(edgesList)
+    print(len(edgesList))
+    print(len(nodesList))
 
-print(partition)
+    with open(r'../data/cit-HepTh/CH_re.csv', 'w+', newline='') as fw:
+        writer = csv.writer(fw, dialect='excel')
+        for i in edgesList:
+            writer.writerow(i)
 
-max_num = 0
-# fw = open(r'../data/oregonf_community.csv', 'w+')
-for key in partition.keys():
-    max_num = max(max_num, partition.get(key))
-    # fw.writelines(str(key)+','+str(partition.get(key))+'\n')
-print(max_num)

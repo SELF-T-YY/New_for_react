@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/d3.v4.min.js"></script>
+    <script src="/js/heatmap.min.js"></script>
+</head>
+<body>
+    <div id="heatmap" style="height:340px; width: 410px; display: none"></div>
+    <script>
+         var heatmapInstance = h337.create({
+            container: document.querySelector("#heatmap"),
+            radius: 10,
+            opacity: [0.1, 0.8],
+            blur: 0.75,
+            color: {
+            2: '#f0f9e8',
+            0.8: '#bae4bc',
+            0.6: '#7bccc4',
+            0.4: '#43a2ca',
+            0.2: '#0868ac',
+            }
+        });
+        var points = [];
+        var max = 0;
+        var width =410;
+        var height = 338;
+        d3.json("/data/soc-sign-bitcoinotc.csv/SSB_id_x_y_kde_edges_betweenness.json",function populate(jsondata){
+            var kdes = [];
+            // console.log(kdedata);
+            // for(var i = 0;i<kdedata.length;i++){
+            //     var kde = {}
+            //     kde.id = parseInt(kdedata[i].id);
+            //     kde.x = parseFloat(kdedata[i].x);
+            //     kde.y = parseFloat(kdedata[i].y);
+            //     kde.kde = parseFloat(kdedata[i].kde);
+            //     kdes.push(kde);
+            // }
+            console.log(jsondata)
+            kdedata = []
+            for(var i in jsondata){
+                var kde = {};
+                kde.id = parseInt(jsondata[i]['id']);
+                kde.x = parseFloat(jsondata[i].x);
+                kde.y = parseFloat(jsondata[i].y);
+                kde.kde = parseFloat(jsondata[i].betweenness);
+                kdedata.push(parseFloat(jsondata[i].betweenness));
+                kdes.push(kde);
+            }
+
+            console.log(kdes)
+            var x_max= d3.max(kdes,function(d){
+                return d.x;
+            })
+            var y_max = d3.max(kdes,function(d){
+                return d.y;
+            })
+            var x_min = d3.min(kdes,function(d){
+                return d.x;
+            })
+            var y_min = d3.min(kdes,function(d){
+                return d.y;
+            })
+
+
+            var xScale = d3.scaleLinear()
+                            .domain([x_min,x_max])
+                            .range([10,width])
+            var yScale = d3.scaleLinear()
+                            .domain([y_min,y_max])
+                            .range([10,height])
+            for(var i = 0;i<kdes.length;i++){
+                kdes[i].x = parseInt(xScale(kdes[i].x));
+                kdes[i].y = parseInt(yScale(kdes[i].y));
+                var val = kdedata[i] * 250;
+                max = Math.max(max,val);
+                var point = {
+                    id:kdes[i].id,
+                    x: kdes[i].x,
+                    y: kdes[i].y,
+                    value : val,
+                };
+                points.push(point);
+            }
+
+            var data_sampling = []
+
+            data_sampling = points;
+            heatmapInstance.addData(data_sampling);
+        });
+    </script>
+</body>
+</html>
